@@ -38,7 +38,7 @@
             android:layout_marginBottom="50dp"
             android:background="@drawable/button_border_shape"
             android:fontFamily="sans-serif"
-            android:text="@string/login_str"
+            android:text="@string/login"
             android:textColor="@color/black"
             android:onClick="showLoginActivity"
             />
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_border_shape"
             android:fontFamily="sans-serif"
-            android:text="@string/register_str"
+            android:text="@string/register"
             android:textColor="@color/black"
             android:onClick="showRegisterActivity"
             />
