@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Acme</string>
+    <string name="login_str">Login</string>
+    <string name="register_str">Register</string>
+    <string name="logo_descrp">Brand Logo Icon</string>
+    <string name="title_activity_register">RegisterActivity</string>
+</resources>
