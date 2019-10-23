@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/brand_yellow"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:background="@color/brand_yellow"
+            android:background="@drawable/button_border_shape"
             android:fontFamily="sans-serif"
             android:text="@string/login_str"
             android:textColor="@color/black"
@@ -47,7 +48,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/brand_yellow"
+            android:background="@drawable/button_border_shape"
             android:fontFamily="sans-serif"
             android:text="@string/register_str"
             android:textColor="@color/black"
