@@ -1,5 +1,9 @@
 package com.acme.server;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,10 +15,37 @@ import org.json.JSONObject;
 
 @Path("/service")
 public class Service {
+	
+	private Connection connection = null;
 
+	public Service() {
+		try {
+			connectToDatabase();
+		} catch (ClassNotFoundException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	private void connectToDatabase() throws ClassNotFoundException {
+		Class.forName("org.sqlite.JDBC");
+		
+		try {
+			// Francisco path to db -> "jdbc:sqlite:///Users/francisco/Documents/FEUP/Projetos/CMOV/Server/acme.db"
+			
+			connection = DriverManager.getConnection("jdbc:sqlite:///Users/francisco/Documents/FEUP/Projetos/CMOV/Server/acme.db");
+		} catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
 	@GET
 	@Produces("application/json")
 	public Response convertFtoC() throws JSONException {
+		
+		if(connection == null) {
+			String result = "NOT CONNECTED TO DB";
+			return Response.status(200).entity(result).build();
+		}
  
 		JSONObject jsonObject = new JSONObject();
 		Double fahrenheit = 98.24;

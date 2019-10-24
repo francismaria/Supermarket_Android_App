@@ -35,13 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void submitLoginInformation(View view){
-        try{
-            new LoginAction().execute(new URL("http://localhost:8080/AcmeServer/acme/service"),
-                    new URL("http://localhost:8080/AcmeServer/acme/service"),
-                    new URL("http://localhost:8080/AcmeServer/acme/service"));
-        } catch(IOException e){
-            System.out.println("URL ERROR");
-        }
+
+        new LoginAction().execute();
 
         //Log.d("RESULT:", );
     }
