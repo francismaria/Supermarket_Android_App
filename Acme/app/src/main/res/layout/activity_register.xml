@@ -29,7 +29,7 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/nameForm"
+                android:id="@+id/registerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -39,7 +39,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/emailForm"
+                android:id="@+id/registerEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -49,7 +49,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/usernameForm"
+                android:id="@+id/registerUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -59,7 +59,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/passwordForm"
+                android:id="@+id/registerPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -69,7 +69,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/confirmPasswordForm"
+                android:id="@+id/registerConfirmPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -79,7 +79,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/birthdateInput"
+                android:id="@+id/registerBirthdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
