@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Acme</string>
+    <!-- Direct Strings -->
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="logo_descrp">Brand Logo Icon</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <!-- Captions  -->
+    <string name="register_caption">Register to Shop in the Best Supermarket</string>
 </resources>
