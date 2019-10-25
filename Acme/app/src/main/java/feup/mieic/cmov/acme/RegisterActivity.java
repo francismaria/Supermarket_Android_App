@@ -19,6 +19,8 @@ import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 import java.util.regex.Pattern;
 
+// TODO: REMOVE ALL THE LOGS
+
 public class RegisterActivity extends AppCompatActivity {
 
     private URL registerPath = null;
