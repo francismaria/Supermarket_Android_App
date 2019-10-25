@@ -6,6 +6,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -70,8 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setUsernameValidator(EditText usernameView){
         usernameView.addTextChangedListener(new TextValidator(usernameView) {
-            // Note:
             final Pattern usernamePattern = Pattern.compile("^(?!.*__.*)(\\w){6,30}$");
+
             @Override
             public void validate(TextView view, String text) {
                 if(!usernamePattern.matcher(text).matches()){
@@ -85,9 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
     private String encryptedPasswdSHA256 = "";
 
     private void setPasswordValidator(EditText passwdView){
-
         passwdView.addTextChangedListener(new TextValidator(passwdView) {
             final Pattern passwdPattern = Pattern.compile("^(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*\\d.*)(?=.*[@#€$£%&÷=_!?].*)[a-zA-Z\\d@#€$£%&÷=_!?]{6,30}$");
+
             @Override
             public void validate(TextView view, String text) {
                 if(!passwdPattern.matcher(text).matches()){
@@ -120,7 +121,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setConfirmPasswordValidator(EditText confirmPasswdView){
-
         confirmPasswdView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -154,12 +154,80 @@ public class RegisterActivity extends AppCompatActivity {
         setCreditCardCCVvalidator((EditText)this.findViewById(R.id.registerCCV));
     }
 
-    private void setCreditCardNumberValidator(EditText textView){
+    private void setCreditCardNumberValidator(EditText creditCardNumView){
+        /*creditCardNumView.addTextChangedListener(new TextValidator(creditCardNumView) {
+            final Pattern creditCardNumPattern = Pattern.compile("^[\\d]{16}$");
 
+            @Override
+            public void validate(TextView view, String text) {
+                if(!creditCardNumPattern.matcher(text).matches()){
+                    view.setError("The credit card number must have 16 digits.");
+                }
+            }
+        });*/
+
+        // TODO: custom credit card validation
+        creditCardNumView.addTextChangedListener(new TextValidator(creditCardNumView) {
+            private final int TOTAL_SYMBOLS = 19;
+            private final int MODULUS = 5;
+
+            @Override
+            public void validate(TextView view, String text) {
+                view.removeTextChangedListener(this);
+
+                String str = correctInput(text);
+
+                //EditText vText = (EditText)view;
+                int position = view.getSelectionStart();
+                view.setText(str);
+                ((EditText) view).setSelection(str.length());
+
+                view.addTextChangedListener(this);
+            }
+
+            private String correctInput(String text){
+                if(text.length() > TOTAL_SYMBOLS)
+                    return text.substring(0, text.length()-1);
+
+                String resStr = "";
+                int charCount = 1;
+
+                for(int i = 0; i < text.length(); i++, charCount++){
+                    if(i > 0 && charCount % MODULUS == 0) {
+                        if(text.charAt(i) != ' '){
+                            resStr += " ";
+                        }
+                        charCount = 0; // will be set to 0
+                    }
+                    resStr += Character.toString(text.charAt(i));
+                }
+                Log.i("INFO", resStr);
+                return resStr;
+            }
+        });
     }
 
-    private void setCreditCardExpDateValidator(EditText textView){
+    private void setCreditCardExpDateValidator(EditText creditcardExpDateView){
+        /*creditcardExpDateView.addTextChangedListener(new TextValidator(creditcardExpDateView) {
+            final Pattern creditCardExpDatePattern = Pattern.compile("^[\\d]{2}/[\\d]{2}$");
 
+            @Override
+            public void validate(TextView view, String text) {
+                EditText creditcardExpDateViewText = (EditText)view;
+
+                if(!creditCardExpDatePattern.matcher(text).matches()){
+                    view.setError("The credit card expiration date must be of the type MM/YY.");
+                } else {
+                    Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
+                    myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
+                    creditcardExpDateViewText.setError("The passwords match.", myIcon);
+                }
+
+                view.removeTextChangedListener(this);
+
+                view.addTextChangedListener(this);
+            }
+        });*/
     }
 
     private void setCreditCardCCVvalidator(EditText textView){

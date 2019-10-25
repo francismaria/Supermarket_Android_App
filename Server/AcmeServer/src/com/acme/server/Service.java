@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@Path("/service")
+@Path("/api")
 public class Service {
 	
 	private Connection connection = null;

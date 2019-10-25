@@ -19,7 +19,7 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
         HttpURLConnection urlConnection = null;
 
         try {
-            URL url = new URL("http://10.0.2.2:8080/AcmeServer/acme/service");
+            URL url = new URL("http://10.0.2.2:8080/AcmeServer/acme/api");
             urlConnection = (HttpURLConnection) url.openConnection();
 
             int code = urlConnection.getResponseCode();
