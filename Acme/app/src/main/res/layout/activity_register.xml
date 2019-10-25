@@ -16,6 +16,7 @@
         android:layout_marginBottom="40dp"
         android:text="@string/register_caption"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <ScrollView
@@ -78,14 +79,6 @@
                 android:backgroundTint="@color/black"
                 android:inputType="textPassword" />
 
-            <EditText
-                android:id="@+id/registerBirthdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:ems="10"
-                android:backgroundTint="@color/black"
-                android:inputType="date" />
 
             <Button
                 android:id="@+id/registerBtn"

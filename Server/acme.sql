@@ -24,17 +24,18 @@ INSERT INTO CARDS VALUES(1, "123X-1234-5432-XYZW", "09/22", "223");
 
 DROP TABLE IF EXISTS USERS;
 CREATE TABLE USERS(
-  UUID        INTEGER     PRIMARY KEY,
-  NAME        TEXT        NOT NULL,
-  EMAIL       VARCHAR(60) UNIQUE NOT NULL,
-  USERNAME    TEXT UNIQUE NOT NULL CHECK(length(USERNAME) >= 6 AND length(USERNAME) <= 30),
-  PASSWORD    TEXT NOT NULL CHECK(length(PASSWORD) >= 6 AND length(PASSWORD) <= 30),
-  CARD_ID     INTEGER     NOT NULL,
-  PUBLIC_KEY  BLOB        NOT NULL,
+  UUID              INTEGER     PRIMARY KEY,
+  NAME              TEXT        NOT NULL,
+  EMAIL             VARCHAR(60) UNIQUE NOT NULL,
+  USERNAME          TEXT UNIQUE NOT NULL CHECK(length(USERNAME) >= 6 AND length(USERNAME) <= 30),
+  PASSWORD          TEXT NOT NULL CHECK(length(PASSWORD) >= 6 AND length(PASSWORD) <= 30),
+  CARD_ID           INTEGER     NOT NULL,
+  PUBLIC_KEY        BLOB        NOT NULL,
+  ACCUMULATED_CASH  REAL DEFAULT 0.0,
   FOREIGN KEY(CARD_ID) REFERENCES CARDS(ID) ON DELETE CASCADE
 );
 
-INSERT INTO USERS VALUES(1, "Francisco Maria", "f@gmail.com", "francis", "password", 1, "llaskdçaskdçlaksçldkaçl");
+INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(1, "Francisco Maria", "f@gmail.com", "francis", "password", 1, "llaskdçaskdçlaksçldkaçl");
 
 /* ------------------------------ *
  *           PRODUCTS             *
