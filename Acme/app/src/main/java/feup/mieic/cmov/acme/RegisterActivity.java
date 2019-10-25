@@ -76,8 +76,17 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void setPasswordValidator(EditText textView){
-
+    private void setPasswordValidator(EditText passwdView){
+        passwdView.addTextChangedListener(new TextValidator(passwdView) {
+            // Note:
+            final Pattern passwdPattern = Pattern.compile("^(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*\\d.*)(?=.*[@#€$£%&÷=_!?].*)[a-zA-Z\\d@#€$£%&÷=_!?]{6,30}$");
+            @Override
+            public void validate(TextView view, String text) {
+                if(!passwdPattern.matcher(text).matches()){
+                    view.setError("The password must have at least 6 and at most 30 characters, containing at least one lowercase, one uppercase, one special character and one digit");
+                }
+            }
+        });
     }
 
     private void setConfirmPasswordValidator(EditText textView){
