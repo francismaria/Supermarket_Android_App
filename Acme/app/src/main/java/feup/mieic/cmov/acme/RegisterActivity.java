@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.net.URL;
 
 import feup.mieic.cmov.acme.validation.TextValidator;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -53,7 +54,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setEmailValidator(EditText emailView){
         emailView.addTextChangedListener(new TextValidator(emailView) {
-
             @Override
             public void validate(TextView view, String text) {
                 if(!Patterns.EMAIL_ADDRESS.matcher(text).matches()){
@@ -63,8 +63,17 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void setUsernameValidator(EditText textView){
-
+    private void setUsernameValidator(EditText usernameView){
+        usernameView.addTextChangedListener(new TextValidator(usernameView) {
+            // Note:
+            final Pattern usernamePattern = Pattern.compile("^(?!.*__.*)(\\w){6,30}$");
+            @Override
+            public void validate(TextView view, String text) {
+                if(!usernamePattern.matcher(text).matches()){
+                    view.setError("The username must have at least 6 and at most 30 characters, containing only lowercase, uppercase, digits or non-contiguous underscores.");
+                }
+            }
+        });
     }
 
     private void setPasswordValidator(EditText textView){
