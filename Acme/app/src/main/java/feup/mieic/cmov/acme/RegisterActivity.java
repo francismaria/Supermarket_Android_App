@@ -177,12 +177,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 String str = correctInput(text);
 
-                //EditText vText = (EditText)view;
                 int position = view.getSelectionStart();
                 view.setText(str);
                 ((EditText) view).setSelection(str.length());
 
                 view.addTextChangedListener(this);
+
+                if(str.length() < TOTAL_SYMBOLS){
+                    view.setError("The credit card number must have 16 digits.");
+                } else {
+                    Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
+                    myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
+                    view.setError("The credit card number is correct.", myIcon);
+                }
             }
 
             private String correctInput(String text){
