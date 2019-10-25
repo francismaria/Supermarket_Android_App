@@ -164,8 +164,6 @@ public class RegisterActivity extends AppCompatActivity {
                 view.removeTextChangedListener(this);
 
                 String str = correctInput(text);
-
-                int position = view.getSelectionStart();
                 view.setText(str);
                 ((EditText) view).setSelection(str.length());
 
@@ -203,29 +201,63 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setCreditCardExpDateValidator(EditText creditcardExpDateView){
-        /*creditcardExpDateView.addTextChangedListener(new TextValidator(creditcardExpDateView) {
-            final Pattern creditCardExpDatePattern = Pattern.compile("^[\\d]{2}/[\\d]{2}$");
+        creditcardExpDateView.addTextChangedListener(new TextValidator(creditcardExpDateView) {
+            private final int TOTAL_SYMBOLS = 5;
+            private final int HALF_SYMBOLS = 2;
 
             @Override
             public void validate(TextView view, String text) {
-                EditText creditcardExpDateViewText = (EditText)view;
-
-                if(!creditCardExpDatePattern.matcher(text).matches()){
-                    view.setError("The credit card expiration date must be of the type MM/YY.");
-                } else {
-                    Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
-                    myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
-                    creditcardExpDateViewText.setError("The passwords match.", myIcon);
-                }
-
                 view.removeTextChangedListener(this);
+
+                String str = correctInput(text);
+                view.setText(str);
+                ((EditText) view).setSelection(str.length());
 
                 view.addTextChangedListener(this);
             }
-        });*/
+
+            private String correctInput(String text){
+                if(text.length() > TOTAL_SYMBOLS)
+                    return text.substring(0, text.length()-1);
+
+                if(text.length() == HALF_SYMBOLS){
+                    text += "/";
+                }
+
+                return text;
+            }
+        });
     }
 
-    private void setCreditCardCCVvalidator(EditText textView){
+    private void setCreditCardCCVvalidator(EditText creditCardCCVView){
+        creditCardCCVView.addTextChangedListener(new TextValidator(creditCardCCVView) {
 
+            private final int TOTAL_SYMBOLS = 3;
+
+            @Override
+            public void validate(TextView view, String text) {
+                view.removeTextChangedListener(this);
+
+                String str = correctInput(text);
+                view.setText(str);
+                ((EditText) view).setSelection(str.length());
+
+                if(str.length() < TOTAL_SYMBOLS){
+                    view.setError("The CCV must have exactly 3 digits.");
+                } else {
+                    Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
+                    myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
+                    view.setError("The credit card number is correct.", myIcon);
+                }
+
+                view.addTextChangedListener(this);
+            }
+
+            private String correctInput(String text){
+                if(text.length() > TOTAL_SYMBOLS)
+                    return text.substring(0, text.length()-1);
+                return text;
+            }
+        });
     }
 }
