@@ -192,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(text.charAt(i) != ' '){
                             resStr += " ";
                         }
-                        charCount = 0; // will be set to 0
+                        charCount = 0; // will be incremented right before the cycle is over
                     }
                     resStr += Character.toString(text.charAt(i));
                 }
