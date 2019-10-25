@@ -155,18 +155,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setCreditCardNumberValidator(EditText creditCardNumView){
-        /*creditCardNumView.addTextChangedListener(new TextValidator(creditCardNumView) {
-            final Pattern creditCardNumPattern = Pattern.compile("^[\\d]{16}$");
-
-            @Override
-            public void validate(TextView view, String text) {
-                if(!creditCardNumPattern.matcher(text).matches()){
-                    view.setError("The credit card number must have 16 digits.");
-                }
-            }
-        });*/
-
-        // TODO: custom credit card validation
         creditCardNumView.addTextChangedListener(new TextValidator(creditCardNumView) {
             private final int TOTAL_SYMBOLS = 19;
             private final int MODULUS = 5;
