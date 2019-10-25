@@ -26,17 +26,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/registerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/black"
                 android:ems="10"
                 android:hint="Name"
-                android:backgroundTint="@color/black"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -44,9 +44,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/black"
                 android:ems="10"
                 android:hint="E-mail"
-                android:backgroundTint="@color/black"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -54,9 +54,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/black"
                 android:ems="10"
                 android:hint="@string/username"
-                android:backgroundTint="@color/black"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -64,9 +64,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/black"
                 android:ems="10"
                 android:hint="@string/password"
-                android:backgroundTint="@color/black"
                 android:inputType="textPassword" />
 
             <EditText
@@ -74,11 +74,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/black"
                 android:ems="10"
                 android:hint="@string/confirm_password"
-                android:backgroundTint="@color/black"
                 android:inputType="textPassword" />
 
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/credit_card_caption" />
+
+            <EditText
+                android:id="@+id/registerCardNr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:hint="@string/credit_card_nr_caption"
+                android:backgroundTint="@color/black"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/registerExpDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/credit_card_expdate_caption"
+                    android:backgroundTint="@color/black"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/registerCCV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/credit_card_ccv_caption"
+                    android:backgroundTint="@color/black"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/registerBtn"

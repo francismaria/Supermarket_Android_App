@@ -10,4 +10,9 @@
     <string name="title_activity_register">RegisterActivity</string>
     <!-- Captions  -->
     <string name="register_caption">Register to Shop in the Best Supermarket</string>
+    <!-- Credit Card Captions-->
+    <string name="credit_card_caption">Credit Card Information</string>
+    <string name="credit_card_nr_caption">Credit Card Number</string>
+    <string name="credit_card_expdate_caption">Expiration Date</string>
+    <string name="credit_card_ccv_caption">CCV</string>
 </resources>
