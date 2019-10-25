@@ -119,9 +119,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/credit_card_ccv_caption"
                     android:backgroundTint="@color/black"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:hint="CCV"/>
+
             </LinearLayout>
 
             <Button
