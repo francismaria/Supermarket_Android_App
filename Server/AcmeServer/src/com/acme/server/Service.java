@@ -2,6 +2,8 @@ package com.acme.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
@@ -20,6 +22,11 @@ import org.json.JSONObject;
 public class Service {
 	
 	private Connection connection = null;
+	
+	private static final int SUCCESS_CODE = 200;
+	private static final int UNAUTHORIZED_CODE = 401;
+	private static final int FORBIDDEN_CODE = 403;
+	private static final int INTERNAL_SERVER_ERROR_CODE = 500;
 
 	public Service() {
 		try {
@@ -47,7 +54,7 @@ public class Service {
 		
 		if(connection == null) {
 			String result = "NOT CONNECTED TO DB";
-			return Response.status(400).entity(result).build();
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(result).build();
 		}
  
 		JSONObject jsonObject = new JSONObject();
@@ -57,16 +64,36 @@ public class Service {
 		jsonObject.put("user", "example");
 		jsonObject.put("password", "123456");
  
-		return Response.status(200).entity(jsonObject.toString()).build();
+		return Response.status(Service.SUCCESS_CODE).entity(jsonObject.toString()).build();
 	}
  
 	@Path("/login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
-	public Response convertFtoCfromInput(String data) throws JSONException {
-
+	public Response loginAction(String data) throws JSONException {
+		JSONObject objData = new JSONObject(data);
 		
-		return Response.status(401).entity(null).build();
+		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
+		
+		if(connection == null) {
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		
+		try {
+			PreparedStatement pStmt = connection.prepareStatement(stmt);
+			pStmt.setString(1, objData.getString("username"));
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if(!rs.next()) {
+				return Response.status(Service.UNAUTHORIZED_CODE).entity(null).build();
+			}
+			
+		} catch (SQLException e) {
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		
+		return Response.status(Service.SUCCESS_CODE).entity(null).build();
 	}
 }
