@@ -72,8 +72,8 @@ public class Service {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
 	public Response loginAction(String data) throws JSONException {
-		JSONObject objData = new JSONObject(data);
 		
+		JSONObject objData = new JSONObject(data);
 		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
 		
 		if(connection == null) {
@@ -89,7 +89,6 @@ public class Service {
 			if(!rs.next()) {
 				return Response.status(Service.UNAUTHORIZED_CODE).entity(null).build();
 			}
-			
 		} catch (SQLException e) {
 			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}

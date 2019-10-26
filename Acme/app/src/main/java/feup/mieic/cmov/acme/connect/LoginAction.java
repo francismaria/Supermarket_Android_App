@@ -45,8 +45,7 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
             os.close();
 
             Log.i("LOGIN ACTION", "request POST send");
-
-
+            
             int code = urlConnection.getResponseCode();
 
             if (code == LoginAction.SUCCESS_CODE) {
@@ -67,7 +66,7 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
         } catch(ConnectException exc){
             Log.e("LOGIN ACTION", "There is no connectivity to the server. Is it down?");
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("LOGIN ACTION", e.getMessage());
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
