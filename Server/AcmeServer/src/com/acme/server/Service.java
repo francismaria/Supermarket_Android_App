@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
@@ -44,32 +47,26 @@ public class Service {
 		
 		if(connection == null) {
 			String result = "NOT CONNECTED TO DB";
-			return Response.status(200).entity(result).build();
+			return Response.status(400).entity(result).build();
 		}
  
 		JSONObject jsonObject = new JSONObject();
 		Double fahrenheit = 98.24;
 		Double celsius;
 		celsius = (fahrenheit - 32) * 5 / 9;
-		jsonObject.put("F Value", fahrenheit);
-		jsonObject.put("C Value", celsius);
+		jsonObject.put("user", "example");
+		jsonObject.put("password", "123456");
  
-		String result = "@Produces(\"application/json\") Output: \n\nF to C Converter Output: \n\n" + jsonObject;
-		return Response.status(200).entity(result).build();
+		return Response.status(200).entity(jsonObject.toString()).build();
 	}
  
-	@Path("{f}")
-	@GET
+	@Path("/login")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
-	public Response convertFtoCfromInput(@PathParam("f") float f) throws JSONException {
- 
-		JSONObject jsonObject = new JSONObject();
-		float celsius;
-		celsius = (f - 32) * 5 / 9;
-		jsonObject.put("F Value", f);
-		jsonObject.put("C Value", celsius);
- 
-		String result = "@Produces(\"application/json\") Output: \n\nF to C Converter Output: \n\n" + jsonObject;
-		return Response.status(200).entity(result).build();
+	public Response convertFtoCfromInput(String data) throws JSONException {
+
+		
+		return Response.status(401).entity(null).build();
 	}
 }
