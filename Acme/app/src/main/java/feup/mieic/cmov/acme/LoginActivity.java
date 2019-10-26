@@ -66,7 +66,19 @@ public class LoginActivity extends AppCompatActivity {
      * @param view
      */
     public void submitLoginInformation(View view){
+        String username = ((EditText)findViewById(R.id.loginUsername)).getText().toString();
+        String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
 
-        new LoginAction().execute();
+        Log.i("bool", Boolean.toString(isTextFieldEmpty(username)));
+
+        if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
+            Log.e("INFO", "Please fill both the authentication fields.");
+        } else {
+            new LoginAction().execute(username, password);
+        }
+    }
+
+    private boolean isTextFieldEmpty(String str){
+        return str.equals("");
     }
 }

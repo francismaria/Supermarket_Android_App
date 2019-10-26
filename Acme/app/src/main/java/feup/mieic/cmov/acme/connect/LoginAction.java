@@ -5,12 +5,11 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,16 +21,16 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
     private static final int SUCCESS_CODE = 200;
     private static final int UNAUTHORIZED_CODE = 401;
 
-    // This is a function that we are overriding from AsyncTask. It takes Strings as parameters because that is what we defined for the parameters of our async task
     @Override
     protected Void doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
+        String username = params[0], password = params[1];
 
         try {
             URL url = new URL(LoginAction.LOGIN_PATH);
             JSONObject obj = new JSONObject();
-            obj.put("username", "example");
-            obj.put("password", "123456");
+            obj.put("username", username);
+            obj.put("password", password);
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
@@ -44,8 +43,9 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
             os.write(obj.toString().getBytes("UTF-8"));
             os.close();
 
-            Log.i("LOGIN ACTION", "request POST send");
-            
+            Log.i("LOGIN ACTION", obj.toString());
+            Log.i("LOGIN ACTION", "request POST sent");
+
             int code = urlConnection.getResponseCode();
 
             if (code == LoginAction.SUCCESS_CODE) {
@@ -75,12 +75,14 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
         return null;
     }
 
-    protected void onProgressUpdate(String... params) {
+    protected Void onProgressUpdate(String... params) {
         //setProgressPercent(progress[0]);
+        return null;
     }
 
-    protected void onPostExecute(Long result) {
+    protected Void onPostExecute() {
         //showDialog("Downloaded " + result + " bytes");
         Log.i("INFORMATION_RESULT", "finished");
+        return null;
     }
 }
