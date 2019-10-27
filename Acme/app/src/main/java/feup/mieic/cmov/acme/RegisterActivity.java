@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Toast filledFieldsToast;
 
-    private boolean NAME_FILLED = true;
+    private boolean NAME_FILLED = false;
     private boolean EMAIL_FLLED = false;
     private boolean USERNAME_FILLED = false;
     private boolean PASSWORD_FILLED = false;
@@ -65,11 +65,31 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void setInputValidators(){
+        setNameValidator((EditText)this.findViewById(R.id.registerName));
         setEmailValidator((EditText)this.findViewById(R.id.registerEmail));
         setUsernameValidator((EditText)this.findViewById(R.id.registerUsername));
         setPasswordValidator((EditText)this.findViewById(R.id.registerPassword));
         setConfirmPasswordValidator((EditText)this.findViewById(R.id.registerConfirmPassword));
         setCreditCardInfoValidator();
+    }
+
+    private void setNameValidator(EditText nameView){
+        final Pattern namePattern = Pattern.compile("^(?!.*[\\d?!*=#€£%&-+|/@$].*)([a-zA-Z]{1,40}(\\s)?){1,10}$");
+
+
+        nameView.addTextChangedListener(new TextValidator(nameView) {
+            @Override
+            public void validate(TextView view, String text) {
+                if(!namePattern.matcher(text).matches()){
+                    view.setError("You can input at most 400 characters. The name must not have digits or special characters of any kind. Enter just one space per name.");
+
+                    NAME_FILLED = false;
+                } else {
+                    NAME_FILLED = true;
+                }
+
+            }
+        });
     }
 
     private void setEmailValidator(EditText emailView){
