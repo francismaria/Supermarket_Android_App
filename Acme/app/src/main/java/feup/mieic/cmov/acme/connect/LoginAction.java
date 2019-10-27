@@ -18,8 +18,6 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import feup.mieic.cmov.acme.LoginActivity;
-
 public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
     private static final String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/acme/api/login";
@@ -28,17 +26,12 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
     private static final int SUCCESS_CODE = 200;
     private static final int UNAUTHORIZED_CODE = 401;
 
-    // Error message dialog
-    //private Context context;
-
     private WeakReference<Context> weakActivity;
 
     private AlertDialog.Builder builder;
     private String ERROR_MSG;
 
     public LoginAction(Context context){
-        //this.context = context;
-
         weakActivity = new WeakReference<>(context);
     }
 
