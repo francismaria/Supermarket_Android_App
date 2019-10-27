@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import java.lang.ref.WeakReference;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,18 +29,24 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
     private static final int UNAUTHORIZED_CODE = 401;
 
     // Error message dialog
-    private Context context;
+    //private Context context;
+
+    private WeakReference<Context> weakActivity;
+
     private AlertDialog.Builder builder;
     private String ERROR_MSG;
 
     public LoginAction(Context context){
-        this.context = context;
+        //this.context = context;
+
+        weakActivity = new WeakReference<>(context);
     }
 
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
-        builder = new AlertDialog.Builder(context);
+        builder = new AlertDialog.Builder(weakActivity.get());
+
     }
 
     @Override
