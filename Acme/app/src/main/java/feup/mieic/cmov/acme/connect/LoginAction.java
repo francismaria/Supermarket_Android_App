@@ -1,6 +1,5 @@
 package feup.mieic.cmov.acme.connect;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;

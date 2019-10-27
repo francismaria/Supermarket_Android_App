@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.URL;
 
@@ -23,7 +24,16 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private URL registerPath = null;
+    private Toast filledFieldsToast;
+
+    private boolean NAME_FILLED = true;
+    private boolean EMAIL_FLLED = false;
+    private boolean USERNAME_FILLED = false;
+    private boolean PASSWORD_FILLED = false;
+    private boolean CFRM_PASSWORD_FILLED = false;
+    private boolean CC_NR_FILLED = false;
+    private boolean CC_EXP_DATE_FILLED = false;
+    private boolean CC_CCV_FILLED = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setSupportActionBarIcon();
         setInputValidators();
+
+        filledFieldsToast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
     }
 
     /** -------------------------------
@@ -66,6 +78,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void validate(TextView view, String text) {
                 if(!Patterns.EMAIL_ADDRESS.matcher(text).matches()){
                     view.setError("The e-mail format is not accepted.");
+
+                    EMAIL_FLLED = false;
+                } else {
+                    EMAIL_FLLED = true;
                 }
             }
         });
@@ -79,6 +95,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void validate(TextView view, String text) {
                 if(!usernamePattern.matcher(text).matches()){
                     view.setError("The username must have at least 6 and at most 30 characters, containing only lowercase, uppercase, digits or non-contiguous underscores.");
+
+                    USERNAME_FILLED = false;
+                } else {
+                    USERNAME_FILLED = true;
                 }
             }
         });
@@ -95,6 +115,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void validate(TextView view, String text) {
                 if(!passwdPattern.matcher(text).matches()){
                     passwdValid = false;
+
+                    PASSWORD_FILLED = false;
                     view.setError("The password must have at least 6 and at most 30 characters, containing at least one lowercase, one uppercase, one special character and one digit");
                 } else {
                     passwdValid = true;
@@ -113,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         Log.i("PASSWORD:", encryptedPasswdSHA256);
 
+                        PASSWORD_FILLED = true;
 
                     } catch (Exception e){
                         Log.e("Password Encryption: ", "Algorithm does not exist.");
@@ -136,10 +159,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if(!confirmEncryption.equals(encryptedPasswdSHA256)){
                             confirmPasswdTextView.setError("The passwords do not match.");
+
+                            CFRM_PASSWORD_FILLED = false;
                         } else {
                             Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
                             myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
                             confirmPasswdTextView.setError("The passwords match.", myIcon);
+
+                            CFRM_PASSWORD_FILLED = true;
                         }
 
                     } catch (Exception e){
@@ -173,10 +200,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(str.length() < TOTAL_SYMBOLS){
                     view.setError("The credit card number must have 16 digits.");
+                    CC_NR_FILLED = false;
                 } else {
                     Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
                     myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
                     view.setError("The credit card number is correct.", myIcon);
+                    CC_NR_FILLED = true;
                 }
             }
 
@@ -213,7 +242,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                 String str = correctInput(text);
                 view.setText(str);
-                ((EditText) view).setSelection(str.length());
+                ((EditText) view).setSelection(str.length());   // moves cursor to the end of the newly added string
+
+                // TODO: REFACTOR THIS -> VALIDATE DATE
+
+                if(str.length() == TOTAL_SYMBOLS){
+                    CC_EXP_DATE_FILLED = true;
+                } else {
+                    CC_EXP_DATE_FILLED = false;
+                }
 
                 view.addTextChangedListener(this);
             }
@@ -225,7 +262,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if(text.length() == HALF_SYMBOLS){
                     text += "/";
                 }
-
                 return text;
             }
         });
@@ -246,10 +282,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(str.length() < TOTAL_SYMBOLS){
                     view.setError("The CCV must have exactly 3 digits.");
+                    CC_CCV_FILLED = false;
                 } else {
                     Drawable myIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.check_icon, null);
                     myIcon.setBounds(0, 0, myIcon.getIntrinsicWidth(), myIcon.getIntrinsicHeight());
                     view.setError("The credit card number is correct.", myIcon);
+                    CC_CCV_FILLED = true;
                 }
 
                 view.addTextChangedListener(this);
@@ -261,5 +299,24 @@ public class RegisterActivity extends AppCompatActivity {
                 return text;
             }
         });
+    }
+
+    /** -------------------------------
+     *      REGISTER BUTTON LISTENER
+     *  ------------------------------- */
+
+    public void submitRegisterInformation(View view){
+        if(!areFieldsFilled()){
+            filledFieldsToast.setText("Please fill all of the registration fields correctly.");
+            filledFieldsToast.show();
+        } else {
+            // new RegisterAction()
+        }
+    }
+
+    private boolean areFieldsFilled(){
+        return NAME_FILLED && EMAIL_FLLED && USERNAME_FILLED
+                && PASSWORD_FILLED && CFRM_PASSWORD_FILLED
+                && CC_NR_FILLED && CC_EXP_DATE_FILLED && CC_CCV_FILLED;
     }
 }
