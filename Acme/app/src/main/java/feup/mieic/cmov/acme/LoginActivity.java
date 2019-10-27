@@ -3,6 +3,7 @@ package feup.mieic.cmov.acme;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,12 +21,16 @@ import feup.mieic.cmov.acme.validation.TextValidator;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setSupportActionBarIcon();
         setInputValidators();
+
+        toast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
     }
 
     /**
@@ -72,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("bool", Boolean.toString(isTextFieldEmpty(username)));
 
         if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
-            Log.e("INFO", "Please fill both the authentication fields.");
+           toast.setText("Please fill both of the authentication fields.");
+           toast.show();
         } else {
             new LoginAction(LoginActivity.this).execute(username, password);
         }

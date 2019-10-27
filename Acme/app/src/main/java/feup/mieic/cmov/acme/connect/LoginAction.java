@@ -64,7 +64,6 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
             os.write(obj.toString().getBytes("UTF-8"));
             os.close();
 
-            Log.i("LOGIN ACTION", obj.toString());
             Log.i("LOGIN ACTION", "request POST sent");
 
             int code = urlConnection.getResponseCode();
