@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Starts a new LoginAction responsible for sending the login innformation
+     * Starts a new LoginAction responsible for sending the login information
      * to the server.
      * @param view
      */
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
             Log.e("INFO", "Please fill both the authentication fields.");
         } else {
-            new LoginAction().execute(username, password);
+            new LoginAction(LoginActivity.this).execute(username, password);
         }
     }
 

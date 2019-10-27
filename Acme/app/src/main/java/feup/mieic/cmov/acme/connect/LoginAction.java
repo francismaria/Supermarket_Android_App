@@ -1,5 +1,8 @@
 package feup.mieic.cmov.acme.connect;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,15 +17,33 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LoginAction extends AsyncTask<String, Void, Void > {
+import feup.mieic.cmov.acme.LoginActivity;
+
+public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
     private static final String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/acme/api/login";
 
+    // HTTP response codes
     private static final int SUCCESS_CODE = 200;
     private static final int UNAUTHORIZED_CODE = 401;
 
+    // Error message dialog
+    private Context context;
+    private AlertDialog.Builder builder;
+    private String ERROR_MSG;
+
+    public LoginAction(Context context){
+        this.context = context;
+    }
+
     @Override
-    protected Void doInBackground(String... params) {
+    protected void onPreExecute(){
+        super.onPreExecute();
+        builder = new AlertDialog.Builder(context);
+    }
+
+    @Override
+    protected Boolean doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
         String username = params[0], password = params[1];
 
@@ -60,29 +81,35 @@ public class LoginAction extends AsyncTask<String, Void, Void > {
                 }
             } else if(code == LoginAction.UNAUTHORIZED_CODE){
                 Log.e("LOGIN ACTION", "The credentials are wrong.");
+                ERROR_MSG = "Please check your credentials.\nThese are incorrect.";
+                return true;
             } else {
                 throw new IOException("Invalid response from server: " + code);
             }
         } catch(ConnectException exc){
             Log.e("LOGIN ACTION", "There is no connectivity to the server. Is it down?");
+            ERROR_MSG = "No connectivity.";
+            return true;
+
+
         } catch (Exception e) {
             Log.e("LOGIN ACTION", e.getMessage());
+            return true;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
-        return null;
+        return false;
     }
 
-    protected Void onProgressUpdate(String... params) {
-        //setProgressPercent(progress[0]);
-        return null;
-    }
-
-    protected Void onPostExecute() {
-        //showDialog("Downloaded " + result + " bytes");
-        Log.i("INFORMATION_RESULT", "finished");
-        return null;
+    @Override
+    protected void onPostExecute(Boolean error) {
+        if(error) {
+            builder.setTitle("Error Message");
+            builder.setMessage(ERROR_MSG);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }
