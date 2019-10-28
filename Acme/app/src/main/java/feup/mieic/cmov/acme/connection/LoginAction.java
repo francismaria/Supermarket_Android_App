@@ -1,4 +1,4 @@
-package feup.mieic.cmov.acme.connect;
+package feup.mieic.cmov.acme.connection;
 
 import android.app.AlertDialog;
 import android.content.Context;

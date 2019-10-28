@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
      *        INPUT VALIDATORS
      *  ------------------------------- */
 
-
     private void setInputValidators(){
         setNameValidator((EditText)this.findViewById(R.id.registerName));
         setEmailValidator((EditText)this.findViewById(R.id.registerEmail));
@@ -73,6 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
         setCreditCardInfoValidator();
     }
 
+    /**
+     * Validates name by checking if there are at maximum 400 characters (prevents buffer overflows)
+     * or if there are any special characters.
+     * @param nameView
+     */
     private void setNameValidator(EditText nameView){
         final Pattern namePattern = Pattern.compile("^(?!.*[\\d?!*=#€£%&-+|/@$].*)([a-zA-Z]{1,40}(\\s)?){1,10}$");
 
@@ -92,6 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Validates e-mail-
+     * @param emailView
+     */
     private void setEmailValidator(EditText emailView){
         emailView.addTextChangedListener(new TextValidator(emailView) {
             @Override
@@ -107,6 +115,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Validates username by checking if there any contiguous two or more whitespaces.
+     * @param usernameView
+     */
     private void setUsernameValidator(EditText usernameView){
         usernameView.addTextChangedListener(new TextValidator(usernameView) {
             final Pattern usernamePattern = Pattern.compile("^(?!.*__.*)(\\w){6,30}$");
@@ -123,6 +135,19 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    /**
+     * Validates password by checking if the text contains:
+     *
+     *      - at least 6 characters and at most 30 characters
+     *      - at least one uppercase letter
+     *      - at least one lowercase letter
+     *      - at least one digit
+     *      - at least one special character
+     *
+     * If the password matches this requirement, then it is used SHA-256 to encrypt it.
+     */
 
     private boolean passwdValid = true;
     private String encryptedPasswdSHA256 = "";

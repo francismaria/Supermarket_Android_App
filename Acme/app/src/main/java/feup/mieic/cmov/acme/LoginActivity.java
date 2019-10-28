@@ -3,20 +3,14 @@ package feup.mieic.cmov.acme;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.URL;
-
-import feup.mieic.cmov.acme.connect.LoginAction;
+import feup.mieic.cmov.acme.connection.LoginAction;
 import feup.mieic.cmov.acme.validation.TextValidator;
 
 public class LoginActivity extends AppCompatActivity {
