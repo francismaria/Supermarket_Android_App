@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.net.URL;
 
+import feup.mieic.cmov.acme.connection.RegisterAction;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 import java.util.regex.Pattern;
@@ -360,7 +361,7 @@ public class RegisterActivity extends AppCompatActivity {
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
             filledFieldsToast.show();
         } else {
-            // new RegisterAction()
+            new RegisterAction().execute();
         }
     }
 
