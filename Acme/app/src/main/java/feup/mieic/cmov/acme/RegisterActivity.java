@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Validates e-mail-
+     * Validates e-mail.
      * @param emailView
      */
     private void setEmailValidator(EditText emailView){
@@ -190,6 +190,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks if the value of the password (which is now encrypted over the SHA-256 hashing
+     * function) is the same of the SHA-256 hashed confirmed password.
+     * @param confirmPasswdView
+     */
     private void setConfirmPasswordValidator(EditText confirmPasswdView){
         confirmPasswdView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
