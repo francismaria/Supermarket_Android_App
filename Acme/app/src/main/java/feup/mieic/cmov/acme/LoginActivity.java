@@ -3,6 +3,7 @@ package feup.mieic.cmov.acme;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             new LoginAction(LoginActivity.this).execute(username, password);
         }
+
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     private boolean isTextFieldEmpty(String str){

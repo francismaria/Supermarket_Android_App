@@ -8,36 +8,42 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="feup.mieic.cmov.acme.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/title_activity_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="feup.mieic.cmov.acme.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_profile"
+        android:name="feup.mieic.cmov.acme.ui.profile.ProfileFragment"
+        android:label="@string/profile_caption"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="feup.mieic.cmov.acme.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_history"
+        android:name="feup.mieic.cmov.acme.ui.history.HistoryFragment"
+        android:label="@string/history_caption"
+        tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="feup.mieic.cmov.acme.ui.tools.ToolsFragment"
+        android:id="@+id/nav_vouchers"
+        android:name="feup.mieic.cmov.acme.ui.vouchers.VouchersFragment"
+        android:label="@string/vouchers_caption"
+        tools:layout="@layout/fragment_vouchers" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="feup.mieic.cmov.acme.ui.settings.SettingsFragment"
         android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="feup.mieic.cmov.acme.ui.share.ShareFragment"
+        android:id="@+id/nav_contact"
+        android:name="feup.mieic.cmov.acme.ui.contact.ContactFragment"
         android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        tools:layout="@layout/fragment_contact" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="feup.mieic.cmov.acme.ui.send.SendFragment"
+        android:id="@+id/nav_help"
+        android:name="feup.mieic.cmov.acme.ui.help.HelpFragment"
         android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        tools:layout="@layout/fragment_help" />
 </navigation>

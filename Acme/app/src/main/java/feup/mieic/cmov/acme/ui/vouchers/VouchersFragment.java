@@ -1,4 +1,4 @@
-package feup.mieic.cmov.acme.ui.share;
+package feup.mieic.cmov.acme.ui.vouchers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import feup.mieic.cmov.acme.R;
 
-public class ShareFragment extends Fragment {
+public class VouchersFragment extends Fragment {
 
-    private ShareViewModel shareViewModel;
+    private VouchersViewModel vouchersViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        shareViewModel =
-                ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_share, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
+        vouchersViewModel =
+                ViewModelProviders.of(this).get(VouchersViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
+        final TextView textView = root.findViewById(R.id.text_vouchers);
+        vouchersViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
@@ -33,3 +33,6 @@ public class ShareFragment extends Fragment {
         return root;
     }
 }
+
+
+

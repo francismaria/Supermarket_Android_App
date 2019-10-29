@@ -1,4 +1,4 @@
-package feup.mieic.cmov.acme.ui.slideshow;
+package feup.mieic.cmov.acme.ui.help;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import feup.mieic.cmov.acme.R;
 
-public class SlideshowFragment extends Fragment {
+public class HelpFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private HelpModel helpModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        helpModel =
+                ViewModelProviders.of(this).get(HelpModel.class);
+        View root = inflater.inflate(R.layout.fragment_help, container, false);
+        final TextView textView = root.findViewById(R.id.text_send);
+        helpModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

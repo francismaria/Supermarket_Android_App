@@ -25,7 +25,7 @@
     <string name="title_activity_home">Home</string>
     <string name="action_settings">Settings</string>
     <!-- Menu caption -->
-    <string name="menu_home">menu_home</string>
+    <string name="menu_home">Home</string>
     <string name="menu_gallery">menu_gallery</string>
     <string name="menu_slideshow">menu_slideshow</string>
     <string name="menu_tools">menu_tools</string>
