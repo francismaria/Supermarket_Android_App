@@ -15,4 +15,20 @@
     <string name="credit_card_nr_caption">Credit Card Number</string>
     <string name="credit_card_expdate_caption">Expiration Date</string>
     <string name="credit_card_ccv_caption">CCV</string>
+    <!-- Home drawer -->
+    <string name="profile_caption">Profile</string>
+    <string name="history_caption">History</string>
+    <string name="vouchers_caption">Vouchers</string>
+    <string name="settings_caption">Settings</string>
+    <string name="help_caption">Help</string>
+    <string name="contact_caption">Contact</string>
+    <string name="title_activity_home">Home</string>
+    <string name="action_settings">Settings</string>
+    <!-- Menu caption -->
+    <string name="menu_home">menu_home</string>
+    <string name="menu_gallery">menu_gallery</string>
+    <string name="menu_slideshow">menu_slideshow</string>
+    <string name="menu_tools">menu_tools</string>
+    <string name="menu_share">menu_share</string>
+    <string name="menu_send">menu_send</string>
 </resources>

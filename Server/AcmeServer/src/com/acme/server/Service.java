@@ -48,6 +48,8 @@ public class Service {
 		}
 	}
 	
+	// TO BE DELETED
+	
 	@GET
 	@Produces("application/json")
 	public Response convertFtoC() throws JSONException {
@@ -67,18 +69,22 @@ public class Service {
 		return Response.status(Service.SUCCESS_CODE).entity(jsonObject.toString()).build();
 	}
  
+	/* ------------------------------------- *
+	 *			   LOGIN ACTION
+	 * ------------------------------------- */
+	
 	@Path("/login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
 	public Response loginAction(String data) throws JSONException {
 		
-		JSONObject objData = new JSONObject(data);
-		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
-		
 		if(connection == null) {
 			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
+		
+		JSONObject objData = new JSONObject(data);
+		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
 		
 		try {
 			PreparedStatement pStmt = connection.prepareStatement(stmt);
@@ -93,6 +99,55 @@ public class Service {
 			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
+		return Response.status(Service.SUCCESS_CODE).entity(null).build();
+	}
+	
+	/* ------------------------------------- *
+	 *			  REGISTER ACTION
+	 * ------------------------------------- */
+	
+	private boolean uniqueUsername(String username) {
+		final String MAX_ID_QUERY = "SELECT MAX(UUID) FROM USERS";
+		System.out.println(username);
+		return true;
+	}
+	
+	@Path("/register")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces("application/json")
+	public Response registerAction(String data) throws JSONException {
+		
+		if(connection == null) {
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		
+		JSONObject objData = new JSONObject(data);
+		
+		if(!uniqueUsername((String) objData.get("username"))) {
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		
+		
+		
+		
+		/*
+		JSONObject objData = new JSONObject(data);
+		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
+		
+		try {
+			PreparedStatement pStmt = connection.prepareStatement(stmt);
+			pStmt.setString(1, objData.getString("username"));
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if(!rs.next()) {
+				return Response.status(Service.UNAUTHORIZED_CODE).entity(null).build();
+			}
+		} catch (SQLException e) {
+			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		*/
 		return Response.status(Service.SUCCESS_CODE).entity(null).build();
 	}
 }

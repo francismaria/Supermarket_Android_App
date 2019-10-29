@@ -361,7 +361,14 @@ public class RegisterActivity extends AppCompatActivity {
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
             filledFieldsToast.show();
         } else {
-            new RegisterAction().execute();
+            String username = ((EditText)findViewById(R.id.registerUsername)).getText().toString(),
+                    password = encryptedPasswdSHA256,
+                    email = ((EditText)findViewById(R.id.registerEmail)).getText().toString(),
+                    cardNr = ((EditText)findViewById(R.id.registerCardNr)).getText().toString(),
+                    cardExpDate = ((EditText)findViewById(R.id.registerExpDate)).getText().toString(),
+                    cardCCV = ((EditText)findViewById(R.id.registerCCV)).getText().toString();
+
+            //new RegisterAction(RegisterActivity.this).execute();
         }
     }
 
