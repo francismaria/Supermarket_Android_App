@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setSupportActionBarIcon();
-        setInputValidators();
 
         toast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
     }
@@ -40,25 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void setInputValidators(){
-        setNameValidator((EditText)this.findViewById(R.id.loginUsername));
-        setpasswordValidator((EditText)this.findViewById(R.id.loginPassword));
-    }
-
-    private void setNameValidator(EditText usernameEditText){
-        usernameEditText.addTextChangedListener(new TextValidator(usernameEditText) {
-            @Override
-            public void validate(TextView view, String text) {
-                if(text.length() < 6){
-                    view.setError("Username has to have at least 6 characters.");
-                }
-            }
-        });
-    }
-
-    private void setpasswordValidator(EditText passwordView){
-
-    }
 
     /**
      * Starts a new LoginAction responsible for sending the login information
