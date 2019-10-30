@@ -1,18 +1,29 @@
 package feup.mieic.cmov.acme.ui.history;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import feup.mieic.cmov.acme.R;
 
 public class HistoryAdapter extends RecyclerView.Adapter {
+
+    private List<ItemModel> items;
+
+    public HistoryAdapter(List<ItemModel> items){
+        this.items = items;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -22,12 +33,12 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((HistoryViewHolder) holder).bindView(position);
+        ((HistoryViewHolder) holder).bindView(items.get(position).getTotal());
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return items.size();
     }
 
     private class HistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -43,13 +54,13 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(this);
         }
 
-        public void bindView(int position){
-            totalView.setText("ajajajajaja");
+        public void bindView(String total){
+            totalView.setText(total);
             dateView.setText("okokoko");
         }
 
         public void onClick(View view){
-
+            Log.i("history_item:" , "clicked");
         }
     }
 }

@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import feup.mieic.cmov.acme.R;
 
 public class HistoryFragment extends Fragment {
@@ -34,11 +37,19 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
-
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_history);
-        HistoryAdapter adapter = new HistoryAdapter();
+
+
+        List<ItemModel> items = new ArrayList<>();
+        items.add(new ItemModel("300€", "27/10/2019"));
+        items.add(new ItemModel("560,20€", "22/10/2019"));
+        items.add(new ItemModel("450,12€", "21/10/2019"));
+
+        HistoryAdapter adapter = new HistoryAdapter(items);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(adapter);
 
         return root;
