@@ -5,6 +5,8 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,12 +45,22 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
             os.close();
 
             Log.i("REGISTER ACTION", "request POST sent");
+
+            int code = urlConnection.getResponseCode();
+
+            if (code == RegisterAction.SUCCESS_CODE) {
+                Log.i("LOGIN ACTION", "OK");
+            } else {
+                Log.i("LOGIN ACTION", "ERROR - username already exists");
+            }
         } catch(Exception e){
-            return false;
+
         }
         return true;
     }
 
     @Override
-    protected void onPostExecute(Boolean error) {}
+    protected void onPostExecute(Boolean error) {
+
+    }
 }

@@ -368,7 +368,7 @@ public class RegisterActivity extends AppCompatActivity {
                     cardExpDate = ((EditText)findViewById(R.id.registerExpDate)).getText().toString(),
                     cardCCV = ((EditText)findViewById(R.id.registerCCV)).getText().toString();
 
-            //new RegisterAction(RegisterActivity.this).execute();
+            new RegisterAction().execute();
         }
     }
 
