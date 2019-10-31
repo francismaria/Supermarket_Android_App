@@ -22,12 +22,15 @@ public class VouchersFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         vouchersViewModel =
                 ViewModelProviders.of(this).get(VouchersViewModel.class);
+
+
         View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
         final TextView textView = root.findViewById(R.id.text_vouchers);
-        vouchersViewModel.getText().observe(this, new Observer<String>() {
+
+        vouchersViewModel.getText().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(@Nullable Integer stock) {
+                textView.setText(Integer.toString(stock));
             }
         });
         return root;
