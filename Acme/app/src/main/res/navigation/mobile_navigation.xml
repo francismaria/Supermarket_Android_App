@@ -32,18 +32,18 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="feup.mieic.cmov.acme.ui.settings.SettingsFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/settings_caption"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_contact"
         android:name="feup.mieic.cmov.acme.ui.contact.ContactFragment"
-        android:label="@string/menu_share"
+        android:label="@string/contact_caption"
         tools:layout="@layout/fragment_contact" />
 
     <fragment
         android:id="@+id/nav_help"
         android:name="feup.mieic.cmov.acme.ui.help.HelpFragment"
-        android:label="@string/menu_send"
+        android:label="@string/help_caption"
         tools:layout="@layout/fragment_help" />
 </navigation>

@@ -10,7 +10,8 @@ public class ContactModel extends ViewModel {
 
     public ContactModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is share fragment");
+        mText.setValue("We're happy to hear your opinion about the app. If you have any problem or just want to leave a recomendation please send us a message using the " +
+                "form below.\nWe will answer you as soon as possible.\nThank you.");
     }
 
     public LiveData<String> getText() {
