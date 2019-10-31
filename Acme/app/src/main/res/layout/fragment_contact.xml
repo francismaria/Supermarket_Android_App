@@ -15,22 +15,35 @@
         android:textSize="18sp"
         android:paddingLeft="10sp"/>
 
-    <EditText
-        android:id="@+id/inputMsg"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:hint="Please write your message."
-        android:layout_marginBottom="20sp"
-        android:layout_marginLeft="5sp"
-        android:layout_marginRight="5sp"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/sendMsgBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_border_shape"
-        android:text="@string/send_caption" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/inputMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:layout_marginBottom="20sp"
+                android:ems="10"
+                android:hint="Please write your message."
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/sendMsgBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_border_shape"
+                android:text="@string/send_caption"
+                android:layout_marginBottom="20sp"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
