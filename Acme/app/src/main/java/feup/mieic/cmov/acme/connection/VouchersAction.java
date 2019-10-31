@@ -1,4 +1,4 @@
-package feup.mieic.cmov.acme.ui.vouchers;
+package feup.mieic.cmov.acme.connection;
 
 import androidx.lifecycle.MutableLiveData;
 

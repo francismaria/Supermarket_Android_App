@@ -25,14 +25,23 @@ public class VouchersFragment extends Fragment {
 
 
         View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
-        final TextView textView = root.findViewById(R.id.text_vouchers);
+
+        final TextView vouchersMsg = root.findViewById(R.id.text_vouchers);
+        final TextView noVouchersMsg = root.findViewById(R.id.textNoVoucherDiff);
 
         vouchersViewModel.getText().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer stock) {
-                textView.setText(Integer.toString(stock));
+                String numStr = Integer.toString(stock);
+                vouchersMsg.setText("You have " + numStr + " vouchers to discount on your next purchase!");
+
+                if(stock == 0) {
+                    // show the difference to get to the voucher
+                    noVouchersMsg.setText("Currently, you have ... € accumulated.\nYou are just ...€ short!");
+                }
             }
         });
+
         return root;
     }
 }
