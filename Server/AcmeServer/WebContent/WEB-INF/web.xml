@@ -20,6 +20,6 @@
   </servlet>
   <servlet-mapping>
 	<servlet-name>Acme Web App</servlet-name>
-	<url-pattern>/acme/*</url-pattern>
+	<url-pattern>/api/*</url-pattern>
   </servlet-mapping>
 </web-app>
