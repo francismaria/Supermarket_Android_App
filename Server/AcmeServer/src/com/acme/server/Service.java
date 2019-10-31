@@ -22,31 +22,11 @@ import org.json.JSONObject;
 public class Service {
 	
 	private Connection connection = null;
-	
-	private static final int SUCCESS_CODE = 200;
-	private static final int UNAUTHORIZED_CODE = 401;
-	private static final int FORBIDDEN_CODE = 403;
-	private static final int INTERNAL_SERVER_ERROR_CODE = 500;
 
 	public Service() {
-		try {
-			connectToDatabase();
-		} catch (ClassNotFoundException e) {
-			System.err.println(e.getMessage());
-		}
+		connection = (new DBConnection()).getConnection();
 	}
 	
-	private void connectToDatabase() throws ClassNotFoundException {
-		Class.forName("org.sqlite.JDBC");
-		
-		try {
-			// Francisco path to db -> "jdbc:sqlite:///Users/francisco/Documents/FEUP/Projetos/CMOV/Server/acme.db"
-			
-			connection = DriverManager.getConnection("jdbc:sqlite:///Users/francisco/Documents/FEUP/Projetos/CMOV/Server/acme.db");
-		} catch(SQLException e) {
-			System.err.println(e.getMessage());
-		}
-	}
 	
 	// TO BE DELETED
 	
@@ -56,7 +36,7 @@ public class Service {
 		
 		if(connection == null) {
 			String result = "NOT CONNECTED TO DB";
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(result).build();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(result).build();
 		}
  
 		JSONObject jsonObject = new JSONObject();
@@ -66,7 +46,7 @@ public class Service {
 		jsonObject.put("user", "example");
 		jsonObject.put("password", "123456");
  
-		return Response.status(Service.SUCCESS_CODE).entity(jsonObject.toString()).build();
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(jsonObject.toString()).build();
 	}
  
 	/* ------------------------------------- *
@@ -80,7 +60,7 @@ public class Service {
 	public Response loginAction(String data) throws JSONException {
 		
 		if(connection == null) {
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
 		JSONObject objData = new JSONObject(data);
@@ -93,13 +73,13 @@ public class Service {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(!rs.next()) {
-				return Response.status(Service.UNAUTHORIZED_CODE).entity(null).build();
+				return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 			}
 		} catch (SQLException e) {
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
-		return Response.status(Service.SUCCESS_CODE).entity(null).build();
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
 	}
 	
 	/* ------------------------------------- *
@@ -155,19 +135,19 @@ public class Service {
 	public Response registerAction(String data) throws JSONException {
 		
 		if(connection == null) {
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
 		JSONObject objData = new JSONObject(data);
 		
 		if(!uniqueUsername((String) objData.get("username"))) {
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
 		int newUUID = getNewUserUUID();
 		
 		
-		return Response.status(Service.SUCCESS_CODE).entity(null).build();
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
 		
 		/*
 		JSONObject objData = new JSONObject(data);
