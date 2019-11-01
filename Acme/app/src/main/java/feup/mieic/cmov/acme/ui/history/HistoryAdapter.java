@@ -56,7 +56,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
         public void bindView(String total){
             totalView.setText(total);
-            dateView.setText("okokoko");
+            dateView.setText("02/10/2019");
         }
 
         public void onClick(View view){
