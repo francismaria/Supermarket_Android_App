@@ -16,8 +16,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /* ------------------------------------- *
- *			   LOGIN ACTION
+ *			 REGISTER ACTION
  * ------------------------------------- */
+
+/*?
+ * curl -d '{"username":"username", "password":"value2"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/register
+
+ */
 
 @Path("/register")
 public class RegisterAction {
@@ -28,10 +33,13 @@ public class RegisterAction {
 		connection = (new DBConnection()).getConnection();
 	}
 	
-	/* ------------------------------------- *
-	 *			  REGISTER ACTION
-	 * ------------------------------------- */
-	
+	/**
+	 * Checks if the username of the new user to be registered is
+	 * or not unique.
+	 * 
+	 * @param username
+	 * @return
+	 */
 	private boolean uniqueUsername(String username) {
 		
 		if(connection == null) return false;
@@ -54,6 +62,13 @@ public class RegisterAction {
 		}
 	}
 
+	/**
+	 * Gets the new UUID of the new user.
+	 * 
+	 * It gets from the database the the maximum UUID and increments it by one.
+	 * 
+	 * @return
+	 */
 	private int getNewUserUUID() {
 		if(connection == null)
 			return -1;			// throw NonExisitingConnection
@@ -74,7 +89,6 @@ public class RegisterAction {
 		return nextUUID;
 	}
 	
-	@Path("/register")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
@@ -91,7 +105,6 @@ public class RegisterAction {
 		}
 		
 		int newUUID = getNewUserUUID();
-		
 		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
 		
