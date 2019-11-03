@@ -19,12 +19,6 @@ import java.net.URL;
 
 public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
-    private static final String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/api/login";
-
-    // HTTP response codes
-    private static final int SUCCESS_CODE = 200;
-    private static final int UNAUTHORIZED_CODE = 401;
-
     private WeakReference<Context> weakActivity;
 
     private AlertDialog.Builder builder;
@@ -47,7 +41,7 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
         String username = params[0], password = params[1];
 
         try {
-            URL url = new URL(LoginAction.LOGIN_PATH);
+            URL url = new URL(HTTPInfo.LOGIN_PATH);
             JSONObject obj = new JSONObject();
             obj.put("username", username);
             obj.put("password", password);
@@ -67,7 +61,7 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
             int code = urlConnection.getResponseCode();
 
-            if (code == LoginAction.SUCCESS_CODE) {
+            if (code == HTTPInfo.SUCCESS_CODE) {
                 Log.i("LOGIN ACTION", "OK");
 
                 BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -77,7 +71,7 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
                     JSONObject jsonObject = new JSONObject(line);
                     Log.i("LOGIN", jsonObject.toString());
                 }
-            } else if(code == LoginAction.UNAUTHORIZED_CODE){
+            } else if(code == HTTPInfo.UNAUTHORIZED_CODE){
                 Log.e("LOGIN ACTION", "The credentials are wrong.");
                 ERROR_MSG = "Please check your credentials.\nThese are incorrect.";
                 return true;

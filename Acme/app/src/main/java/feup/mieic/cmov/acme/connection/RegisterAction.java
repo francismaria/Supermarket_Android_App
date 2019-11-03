@@ -1,6 +1,11 @@
 package feup.mieic.cmov.acme.connection;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.provider.SyncStateContract;
+import android.security.KeyPairGeneratorSpec;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -8,27 +13,88 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.AlgorithmParameterSpec;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.security.auth.x500.X500Principal;
 
 public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
 
-    private static final String REGISTER_PATH = "http://10.0.2.2:8080/AcmeServer/acme/api/register";
+    private WeakReference<Context> weakActivity;
 
-    // HTTP response codes
-    private static final int SUCCESS_CODE = 200;
-    private static final int UNAUTHORIZED_CODE = 401;
+    // Security Keys
+    private PrivateKey pri;
+    private PublicKey pub;
+    private static final int KEY_SIZE = 512;
+    private static final String KEY_ALGO = "RSA";
+    private static final int CERT_SERIAL = 12121212;
+    private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
+
+    public RegisterAction(Context context){
+        weakActivity = new WeakReference<>(context);
+    }
 
     @Override
-    protected void onPreExecute(){}
+    protected void onPreExecute(){ }
+
+    private boolean generateKeyPair(String keyname) {
+
+        keyname = keyname + "_key";
+
+        try {
+            Calendar start = new GregorianCalendar();
+            Calendar end = new GregorianCalendar();
+            // set the end date to 20 years from now
+            end.add(Calendar.YEAR, 20);
+
+            KeyPairGenerator kgen = null;
+            kgen = KeyPairGenerator.getInstance(KEY_ALGO, ANDROID_KEYSTORE);
+
+            AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(this.weakActivity.get())
+                    .setKeySize(KEY_SIZE)
+                    .setAlias(keyname)
+                    .setSubject(new X500Principal("CN=" + keyname))
+                    .setSerialNumber(BigInteger.valueOf(CERT_SERIAL))
+                    .setStartDate(start.getTime())
+                    .setEndDate(end.getTime())
+                    .build();
+            kgen.initialize(spec);
+
+            KeyPair kp = kgen.generateKeyPair();
+            pri = kp.getPrivate();
+            pub = kp.getPublic();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     @Override
     protected Boolean doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
         //String username = params[0], password = params[1];
 
+        String username = "example";
+
+        // TODO: remove this from here??
+        if(!generateKeyPair(username))
+            return false;
+
+/*
         try {
-            URL url = new URL(RegisterAction.REGISTER_PATH);
+            URL url = new URL(HTTPInfo.REGISTER_PATH);
             JSONObject obj = new JSONObject();
             obj.put("username", "example");
             //obj.put("password", password);
@@ -48,19 +114,23 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
 
             int code = urlConnection.getResponseCode();
 
-            if (code == RegisterAction.SUCCESS_CODE) {
-                Log.i("LOGIN ACTION", "OK");
+            if (code == HTTPInfo.SUCCESS_CODE) {
+                Log.i("REGISTER ACTION", "OK");
             } else {
-                Log.i("LOGIN ACTION", "ERROR - username already exists");
+                Log.i("REGISTER ACTION", "ERROR - username already exists");
             }
         } catch(Exception e){
 
-        }
+        }*/
         return true;
     }
 
     @Override
-    protected void onPostExecute(Boolean error) {
-
+    protected void onPostExecute(Boolean success) {
+        if(success){
+            Log.e("KEYS", "ok");
+        } else {
+            Log.e("KEYS", "oERROR");
+        }
     }
 }
