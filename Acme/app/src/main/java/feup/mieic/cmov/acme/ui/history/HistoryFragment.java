@@ -50,7 +50,7 @@ public class HistoryFragment extends Fragment {
         items.add(new ItemModel("00002","450,12€", "21/10/2019"));
         items.add(new ItemModel("00001","450,12€", "21/10/2019"));
 
-        HistoryAdapter adapter = new HistoryAdapter(items);
+        HistoryAdapter adapter = new HistoryAdapter(items, this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(layoutManager);

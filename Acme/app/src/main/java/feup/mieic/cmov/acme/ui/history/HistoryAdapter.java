@@ -1,27 +1,32 @@
 package feup.mieic.cmov.acme.ui.history;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.ui.order.OrderFragment;
 
 public class HistoryAdapter extends RecyclerView.Adapter {
 
     private List<ItemModel> items;
+    private HistoryFragment fragmentParent;
 
-    public HistoryAdapter(List<ItemModel> items){
+    public HistoryAdapter(List<ItemModel> items, HistoryFragment fragment){
         this.items = items;
+        this.fragmentParent = fragment;
     }
 
     @NonNull
@@ -68,6 +73,19 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
         public void onClick(View view){
             Log.i("history_item:" , "clicked");
+
+            OrderFragment orderFragment = new OrderFragment();
+
+            Bundle args = new Bundle();
+            args.putString("data", "This data has sent to FragmentTwo");
+
+            orderFragment.setArguments(args);
+
+            FragmentTransaction transaction = fragmentParent.getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, orderFragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.addToBackStack("all history");
+            transaction.commit();
         }
     }
 }
