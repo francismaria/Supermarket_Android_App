@@ -33,7 +33,11 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((HistoryViewHolder) holder).bindView(items.get(position).getTotal());
+        String total = items.get(position).getTotal();
+        String date = items.get(position).getDate();
+        String id = "#" + items.get(position).getID();
+
+        ((HistoryViewHolder) holder).bindView(total, date, id);
     }
 
     @Override
@@ -45,18 +49,21 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
         private TextView dateView;
         private TextView totalView;
+        private TextView orderIDView;
 
         public HistoryViewHolder(View itemView){
             super(itemView);
             totalView = (TextView) itemView.findViewById(R.id.total_history);
             dateView = (TextView) itemView.findViewById(R.id.date_history);
+            orderIDView = (TextView) itemView.findViewById(R.id.order_id_history);
 
             itemView.setOnClickListener(this);
         }
 
-        public void bindView(String total){
+        public void bindView(String total, String date, String id){
             totalView.setText(total);
-            dateView.setText("02/10/2019");
+            dateView.setText(date);
+            orderIDView.setText(id);
         }
 
         public void onClick(View view){

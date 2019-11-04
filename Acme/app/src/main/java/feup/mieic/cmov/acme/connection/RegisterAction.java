@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
@@ -128,6 +129,13 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
+            try{
+                KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
+                ks.load(null);
+                KeyStore.Entry entry = ks.getEntry("example", null);
+            } catch(Exception e){
+
+            }
             Log.e("KEYS", "ok");
         } else {
             Log.e("KEYS", "oERROR");

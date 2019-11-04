@@ -41,9 +41,14 @@ public class HistoryFragment extends Fragment {
 
 
         List<ItemModel> items = new ArrayList<>();
-        items.add(new ItemModel("300€", "27/10/2019"));
-        items.add(new ItemModel("560,20€", "22/10/2019"));
-        items.add(new ItemModel("450,12€", "21/10/2019"));
+        items.add(new ItemModel("25408", "300€", "27/10/2019"));
+        items.add(new ItemModel("22012", "560,20€", "22/10/2019"));
+        items.add(new ItemModel("19034", "450,12€", "21/10/2019"));
+        items.add(new ItemModel("16790", "450,12€", "21/10/2019"));
+        items.add(new ItemModel("15402", "450,12€", "21/10/2019"));
+        items.add(new ItemModel("12313","450,12€", "21/10/2019"));
+        items.add(new ItemModel("00002","450,12€", "21/10/2019"));
+        items.add(new ItemModel("00001","450,12€", "21/10/2019"));
 
         HistoryAdapter adapter = new HistoryAdapter(items);
 
