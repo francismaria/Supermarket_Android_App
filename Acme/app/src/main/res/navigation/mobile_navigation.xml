@@ -41,9 +41,9 @@
         android:label="@string/contact_caption"
         tools:layout="@layout/fragment_contact" />
 
-    <fragment
+<!--    <fragment
         android:id="@+id/nav_help"
         android:name="feup.mieic.cmov.acme.ui.help.HelpFragment"
         android:label="@string/help_caption"
-        tools:layout="@layout/fragment_help" />
+        tools:layout="@layout/fragment_help" />-->
 </navigation>
