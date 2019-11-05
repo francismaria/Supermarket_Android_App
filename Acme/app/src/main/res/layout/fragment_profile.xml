@@ -40,87 +40,67 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="18sp"/>
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/profileNameCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_caption"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:paddingLeft="10sp"
-                    android:paddingRight="10sp">
+            <TextView
+                android:id="@+id/profileNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20sp"
+                android:text="TextView"
+                android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/profileNameCaption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/name_caption"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/profileUsernameCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/profileNameText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10sp"
-                        android:text="TextView"
-                        android:textSize="18sp"/>
-                </TableRow>
+            <TextView
+                android:id="@+id/profileUsernameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20sp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="18sp" />
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:paddingLeft="10sp"
-                    android:paddingRight="10sp">
+            <TextView
+                android:id="@+id/profileEmailCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email_caption"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/profileUsernameCaption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/username"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/profileEmailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20sp"
+                android:text="TextView"
+                android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/profileUsernameText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10sp"
-                        android:layout_weight="1"
-                        android:text="TextView"
-                        android:textSize="18sp"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:paddingLeft="10sp"
-                    android:paddingRight="10sp">
-
-                    <TextView
-                        android:id="@+id/profileEmailCaption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email_caption"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"/>
-
-                    <TextView
-                        android:id="@+id/profileEmailText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10sp"
-                        android:text="TextView"
-                        android:textSize="18sp"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </TableLayout>
         </LinearLayout>
     </ScrollView>
 
