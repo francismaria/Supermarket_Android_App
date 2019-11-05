@@ -87,15 +87,29 @@ public class RegisterAction {
 		return nextUUID;
 	}
 	
-	private void registerNewUser(RegisterRequest req) {
-		
+	private void registerNewUser(int UUID, RegisterRequest req) {
+		// CARD ID?? - a card needs first to be innserted in the database in order to associate it to acrd ID which will be associated with the user
+       String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
+       
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(INSERT_NEW_USER_QUERY);
+            pstmt.setInt(1, UUID);
+            pstmt.setString(2, req.getName());
+            pstmt.setString(3, req.getEmail());
+            pstmt.setString(4, req.getUsername());
+            pstmt.setString(5, req.getPassword());
+            pstmt.setInt(6, 1);
+            pstmt.setString(7, req.getPublicKey());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
-	public Response registerAction(String data) throws JSONException {
-		
+	public Response registerAction(String data) {
 		if(connection == null) 
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
@@ -118,7 +132,7 @@ public class RegisterAction {
 		if(newUUID == -1)
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
-		registerNewUser(req);
+		registerNewUser(newUUID, req);
 		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
 		
