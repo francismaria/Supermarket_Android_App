@@ -41,27 +41,23 @@ public class RegisterAction {
 	 * 
 	 * @param username
 	 * @return
+	 * @throws SQLException 
 	 */
-	private boolean uniqueUsername(String username) {
+	private boolean uniqueUsername(String username) throws SQLException {
 		
 		if(connection == null) return false;
 		
 		final String USERNAME_EXISTS_QUERY = "SELECT USERNAME FROM USERS WHERE USERNAME = ?";
 		
-		try {
-			PreparedStatement pStmt = connection.prepareStatement(USERNAME_EXISTS_QUERY);
-			pStmt.setString(1, username);
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			if(!rs.next()) 
-				return true;
-			return false;
-			
-		} catch (SQLException e) {
-			System.out.println("Error: " + e .toString());
-			return false;
-		}
+		PreparedStatement pStmt = connection.prepareStatement(USERNAME_EXISTS_QUERY);
+		pStmt.setString(1, username);
+		
+		ResultSet rs = pStmt.executeQuery();
+		
+		if(!rs.next()) 
+			return true;
+		return false;
+	
 	}
 
 	/**
@@ -91,14 +87,17 @@ public class RegisterAction {
 		return nextUUID;
 	}
 	
+	private void registerNewUser(RegisterRequest req) {
+		
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
 	public Response registerAction(String data) throws JSONException {
 		
-		if(connection == null) {
+		if(connection == null) 
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		}
 		
 		RegisterRequest req;
 		
@@ -108,14 +107,23 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 		
-		if(!uniqueUsername(req.getUsername())) {
-			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity("username must be unique").build();
+		try {
+			if(!uniqueUsername(req.getUsername()))
+				return Response.status(HTTPCodes.BAD_REQUEST).entity("username must be unique").build();
+		} catch (SQLException e) {
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
-		return Response.status(HTTPCodes.SUCCESS_CODE).entity(data).build();
+		int newUUID = getNewUserUUID();
+		if(newUUID == -1)
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		
+		registerNewUser(req);
+		
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
 		
 		/*
-		int newUUID = getNewUserUUID();
+		
 		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
 		*/
