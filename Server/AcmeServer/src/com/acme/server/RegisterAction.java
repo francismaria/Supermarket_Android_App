@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.acme.server.validation.RegisterRequest;
+
 /* ------------------------------------- *
  *			 REGISTER ACTION
  * ------------------------------------- */
@@ -98,16 +100,25 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 		
-		JSONObject objData = new JSONObject(data);
+		RegisterRequest req;
 		
-		if(!uniqueUsername((String) objData.get("username"))) {
-			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		try {
+			req = new RegisterRequest(data);
+		} catch (Exception e) {
+			return Response.status(HTTPCodes.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 		
+		if(!uniqueUsername(req.getUsername())) {
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity("username must be unique").build();
+		}
+		
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(data).build();
+		
+		/*
 		int newUUID = getNewUserUUID();
 		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
-		
+		*/
 		/*
 		JSONObject objData = new JSONObject(data);
 		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";

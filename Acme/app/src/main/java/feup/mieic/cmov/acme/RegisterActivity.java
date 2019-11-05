@@ -353,7 +353,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /** -------------------------------
-     *      REGISTER BUTTON LISTENER
+     *     REGISTER BUTTON LISTENER
      *  ------------------------------- */
 
     public void submitRegisterInformation(View view){
@@ -361,7 +361,8 @@ public class RegisterActivity extends AppCompatActivity {
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
             filledFieldsToast.show();
         } else {
-            String username = ((EditText)findViewById(R.id.registerUsername)).getText().toString(),
+            String name = ((EditText)findViewById(R.id.registerName)).getText().toString(),
+                    username = ((EditText)findViewById(R.id.registerUsername)).getText().toString(),
                     password = encryptedPasswdSHA256,
                     email = ((EditText)findViewById(R.id.registerEmail)).getText().toString(),
                     cardNr = ((EditText)findViewById(R.id.registerCardNr)).getText().toString(),

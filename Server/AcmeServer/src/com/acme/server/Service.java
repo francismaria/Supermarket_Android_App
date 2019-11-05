@@ -1,10 +1,13 @@
 package com.acme.server;
 
+import java.lang.annotation.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +19,8 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+
 
 @Path("/public")
 public class Service {
@@ -43,6 +48,17 @@ public class Service {
 		jsonObject.put("password", "123456");
  
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(jsonObject.toString()).build();
+	}
+	
+	@POST
+	@Produces("application/json")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response example(String json) throws JSONException {
+		
+		JSONObject obj = new JSONObject(json);
+		
+		
+		return Response.status(HTTPCodes.SUCCESS_CODE).entity(obj.toString()).build();
 	}
 
 }
