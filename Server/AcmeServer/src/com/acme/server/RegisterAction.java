@@ -89,7 +89,7 @@ public class RegisterAction {
 	}
 	
 	private void registerNewUser(int UUID, RegisterRequest req) {
-		// CARD ID?? - a card needs first to be innserted in the database in order to associate it to acrd ID which will be associated with the user
+		// CARD ID?? - a card needs first to be innserted in the database in order to associate it to a card ID which will be associated with the user
        String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
        
         try {
@@ -99,7 +99,7 @@ public class RegisterAction {
             pstmt.setString(3, req.getEmail());
             pstmt.setString(4, req.getUsername());
             pstmt.setString(5, req.getPassword());
-            pstmt.setInt(6, 1);
+            pstmt.setInt(6, 1);			// hardcoded value - the card must be added first in the DB
             pstmt.setString(7, req.getPublicKey());
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -115,16 +115,20 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
 		RegisterRequest req;
+		JSONObject response = new JSONObject();
 		
 		try {
 			req = new RegisterRequest(data);
 		} catch (Exception e) {
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(e.getMessage()).build();
+			response.put("msg", e.getMessage());
+			return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
 		}
 		
 		try {
-			if(!uniqueUsername(req.getUsername()))
-				return Response.status(HTTPCodes.BAD_REQUEST).entity("username must be unique").build();
+			if(!uniqueUsername(req.getUsername())) {
+				response.put("msg", "username must be unique");
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
+			}
 		} catch (SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
