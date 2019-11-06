@@ -107,6 +107,10 @@ public class RegisterAction {
         }
 	}
 	
+	//TODO: In response, the server should generate a unique user identifier in the format of a UUID (16- byte value) 
+	// and transmit it back to the app, that should store it. Together with the previous id, the server sends also the supermarket 
+	// public key, used to read the product labels.
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")

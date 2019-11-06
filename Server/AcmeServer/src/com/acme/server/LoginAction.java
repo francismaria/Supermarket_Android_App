@@ -32,16 +32,6 @@ public class LoginAction {
 		connection = (new DBConnection()).getConnection();
 	}
 	
-	/**
-	 * Checks if the JSON body comes according to the expected JSON schema.
-	 * @return
-	 */
-	private boolean schemaMatches(JSONObject body) {
-		return true;
-	}
-
-	
-	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")

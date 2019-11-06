@@ -16,10 +16,10 @@ public class RegisterRequest implements RequestValidation {
 	
 	// Validates the request
 	private boolean valid;
+	private String errorMsg;
 	
 	private JSONObject obj;
 	
-	private String errorMsg;
 	
 	// Name
 	private void setName() throws Exception {
