@@ -35,10 +35,11 @@
                 android:id="@+id/titleStr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="Personal Information"
                 android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:textSize="18sp"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/profileNameCaption"
@@ -100,6 +101,87 @@
                 android:layout_marginBottom="20sp"
                 android:text="TextView"
                 android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/profileInfoCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Credit Card Information"
+                android:layout_marginBottom="30dp"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/profileCCNr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:text="@string/credit_card_nr_caption" />
+
+            <TextView
+                android:id="@+id/profileCCNrText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20sp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20sp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profileCCExpDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@string/credit_card_expdate_caption" />
+
+                    <TextView
+                        android:id="@+id/profileCCExpDateText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/profileCC_CCV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@string/credit_card_ccv_caption" />
+
+                    <TextView
+                        android:id="@+id/profileCC_CCVText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
