@@ -9,6 +9,8 @@ public interface HTTPInfo {
 
     String REGISTER_PATH = "http://10.0.2.2:8080/AcmeServer/api/register";
 
+    String PROFILE_PATH = "http://10.0.2.2:8080/AcmeServer/api/profile";
+
     // HTTP response codes
 
     int SUCCESS_CODE = 200;

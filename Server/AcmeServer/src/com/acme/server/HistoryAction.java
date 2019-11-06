@@ -27,7 +27,6 @@ public class HistoryAction {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response historyAction(String data) {
-		
 		if(connection == null) 
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
