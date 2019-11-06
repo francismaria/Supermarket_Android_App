@@ -117,11 +117,11 @@ public class RegisterAction {
 		RegisterRequest req;
 		JSONObject response = new JSONObject();
 		
-		try {
-			req = new RegisterRequest(data);
-		} catch (Exception e) {
-			response.put("msg", e.getMessage());
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
+		req = new RegisterRequest(data);
+		
+		if(!req.isValid()) {
+			//response.put("msg", );
+			return Response.status(HTTPCodes.BAD_REQUEST).entity(req.getErrorMsg()).build();
 		}
 		
 		try {
@@ -138,7 +138,6 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
 		registerNewUser(newUUID, req);
-		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
 	}
 }

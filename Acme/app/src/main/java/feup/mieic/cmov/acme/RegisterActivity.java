@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URL;
 
 import feup.mieic.cmov.acme.connection.RegisterAction;
@@ -361,6 +364,8 @@ public class RegisterActivity extends AppCompatActivity {
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
             filledFieldsToast.show();
         } else {
+            JSONObject reqBody = new JSONObject();
+
             String name = ((EditText)findViewById(R.id.registerName)).getText().toString(),
                     username = ((EditText)findViewById(R.id.registerUsername)).getText().toString(),
                     password = encryptedPasswdSHA256,
@@ -369,7 +374,21 @@ public class RegisterActivity extends AppCompatActivity {
                     cardExpDate = ((EditText)findViewById(R.id.registerExpDate)).getText().toString(),
                     cardCCV = ((EditText)findViewById(R.id.registerCCV)).getText().toString();
 
-            new RegisterAction(RegisterActivity.this).execute();
+            try {
+                reqBody.put("name", name);
+                reqBody.put("username", username);
+                reqBody.put("password", password);
+                reqBody.put("email", email);
+                reqBody.put("cardNr", cardNr);
+                reqBody.put("cardExpDate", cardExpDate);
+                reqBody.put("cardCCV", cardCCV);
+                reqBody.put("publicKey", "EXAMPLE??????");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            new RegisterAction(RegisterActivity.this).execute(reqBody);
         }
     }
 

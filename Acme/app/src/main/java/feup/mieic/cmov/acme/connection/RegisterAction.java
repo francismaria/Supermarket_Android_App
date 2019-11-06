@@ -1,6 +1,8 @@
 package feup.mieic.cmov.acme.connection;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.provider.SyncStateContract;
 import android.security.KeyPairGeneratorSpec;
@@ -30,7 +32,9 @@ import java.util.GregorianCalendar;
 
 import javax.security.auth.x500.X500Principal;
 
-public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
+import feup.mieic.cmov.acme.HomeActivity;
+
+public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
     private WeakReference<Context> weakActivity;
 
@@ -83,22 +87,19 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
     }
 
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected Boolean doInBackground(JSONObject... params) {
         HttpURLConnection urlConnection = null;
         //String username = params[0], password = params[1];
 
         String username = "example";
 
         // TODO: remove this from here??
-        if(!generateKeyPair(username))
-            return false;
+        /*if(!generateKeyPair(username))
+            return false;*/
 
-/*
+
         try {
             URL url = new URL(HTTPInfo.REGISTER_PATH);
-            JSONObject obj = new JSONObject();
-            obj.put("username", "example");
-            //obj.put("password", password);
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
@@ -108,7 +109,7 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
             urlConnection.setDoInput(true);
 
             OutputStream os = urlConnection.getOutputStream();
-            os.write(obj.toString().getBytes("UTF-8"));
+            os.write(params[0].toString().getBytes("UTF-8"));
             os.close();
 
             Log.i("REGISTER ACTION", "request POST sent");
@@ -118,11 +119,19 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
             if (code == HTTPInfo.SUCCESS_CODE) {
                 Log.i("REGISTER ACTION", "OK");
             } else {
-                Log.i("REGISTER ACTION", "ERROR - username already exists");
+                Log.i("REGISTER ACTION", "ERROR " + Integer.toString(code));
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                String line;
+
+                while ((line = rd.readLine()) != null) {
+                    JSONObject jsonObject = new JSONObject(line);
+                    Log.i("LOGIN", jsonObject.toString());
+                }
             }
         } catch(Exception e){
 
-        }*/
+        }
         return true;
     }
 
@@ -137,6 +146,7 @@ public class RegisterAction extends AsyncTask<String, Void, Boolean>  {
 
             }
             Log.e("KEYS", "ok");
+            weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
         } else {
             Log.e("KEYS", "oERROR");
         }

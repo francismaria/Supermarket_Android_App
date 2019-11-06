@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 public class RegisterRequest implements RequestValidation {
 
+	// Request parameters
 	private String name;
 	private String username;
 	private String password;
@@ -13,6 +14,7 @@ public class RegisterRequest implements RequestValidation {
 	private String cardCCV; 
 	private String publicKey;
 	
+	// Validates the request
 	private boolean valid;
 	
 	private JSONObject obj;
@@ -92,19 +94,23 @@ public class RegisterRequest implements RequestValidation {
 		this.publicKey = obj.getString("publicKey");
 	}
 	
-	
-	private void setKeys() throws Exception {
-		setName();
-		setUsername();
-		setPassword();
-		setEmail();
-		setCardNr();
-		setCardExpDate();
-		setCardCCV();
-		setPublicKey();
+	private void setKeys() {
+		try {
+			setName();
+			setUsername();
+			setPassword();
+			setEmail();
+			setCardNr();
+			setCardExpDate();
+			setCardCCV();
+			setPublicKey();
+		} catch(Exception e) {
+			this.errorMsg = e.getMessage();
+			this.valid = false;
+		}
 	}
 	
-	public RegisterRequest(String req) throws Exception {
+	public RegisterRequest(String req) {
 		this.valid = true;
 		this.obj = new JSONObject(req);
 		this.errorMsg = "";
