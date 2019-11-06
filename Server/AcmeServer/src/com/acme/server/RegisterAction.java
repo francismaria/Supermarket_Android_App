@@ -21,9 +21,10 @@ import com.acme.server.validation.RegisterRequest;
  *			 REGISTER ACTION
  * ------------------------------------- */
 
-/*?
- * curl -d '{"username":"username", "password":"value2"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/register
-
+/*
+ * CURL EXAMPLE - testing
+ * 
+ * curl -d '{"username":"username", "password":"francis", "name":"francisco", "email":"example", "cardNr":"1234", "cardExpDate":"12/12", "cardCCV":"123", "publicKey":"asdaksdlakdlak1231ewdda"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/register
  */
 
 @Path("/register")
