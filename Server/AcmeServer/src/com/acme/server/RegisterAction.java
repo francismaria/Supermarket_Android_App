@@ -135,29 +135,5 @@ public class RegisterAction {
 		registerNewUser(newUUID, req);
 		
 		return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
-		
-		/*
-		
-		
-		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
-		*/
-		/*
-		JSONObject objData = new JSONObject(data);
-		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
-		
-		try {
-			PreparedStatement pStmt = connection.prepareStatement(stmt);
-			pStmt.setString(1, objData.getString("username"));
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			if(!rs.next()) {
-				return Response.status(Service.UNAUTHORIZED_CODE).entity(null).build();
-			}
-		} catch (SQLException e) {
-			return Response.status(Service.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		}
-		*/
-		//return Response.status(Service.SUCCESS_CODE).entity(null).build();
 	}
 }
