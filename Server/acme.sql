@@ -61,6 +61,7 @@ CREATE TABLE TRANSACTIONS(
   ID      INTEGER   PRIMARY KEY,
   USER_ID INTEGER   NOT NULL,
   TIME    TEXT      NOT NULL,
+  /*put voucher in here -> the voucher is applied to the whole transaction and not only in a product*/
   FOREIGN KEY(USER_ID) REFERENCES USERS(UUID) ON DELETE CASCADE
 );
 

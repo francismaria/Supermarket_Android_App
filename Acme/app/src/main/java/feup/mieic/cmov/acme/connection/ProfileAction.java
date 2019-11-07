@@ -3,8 +3,6 @@ package feup.mieic.cmov.acme.connection;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import feup.mieic.cmov.acme.ui.profile.ProfileViewModel;
 

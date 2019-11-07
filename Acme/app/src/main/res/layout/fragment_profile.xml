@@ -58,7 +58,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20sp"
-                android:text="TextView"
+                android:text=""
                 android:textSize="18sp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20sp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text=""
                 android:textSize="18sp" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20sp"
-                android:text="TextView"
+                android:text=""
                 android:textSize="18sp" />
 
 
@@ -128,7 +128,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20sp"
-                android:text="TextView"
+                android:text=""
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -156,7 +156,7 @@
                         android:id="@+id/profileCCExpDateText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=""
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -177,7 +177,7 @@
                         android:id="@+id/profileCC_CCVText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=""
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
