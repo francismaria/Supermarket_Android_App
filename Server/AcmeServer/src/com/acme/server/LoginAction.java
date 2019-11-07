@@ -19,6 +19,8 @@ import org.hibernate.validator.constraints.Length;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.acme.server.database.DBConnection;
+
 /* ------------------------------------- *
  *			   LOGIN ACTION
  * ------------------------------------- */

@@ -1,4 +1,4 @@
-package com.acme.server;
+package com.acme.server.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

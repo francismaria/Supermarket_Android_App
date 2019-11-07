@@ -14,7 +14,7 @@ public class ContactRequest extends Request {
 		UUID = obj.getInt("UUID");
 	}
 	
-	private void setName() throws Exception {
+	private void setMsg() throws Exception {
 		if(!obj.has("msg")) {
 			throw new Exception("msg was not specified");
 		}
@@ -24,7 +24,7 @@ public class ContactRequest extends Request {
 	private void setKeys() {
 		try {
 			setUUID();
-			setName();
+			setMsg();
 		} catch (Exception e) {
 			setAsInvalid(e.getMessage());
 		}

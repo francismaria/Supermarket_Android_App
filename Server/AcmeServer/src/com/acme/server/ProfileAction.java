@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
+import com.acme.server.database.DBConnection;
 import com.acme.server.validation.ProfileRequest;
 
 /* ------------------------------------- *
@@ -104,7 +105,9 @@ public class ProfileAction {
 			// response validation
 			if(res == null) {
 				closeConnection();
-				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+				res = new JSONObject();
+				res.put("msg", "UUID doesn't exist");
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(res.toString()).build();
 			}
 			
 			closeConnection();

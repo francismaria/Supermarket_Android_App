@@ -20,6 +20,8 @@ import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.acme.server.database.DBConnection;
+
 
 
 @Path("/public")
