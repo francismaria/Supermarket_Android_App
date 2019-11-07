@@ -3,6 +3,8 @@ package feup.mieic.cmov.acme.connection;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,10 +13,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+
+import feup.mieic.cmov.acme.ui.profile.ProfileViewModel;
 
 public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
 
     private JSONObject req;
+    private JSONObject res;
+
+    private ProfileViewModel model;
+
+    public ProfileAction(ProfileViewModel model){
+        this.model = model;
+    }
 
     @Override
     protected void onPreExecute(){ }
@@ -23,7 +35,7 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
         req = new JSONObject();
 
         try {
-            req.put("UUID", 1);
+            req.put("UUID", "1");
             req.put("publicKey", "example???");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -63,8 +75,8 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
                 String line;
 
                 while ((line = rd.readLine()) != null) {
-                    JSONObject jsonObject = new JSONObject(line);
-                    Log.i("PROFILE", jsonObject.toString());
+                    res = new JSONObject(line);
+                    Log.i("PROFILE", res.toString());
                 }
             } else {
                 return false;
@@ -77,6 +89,20 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-
+        if(success){
+            try {
+                model.setName(res.getString("name"));
+                model.setUsername(res.getString("username"));
+                model.setEmail(res.getString("email"));
+                model.setCCNumber(res.getString("cardNr"));
+                model.setCCV(res.getString("cardCCV"));
+                model.setCCExpDate(res.getString("cardExpDate"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                // TODO - show toast saying that there was an internal error -> please reload??
+            }
+        } else {
+            // TODO - show toast saying that there was an internal error -> please reload??
+        }
     }
 }

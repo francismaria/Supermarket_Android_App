@@ -20,6 +20,8 @@ import com.acme.server.validation.ProfileRequest;
  *			 PROFILE ACTION
  * ------------------------------------- */
 
+// curl -d '{"UUID":"1" ,"publicKey":"asdaksdlakdlak1231ewdda"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/profile
+
 @Path("/profile")
 public class ProfileAction {
 	

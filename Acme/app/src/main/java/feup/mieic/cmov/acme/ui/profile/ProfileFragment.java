@@ -23,12 +23,52 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
-        final TextView textView = root.findViewById(R.id.text_gallery);
+        final TextView profileName = root.findViewById(R.id.profileNameText);
+        final TextView profileUsername = root.findViewById(R.id.profileUsernameText);
+        final TextView profileEmail = root.findViewById(R.id.profileEmailText);
+        final TextView profileCCNr = root.findViewById(R.id.profileCCNrText);
+        final TextView profileCCV = root.findViewById(R.id.profileCC_CCVText);
+        final TextView profileExpDate = root.findViewById(R.id.profileCCExpDateText);
 
-        profileViewModel.getInformation().observe(this, new Observer<String>() {
+        profileViewModel.getNameTextView().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                profileName.setText(s);
+            }
+        });
+
+        profileViewModel.getUsernameTextView().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                profileUsername.setText(s);
+            }
+        });
+
+        profileViewModel.getEmailTextView().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                profileEmail.setText(s);
+            }
+        });
+
+        profileViewModel.getCCNumberTextView().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                profileCCNr.setText(s);
+            }
+        });
+
+        profileViewModel.getCCVTextView().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                profileCCV.setText(s);
+            }
+        });
+
+        profileViewModel.getExpDateTextView().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                profileExpDate.setText(s);
             }
         });
 
