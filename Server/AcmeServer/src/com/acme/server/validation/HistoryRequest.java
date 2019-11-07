@@ -1,18 +1,13 @@
 package com.acme.server.validation;
 
-
 import org.json.JSONObject;
 
-public class HistoryRequest implements RequestValidation {
+public class HistoryRequest extends Request {
 	
 	private int UUID;
 	private String publicKey;
 	
 	private JSONObject obj;
-	
-	// Validates the request
-	private boolean valid;
-	private String errorMsg;
 	
 	private void setUUID() {
 		this.UUID = obj.getInt("UUID");
@@ -23,13 +18,13 @@ public class HistoryRequest implements RequestValidation {
 			setUUID();
 			//setPublicKey();
 		} catch(Exception e) {
-			this.valid = false;
+			setAsInvalid(e.getMessage());
 		}
 	}
 	
 	public HistoryRequest(String req){
-		this.valid = true;
-		this.errorMsg = "";
+		setValid(true);
+		setErrorMsg("");
 		this.obj = new JSONObject(req);
 		setKeys();
 	}
@@ -41,15 +36,4 @@ public class HistoryRequest implements RequestValidation {
 	public String getPublicKey() {
 		return publicKey;
 	}
-
-	@Override
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	@Override
-	public boolean isValid() {
-		return valid;
-	}
-
 }

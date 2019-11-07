@@ -32,6 +32,10 @@ public class ProfileAction {
 		connection = (new DBConnection()).getConnection();
 	}
 	
+	private void closeConnection() throws SQLException {
+		connection.close();
+	}
+	
 	private void getCreditCardInfo(int cardID) throws SQLException {
 		final String stmt = "SELECT NUMBER, EXP_DATE, CCV FROM CARDS WHERE ID = ?";
 		
@@ -70,15 +74,10 @@ public class ProfileAction {
 		getCreditCardInfo(rs.getInt("CARD_ID"));
 	}
 	
-	private void constructResponse(ProfileRequest req) {
+	private void constructResponse(ProfileRequest req) throws SQLException {
 		res = new JSONObject();
+		getPersonalInfo(req);
 		
-		try {
-			getPersonalInfo(req);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			res = null;
-		}
 	}
 	
 	@POST
@@ -90,17 +89,28 @@ public class ProfileAction {
 		
 		// request validation
 		ProfileRequest req = new ProfileRequest(data);
-		if(!req.isValid()) {
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(req.getErrorMsg()).build();
-		}
 		
-		// response creation
-		constructResponse(req);
-		
-		// response validation
-		if(res == null)
+		try {
+			if(!req.isValid()) {
+				res = new JSONObject();
+				res.put("msg", req.getErrorMsg());
+				closeConnection();
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(req.getErrorMsg()).build();
+			}
+			
+			// response creation
+			constructResponse(req);
+			
+			// response validation
+			if(res == null) {
+				closeConnection();
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			}
+			
+			closeConnection();
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
+		} catch(SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		
-		return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
+		}
 	}
 }

@@ -2,40 +2,48 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
-public class ProfileRequest extends Request{
+public class ContactRequest extends Request {
 	private int UUID;
-	private String publicKey;
-	
+	private String msg;
 	private JSONObject obj;
 	
 	private void setUUID() throws Exception {
 		if(!obj.has("UUID")) {
 			throw new Exception("UUID was not specified");
 		}
-		this.UUID = obj.getInt("UUID");
+		UUID = obj.getInt("UUID");
+	}
+	
+	private void setName() throws Exception {
+		if(!obj.has("msg")) {
+			throw new Exception("msg was not specified");
+		}
+		msg = obj.getString("msg");
 	}
 	
 	private void setKeys() {
 		try {
 			setUUID();
-			//setPublicKey();
-		} catch(Exception e) {
+			setName();
+		} catch (Exception e) {
 			setAsInvalid(e.getMessage());
 		}
 	}
 	
-	public ProfileRequest(String req){
+	public ContactRequest(String req) {
 		setValid(true);
 		setErrorMsg("");
-		this.obj = new JSONObject(req);
+		obj = new JSONObject(req);
+		
 		setKeys();
 	}
-	
+
 	public int getUUID() {
 		return UUID;
 	}
 	
-	public String getPublicKey() {
-		return publicKey;
+	public String getMsg() {
+		return msg;
 	}
+	
 }
