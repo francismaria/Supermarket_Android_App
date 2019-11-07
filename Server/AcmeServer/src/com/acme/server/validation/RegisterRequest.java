@@ -2,7 +2,7 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
-public class RegisterRequest implements RequestValidation {
+public class RegisterRequest extends Request {
 
 	// Request parameters
 	private String name;
@@ -14,17 +14,12 @@ public class RegisterRequest implements RequestValidation {
 	private String cardCCV; 
 	private String publicKey;
 	
-	// Validates the request
-	private boolean valid;
-	private String errorMsg;
-	
 	private JSONObject obj;
 	
 	
 	// Name
 	private void setName() throws Exception {
 		if(!obj.has("name")) {
-			this.valid = false;
 			throw new Exception("name was not specified.");
 		}
 		this.name = obj.getString("name");
@@ -33,7 +28,6 @@ public class RegisterRequest implements RequestValidation {
 	// Username
 	private void setUsername() throws Exception {
 		if(!obj.has("username")) {
-			this.valid = false;
 			throw new Exception("username was not specified.");
 		}
 		this.username = obj.getString("username");
@@ -42,7 +36,6 @@ public class RegisterRequest implements RequestValidation {
 	// Password
 	private void setPassword() throws Exception {
 		if(!obj.has("password")) {
-			this.valid = false;
 			throw new Exception("password was not specified.");
 		}
 		this.password = obj.getString("password");
@@ -51,7 +44,6 @@ public class RegisterRequest implements RequestValidation {
 	// Email
 	private void setEmail() throws Exception {
 		if(!obj.has("email")) {
-			this.valid = false;
 			throw new Exception("email was not specified.");
 		}
 		this.email = obj.getString("email");
@@ -60,7 +52,6 @@ public class RegisterRequest implements RequestValidation {
 	// CardNr
 	private void setCardNr() throws Exception {
 		if(!obj.has("cardNr")) {
-			this.valid = false;
 			throw new Exception("card nr was not specified.");
 		}
 		this.cardNr = obj.getString("cardNr");
@@ -69,7 +60,6 @@ public class RegisterRequest implements RequestValidation {
 	// Card Exp Date
 	private void setCardExpDate() throws Exception {
 		if(!obj.has("cardExpDate")) {
-			this.valid = false;
 			throw new Exception("username was not specified.");
 		}
 		this.cardExpDate = obj.getString("cardExpDate");
@@ -78,7 +68,6 @@ public class RegisterRequest implements RequestValidation {
 	// Card CCV
 	private void setCardCCV() throws Exception {
 		if(!obj.has("cardCCV")) {
-			this.valid = false;
 			throw new Exception("username was not specified.");
 		}
 		this.cardCCV = obj.getString("cardCCV");
@@ -87,8 +76,6 @@ public class RegisterRequest implements RequestValidation {
 	// Public Key
 	private void setPublicKey() throws Exception {
 		if(!obj.has("publicKey")) {
-			this.valid = false;
-			
 			throw new Exception("username was not specified.");
 		}
 		this.publicKey = obj.getString("publicKey");
@@ -105,15 +92,14 @@ public class RegisterRequest implements RequestValidation {
 			setCardCCV();
 			setPublicKey();
 		} catch(Exception e) {
-			this.errorMsg = e.getMessage();
-			this.valid = false;
+			setAsInvalid(e.getMessage());
 		}
 	}
 	
 	public RegisterRequest(String req) {
-		this.valid = true;
+		setValid(true);
+		setErrorMsg("");
 		this.obj = new JSONObject(req);
-		this.errorMsg = "";
 		setKeys();
 	}
 	
@@ -148,15 +134,4 @@ public class RegisterRequest implements RequestValidation {
 	public String getPublicKey() {
 		return publicKey;
 	}
-	
-	@Override
-	public boolean isValid() {
-		return valid;
-	}
-
-	@Override
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
 }

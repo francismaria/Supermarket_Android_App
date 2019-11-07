@@ -36,6 +36,10 @@ public class RegisterAction {
 		connection = (new DBConnection()).getConnection();
 	}
 	
+	private void closeConnection() throws SQLException {
+			connection.close();
+	}
+	
 	/**
 	 * Checks if the username of the new user to be registered is
 	 * or not unique.
@@ -123,25 +127,31 @@ public class RegisterAction {
 		
 		req = new RegisterRequest(data);
 		
-		if(!req.isValid()) {
-			//response.put("msg", );
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(req.getErrorMsg()).build();
-		}
-		
 		try {
+			if(!req.isValid()) {
+				closeConnection();
+				response.put("msg", req.getErrorMsg());
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
+			}
+		
 			if(!uniqueUsername(req.getUsername())) {
+				closeConnection();
 				response.put("msg", "username must be unique");
 				return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
 			}
+			
+			int newUUID = getNewUserUUID();
+			if(newUUID == -1) {
+				closeConnection();
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			}
+			
+			registerNewUser(newUUID, req);
+			
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
+			
 		} catch (SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
-		
-		int newUUID = getNewUserUUID();
-		if(newUUID == -1)
-			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		
-		registerNewUser(newUUID, req);
-		return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
 	}
 }
