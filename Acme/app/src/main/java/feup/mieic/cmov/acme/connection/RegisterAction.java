@@ -131,6 +131,10 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
             }
         } catch(Exception e){
             return false;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
         return true;
     }

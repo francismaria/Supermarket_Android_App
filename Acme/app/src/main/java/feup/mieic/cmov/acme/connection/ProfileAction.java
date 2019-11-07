@@ -80,6 +80,10 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
             }
         } catch(Exception e){
             return false;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
         return true;
     }
