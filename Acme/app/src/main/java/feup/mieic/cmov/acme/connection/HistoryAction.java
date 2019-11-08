@@ -8,15 +8,17 @@ import androidx.lifecycle.ViewModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import feup.mieic.cmov.acme.ui.contact.ContactViewModel;
 import feup.mieic.cmov.acme.ui.history.HistoryViewModel;
 
 public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
 
+    private JSONObject res;
     private JSONObject req;
     private HistoryViewModel model;
 
@@ -66,6 +68,13 @@ public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
 
             if (code == HTTPInfo.SUCCESS_CODE) {
                 Log.i("HISTORY ACTION", "OK");
+                BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                String line;
+
+                while ((line = rd.readLine()) != null) {
+                    res = new JSONObject(line);
+                    Log.i("PROFILE", res.toString());
+                }
             } else {
                 return false;
             }
