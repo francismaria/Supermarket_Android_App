@@ -28,6 +28,10 @@ public class ContactAction {
 		connection = (new DBConnection()).getConnection();
 	}
 	
+	private void closeConnection() throws SQLException {
+		connection.close();
+	}
+	
 	private String getUserEmail(ContactRequest req) throws Exception {
 		final String stmt = "SELECT EMAIL FROM USERS WHERE UUID = ?";
 		
@@ -51,20 +55,28 @@ public class ContactAction {
 		
 		ContactRequest req = new ContactRequest(data);
 		
-		if(!req.isValid()) {
-			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		}
-		
 		try {
-			String userEmail = getUserEmail(req);
-		} catch(SQLException e) {
-			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		} catch(Exception e) {
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(null).build();
-		}
+			if(!req.isValid()) {
+				closeConnection();
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			}
 			
-		// send email to user
-		
-		return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
+			try {
+				String userEmail = getUserEmail(req);
+			} catch(SQLException e) {
+				closeConnection();
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+			} catch(Exception e) {
+				closeConnection();
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(null).build();
+			}
+				
+			// send email to user
+			
+			closeConnection();
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
+		} catch(Exception e) {
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
 	}
 }
