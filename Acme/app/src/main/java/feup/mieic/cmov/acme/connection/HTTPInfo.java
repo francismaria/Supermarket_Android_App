@@ -13,6 +13,8 @@ public interface HTTPInfo {
 
     String CONTACT_PATH = "http://10.0.2.2:8080/AcmeServer/api/contact";
 
+    String HISTORY_PATH = "http://10.0.2.2:8080/AcmeServer/api/history";
+
     // HTTP response codes
 
     int SUCCESS_CODE = 200;

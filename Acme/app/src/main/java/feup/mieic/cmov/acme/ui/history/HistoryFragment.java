@@ -21,22 +21,18 @@ import feup.mieic.cmov.acme.R;
 
 public class HistoryFragment extends Fragment {
 
-    //private HistoryViewModel historyViewModel;
+    private HistoryViewModel historyViewModel;
 
 
-    //historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
-        /*final TextView textView = root.findViewById(R.id.text_slideshow);
+    //final TextView textView = root.findViewById(R.id.text_slideshow);
 
-        historyViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_history, container, false);
+        historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
 
+        View root = inflater.inflate(R.layout.fragment_history, container, false);
+/*
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_history);
 
 
@@ -53,10 +49,18 @@ public class HistoryFragment extends Fragment {
         HistoryAdapter adapter = new HistoryAdapter(items, this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(adapter);
+        historyViewModel.getText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                //
+                //recyclerView.setLayoutManager(layoutManager);
 
+                //recyclerView.setAdapter(adapter);
+            }
+        });
+*/
         return root;
     }
+
 }
