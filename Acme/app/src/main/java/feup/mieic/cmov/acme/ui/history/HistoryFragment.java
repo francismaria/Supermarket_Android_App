@@ -44,6 +44,8 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+
+        // TODO : pass this to the observer function to ensure that there are no memory leaks
         final RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_history);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
 

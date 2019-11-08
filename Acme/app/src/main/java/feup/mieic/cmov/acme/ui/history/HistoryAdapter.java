@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.ui.order.OrderFragment;
@@ -81,10 +82,10 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
             orderFragment.setArguments(args);
 
-            FragmentTransaction transaction = fragmentParent.getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = Objects.requireNonNull(fragmentParent.getActivity()).getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_container, orderFragment);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.addToBackStack("all history");
+            transaction.addToBackStack(null);
             transaction.commit();
         }
     }
