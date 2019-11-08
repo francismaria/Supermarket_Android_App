@@ -24,6 +24,8 @@ public class HistoryAction {
 	
 	//private boolean publicKeyMatches() {}
 	
+	// String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date()); -> gets current date in the specific format
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
