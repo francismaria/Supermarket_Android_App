@@ -60,7 +60,7 @@ public class ContactAction {
 		} catch(SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		} catch(Exception e) {
-			return Response.status(HTTPCodes.BAD_REQUEST).entity("no uuid").build();
+			return Response.status(HTTPCodes.BAD_REQUEST).entity(null).build();
 		}
 			
 		// send email to user

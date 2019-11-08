@@ -22,7 +22,6 @@ public class ProfileFragment extends Fragment {
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
         final TextView profileName = root.findViewById(R.id.profileNameText);
         final TextView profileUsername = root.findViewById(R.id.profileUsernameText);
         final TextView profileEmail = root.findViewById(R.id.profileEmailText);
