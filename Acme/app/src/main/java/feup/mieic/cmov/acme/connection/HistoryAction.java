@@ -92,7 +92,12 @@ public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
-
+            try {
+                model.setRequestResult(res.getJSONArray("items"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                model.setRequestResult(null);
+            }
         } else {
             model.setRequestResult(null);
         }

@@ -13,7 +13,7 @@ public class ItemModel {
     }
 
     public String getTotal() {
-        return total;
+        return total + "€";
     }
 
     public String getDate(){
