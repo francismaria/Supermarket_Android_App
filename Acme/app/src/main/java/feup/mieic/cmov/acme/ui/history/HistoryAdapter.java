@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,8 +27,18 @@ public class HistoryAdapter extends RecyclerView.Adapter {
     private HistoryFragment fragmentParent;
 
     public HistoryAdapter(List<ItemModel> items, HistoryFragment fragment){
-        this.items = items;
+        if(items == null){
+            this.items = new ArrayList<ItemModel>();
+        } else {
+            this.items = items;
+        }
         this.fragmentParent = fragment;
+    }
+
+    public void updateItemsList(List<ItemModel> items){
+        this.items.clear();
+        this.items.addAll(items);
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -59,9 +70,9 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
         public HistoryViewHolder(View itemView){
             super(itemView);
-            totalView = (TextView) itemView.findViewById(R.id.total_history);
-            dateView = (TextView) itemView.findViewById(R.id.date_history);
-            orderIDView = (TextView) itemView.findViewById(R.id.order_id_history);
+            totalView = itemView.findViewById(R.id.total_history);
+            dateView = itemView.findViewById(R.id.date_history);
+            orderIDView = itemView.findViewById(R.id.order_id_history);
 
             itemView.setOnClickListener(this);
         }

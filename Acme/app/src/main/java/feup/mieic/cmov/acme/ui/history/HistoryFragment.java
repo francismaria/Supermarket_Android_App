@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,7 +34,7 @@ public class HistoryFragment extends Fragment {
         initToast();
         historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
 
-        View root = inflater.inflate(R.layout.fragment_history, container, false);
+        final View root = inflater.inflate(R.layout.fragment_history, container, false);
 
         historyViewModel.getError().observe(this, new Observer<String>() {
             @Override
@@ -46,17 +45,21 @@ public class HistoryFragment extends Fragment {
 
 
         // TODO : pass this to the observer function to ensure that there are no memory leaks
-        final RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view_history);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+
+
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_history);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(HistoryFragment.this.getActivity());
+        final HistoryAdapter adapter = new HistoryAdapter(historyViewModel.getItems(), HistoryFragment.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
 
         historyViewModel.getLoad().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean loadFinished) {
 
                 if(loadFinished){
-                    HistoryAdapter adapter = new HistoryAdapter(historyViewModel.getItems(), HistoryFragment.this);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
+                    adapter.updateItemsList(historyViewModel.getItems());
                 }
             }
         });
