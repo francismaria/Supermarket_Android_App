@@ -82,6 +82,11 @@ CREATE TABLE HISTORY(
   PRIMARY KEY(TRANSACTION_ID, PRODUCT_ID)
 );
 
+-- TODO
+-- TRIGGER : Update product stock
+
+
+
 -- TRIGGER : Updates the total cost of the transaction upon insertion of a new product to the history
 
 CREATE TRIGGER update_transaction_total_cost
