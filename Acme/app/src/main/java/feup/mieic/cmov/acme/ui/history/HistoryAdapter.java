@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +51,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String total = items.get(position).getTotal();
         String date = items.get(position).getDate();
-        String id = "#" + items.get(position).getID();
+        String id = items.get(position).getID();
 
         ((HistoryViewHolder) holder).bindView(total, date, id);
     }
@@ -68,8 +67,11 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         private TextView totalView;
         private TextView orderIDView;
 
+        private int orderID;
+
         public HistoryViewHolder(View itemView){
             super(itemView);
+            orderID = -1;
             totalView = itemView.findViewById(R.id.total_history);
             dateView = itemView.findViewById(R.id.date_history);
             orderIDView = itemView.findViewById(R.id.order_id_history);
@@ -80,16 +82,16 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         public void bindView(String total, String date, String id){
             totalView.setText(total);
             dateView.setText(date);
-            orderIDView.setText(id);
+            orderIDView.setText("#" + id);
+
+            orderID = Integer.parseInt(id);
         }
 
         public void onClick(View view){
-            Log.i("history_item:" , "clicked");
-
             OrderFragment orderFragment = new OrderFragment();
 
             Bundle args = new Bundle();
-            args.putString("data", "This data has sent to FragmentTwo");
+            args.putInt("orderID", orderID);
 
             orderFragment.setArguments(args);
 
