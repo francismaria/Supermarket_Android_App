@@ -43,10 +43,6 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-
-        // TODO : pass this to the observer function to ensure that there are no memory leaks
-
-
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view_history);
         LinearLayoutManager layoutManager = new LinearLayoutManager(HistoryFragment.this.getActivity());
         final HistoryAdapter adapter = new HistoryAdapter(historyViewModel.getItems(), HistoryFragment.this);
@@ -57,7 +53,6 @@ public class HistoryFragment extends Fragment {
         historyViewModel.getLoad().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean loadFinished) {
-
                 if(loadFinished){
                     adapter.updateItemsList(historyViewModel.getItems());
                 }

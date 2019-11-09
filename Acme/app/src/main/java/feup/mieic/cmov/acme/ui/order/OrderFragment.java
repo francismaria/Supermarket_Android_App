@@ -13,6 +13,8 @@ import feup.mieic.cmov.acme.R;
 public class OrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_order, container, false);
+
+
         return root;
     }
 }
