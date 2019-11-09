@@ -2,9 +2,10 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
-public class HistoryRequest extends Request {
+public class GetOrderInfoRequest extends Request {
 	
 	private int UUID;
+	private int orderID;
 	private String publicKey;
 	
 	private JSONObject obj;
@@ -16,16 +17,24 @@ public class HistoryRequest extends Request {
 		this.UUID = obj.getInt("UUID");
 	}
 	
+	private void setOrderID() throws Exception{
+		if(!obj.has("orderID")) {
+			throw new Exception("orderID was not specified");
+		}
+		this.orderID = obj.getInt("orderID");
+	}
+	
 	private void setKeys() {
 		try {
 			setUUID();
+			setOrderID();
 			//setPublicKey();
 		} catch(Exception e) {
 			setAsInvalid(e.getMessage());
 		}
 	}
 	
-	public HistoryRequest(String req){
+	public GetOrderInfoRequest(String req){
 		setValid(true);
 		setErrorMsg("");
 		this.obj = new JSONObject(req);
@@ -34,6 +43,10 @@ public class HistoryRequest extends Request {
 	
 	public int getUUID() {
 		return UUID;
+	}
+	
+	public int getOrderID() {
+		return orderID;
 	}
 	
 	public String getPublicKey() {
