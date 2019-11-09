@@ -93,15 +93,17 @@ public class OrderAction extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-        /*if(success){
+        if(success){
             try {
-                model.setRequestResult(res.getJSONArray("items"));
+                model.setRequestResult(res.getString("orderID"), res.getString("date"),
+                        res.getString("total_cost"), res.getString("vouchers"),
+                        res.getJSONArray("products"));
             } catch (JSONException e) {
                 e.printStackTrace();
-                model.setRequestResult(null);
+                model.flagError();
             }
         } else {
-            model.setRequestResult(null);
-        }*/
+            model.flagError();
+        }
     }
 }

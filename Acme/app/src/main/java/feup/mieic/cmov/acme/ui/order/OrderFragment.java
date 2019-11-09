@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,16 +35,15 @@ public class OrderFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        int orderID;
+        final int orderID;
 
         initToast();
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
             orderID = bundle.getInt("orderID", 0);
-            Log.i("ORDER - ORDER ID", Integer.toString(orderID));
         } else {
-            // show error
+            showErrorToast("Unavailable. Please try again later.");
             return null;
         }
 
@@ -64,18 +65,24 @@ public class OrderFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-
-        // observer ID, DATE, VOUCHERS TOTAL_COST
-
         orderViewModel.getLoad().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean loadFinished) {
                 if(loadFinished){
+                    TextView orderIDText = root.findViewById(R.id.orderID);
+                    TextView orderDateText = root.findViewById(R.id.orderDate);
+                    TextView orderVouchersText = root.findViewById(R.id.orderVouchers);
+                    TextView orderTotalCostText = root.findViewById(R.id.orderTotalCost);
+
                     adapter.updateProducts(orderViewModel.getProducts());
+
+                    orderIDText.setText(orderViewModel.getOrderID());
+                    orderDateText.setText(orderViewModel.getOrderDate());
+                    orderVouchersText.setText(orderViewModel.getVouchers());
+                    orderTotalCostText.setText(orderViewModel.getOrderTotalCost());
                 }
             }
         });
-
 
         return root;
     }
