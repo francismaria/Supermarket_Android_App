@@ -38,6 +38,7 @@ CREATE TABLE USERS(
 
 INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(1, "Francisco Maria", "f@gmail.com", "francis", "password", 1, "llaskdçaskdçlaksçldkaçl");
 
+
 /* ------------------------------ *
  *           PRODUCTS             *
  * ------------------------------ */
@@ -67,7 +68,8 @@ CREATE TABLE TRANSACTIONS(
   FOREIGN KEY(USER_ID) REFERENCES USERS(UUID) ON DELETE CASCADE
 );
 
-INSERT INTO TRANSACTIONS VALUES(1, 1, "26/04/2019", "0", 0.0);
+INSERT INTO TRANSACTIONS (ID, USER_ID, DATE, VOUCHERS) VALUES(1, 1, "26/04/2019", 0);
+INSERT INTO TRANSACTIONS (ID, USER_ID, DATE, VOUCHERS) VALUES(2, 1, "27/04/2019", 0);
 
 /* ------------------------------ *
  *            HISTORY             *
@@ -84,9 +86,9 @@ CREATE TABLE HISTORY(
 );
 
 -- TODO
+
+-- TRIGGER : Add voucher if multiple of 100 is reached
 -- TRIGGER : Update product stock
-
-
 
 -- TRIGGER : Updates the total cost of the transaction upon insertion of a new product to the history
 
@@ -109,6 +111,8 @@ CREATE TRIGGER update_accumulated_cash
 
 INSERT INTO HISTORY VALUES(1, 1, 10);
 INSERT INTO HISTORY VALUES(1, 2, 5);
+INSERT INTO HISTORY VALUES(2, 2, 1);
+INSERT INTO HISTORY VALUES(2, 1, 1);
 
 
 SELECT * FROM USERS;
