@@ -24,7 +24,6 @@ import com.acme.server.validation.HistoryRequest;
 
 // curl -d '{"UUID":"1", "orderID": "1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/order
 
-
 @Path("/order")
 public class GetOrderInfoAction {
 
