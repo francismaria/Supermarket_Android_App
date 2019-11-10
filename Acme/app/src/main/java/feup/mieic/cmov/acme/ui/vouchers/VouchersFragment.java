@@ -18,10 +18,8 @@ public class VouchersFragment extends Fragment {
 
     private VouchersViewModel vouchersViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        vouchersViewModel =
-                ViewModelProviders.of(this).get(VouchersViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        vouchersViewModel = ViewModelProviders.of(this).get(VouchersViewModel.class);
 
 
         View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
@@ -29,15 +27,18 @@ public class VouchersFragment extends Fragment {
         final TextView vouchersMsg = root.findViewById(R.id.text_vouchers);
         final TextView noVouchersMsg = root.findViewById(R.id.textNoVoucherDiff);
 
-        vouchersViewModel.getText().observe(this, new Observer<Boolean>() {
+        vouchersViewModel.getLoad().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable Boolean stock) {
-
-                vouchersMsg.setText("You have vouchers to discount on your next purchase!");
-
-                if(stock) {
-                    // show the difference to get to the voucher
-                    noVouchersMsg.setText("Currently, you have ... € accumulated.\nYou are just ...€ short!");
+            public void onChanged(@Nullable Boolean success) {
+                if(success) {
+                    if(vouchersViewModel.isRequestSuccessful()){
+                        String numStr = Integer.toString(vouchersViewModel.getVouchersNum());
+                        vouchersMsg.setText("You have vouchers " + numStr + " to discount on your next purchase!");
+                    } else {
+                        noVouchersMsg.setText("Currently, you have ... € accumulated.\nYou are just ...€ short!");
+                    }
+                } else {
+                    // show error toast
                 }
             }
         });

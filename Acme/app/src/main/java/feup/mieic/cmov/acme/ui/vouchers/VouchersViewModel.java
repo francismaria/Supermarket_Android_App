@@ -9,20 +9,31 @@ import feup.mieic.cmov.acme.connection.VouchersAction;
 public class VouchersViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> load;
-    private MutableLiveData<Integer> vouchersNum;
-    private VouchersAction action;
+    private Integer vouchersNum;
+    private boolean success;
 
     public VouchersViewModel() {
-        vouchersNum = new MutableLiveData<>();
+        load = new MutableLiveData<>();
+        success = true;
 
-        this.action = new VouchersAction();
-
-        vouchersNum.setValue(this.action.getVouchersAvailable());
+        new VouchersAction(this).execute();
     }
 
-
-
-    public LiveData<Boolean> getText() {
+    public LiveData<Boolean> getLoad() {
         return load;
+    }
+
+    public int getVouchersNum(){ return vouchersNum; }
+
+    public void setVouchersNum(Integer vouchersNum){
+        if(vouchersNum == -1){
+            success = false;
+        }
+        this.vouchersNum = vouchersNum;
+        load.setValue(true);
+    }
+
+    public boolean isRequestSuccessful(){
+        return success;
     }
 }

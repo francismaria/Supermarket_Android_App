@@ -17,6 +17,8 @@ public interface HTTPInfo {
 
     String GET_ORDER_INFO_PATH = "http://10.0.2.2:8080/AcmeServer/api/order";
 
+    String VOUCHERS_PATH = "http://10.0.2.2:8080/AcmeServer/api/vouchers";
+
     // HTTP response codes
 
     int SUCCESS_CODE = 200;
