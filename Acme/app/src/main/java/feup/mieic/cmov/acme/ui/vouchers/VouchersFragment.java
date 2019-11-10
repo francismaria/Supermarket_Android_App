@@ -29,13 +29,13 @@ public class VouchersFragment extends Fragment {
         final TextView vouchersMsg = root.findViewById(R.id.text_vouchers);
         final TextView noVouchersMsg = root.findViewById(R.id.textNoVoucherDiff);
 
-        vouchersViewModel.getText().observe(this, new Observer<Integer>() {
+        vouchersViewModel.getText().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable Integer stock) {
-                String numStr = Integer.toString(stock);
-                vouchersMsg.setText("You have " + numStr + " vouchers to discount on your next purchase!");
+            public void onChanged(@Nullable Boolean stock) {
 
-                if(stock == 0) {
+                vouchersMsg.setText("You have vouchers to discount on your next purchase!");
+
+                if(stock) {
                     // show the difference to get to the voucher
                     noVouchersMsg.setText("Currently, you have ... € accumulated.\nYou are just ...€ short!");
                 }
