@@ -17,6 +17,7 @@ import feup.mieic.cmov.acme.R;
 
 public class CartFragment extends Fragment {
 
+    // This will serve as a database to store the products
     private static List<String> cart = new ArrayList<>();
 
     private void initActionBar(){
