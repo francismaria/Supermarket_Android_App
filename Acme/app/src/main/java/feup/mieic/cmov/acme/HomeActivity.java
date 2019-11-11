@@ -76,29 +76,20 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.iconShopBar:
 /*
-                FragmentManager fragmentManager = this.getSupportFragmentManager();
-                List<Fragment> fragments = fragmentManager.getFragments();
+                Fragment cf = getSupportFragmentManager().findFragmentById(R.id.cart_frame_layout);
+                if(cf != null && cf.isVisible()){
+                    return true;
+                }*/
 
-
-                Log.e("--", getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).toString());
-
-                for (Fragment fragment : fragments) {
-                    Log.e("fragments", fragment.toString());
-                    if (fragment != null && fragment.isVisible())
-                        Log.e("fragment", Boolean.toString(fragment instanceof ProfileFragment));
-                }
-*/
                 List<Fragment> fragments = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().getFragments();
                 FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
                 CartFragment cartFragment = new CartFragment();
 
                 for (Fragment fragment : fragments) {
                     if (fragment != null && fragment.isVisible()){
-
                         if(fragment instanceof VouchersFragment){
                             transaction.replace(R.id.vouchers_frame_container, cartFragment);
                         } else if(fragment instanceof ProfileFragment){
@@ -120,20 +111,7 @@ public class HomeActivity extends AppCompatActivity {
                         transaction.commit();
                         break;
                     }
-
-
                 }
-
-
-                /*
-
-                FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
-                CartFragment cartFragment = new CartFragment();
-                transaction.replace(R.id.nav_host_fragment, cartFragment);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.addToBackStack(null);
-                transaction.commit();*/
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

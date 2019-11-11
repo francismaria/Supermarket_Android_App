@@ -30,7 +30,8 @@
     <string name="email_caption">Email</string>
     <string name="name_caption">Name</string>
     <string name="readQR_caption">Read QR code</string>
-
+    <string name="shopping_cart_caption">Shopping Cart</string>
+    <string name="checkout_caption">Checkout</string>
     <string name="contact_text">Please fill out the form below to send us a message
         regarding any problems you may encounter or any other subject.\n\nWe will try to answer you as soon as possible.\n\nThank you.</string>
 </resources>

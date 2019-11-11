@@ -37,14 +37,6 @@ public class OrderFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Purchase Information");
     }
 
-
-
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-    }*/
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final int orderID;
 
