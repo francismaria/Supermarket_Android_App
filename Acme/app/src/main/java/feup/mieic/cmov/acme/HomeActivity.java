@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,9 +27,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
+import feup.mieic.cmov.acme.ui.contact.ContactFragment;
+import feup.mieic.cmov.acme.ui.history.HistoryFragment;
+import feup.mieic.cmov.acme.ui.home.HomeFragment;
+import feup.mieic.cmov.acme.ui.order.OrderFragment;
+import feup.mieic.cmov.acme.ui.order.OrderViewModel;
+import feup.mieic.cmov.acme.ui.profile.ProfileFragment;
+import feup.mieic.cmov.acme.ui.vouchers.VouchersFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -69,13 +79,60 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.iconShopBar:
+/*
+                FragmentManager fragmentManager = this.getSupportFragmentManager();
+                List<Fragment> fragments = fragmentManager.getFragments();
+
+
+                Log.e("--", getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).toString());
+
+                for (Fragment fragment : fragments) {
+                    Log.e("fragments", fragment.toString());
+                    if (fragment != null && fragment.isVisible())
+                        Log.e("fragment", Boolean.toString(fragment instanceof ProfileFragment));
+                }
+*/
+                List<Fragment> fragments = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().getFragments();
+                FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
+                CartFragment cartFragment = new CartFragment();
+
+                for (Fragment fragment : fragments) {
+                    if (fragment != null && fragment.isVisible()){
+
+                        if(fragment instanceof VouchersFragment){
+                            transaction.replace(R.id.vouchers_frame_container, cartFragment);
+                        } else if(fragment instanceof ProfileFragment){
+                            transaction.replace(R.id.profile_frame_container, cartFragment);
+                        } else if(fragment instanceof HistoryFragment){
+                            transaction.replace(R.id.history_frame_container, cartFragment);
+                        } else if(fragment instanceof HomeFragment){
+                            transaction.replace(R.id.home_frame_container, cartFragment);
+                        } else if(fragment instanceof OrderFragment){
+                            transaction.replace(R.id.order_frame_container, cartFragment);
+                        } else if(fragment instanceof ContactFragment){
+                            transaction.replace(R.id.contact_frame_container, cartFragment);
+                        }
+                        /* else if(fragment instanceof Settingsragment){
+                            transaction.replace(R.id.settings_frame_container, cartFragment);
+                        }*/
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        break;
+                    }
+
+
+                }
+
+
+                /*
 
                 FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
                 CartFragment cartFragment = new CartFragment();
-                transaction.replace(R.id.contact_frame_container, cartFragment);
+                transaction.replace(R.id.nav_host_fragment, cartFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
-                transaction.commit();
+                transaction.commit();*/
 
                 return true;
             default:
