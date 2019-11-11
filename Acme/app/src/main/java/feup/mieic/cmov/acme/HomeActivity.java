@@ -86,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 List<Fragment> fragments = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment).getChildFragmentManager().getFragments();
                 FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
+
                 CartFragment cartFragment = new CartFragment();
 
                 for (Fragment fragment : fragments) {
@@ -106,6 +107,9 @@ public class HomeActivity extends AppCompatActivity {
                         /* else if(fragment instanceof Settingsragment){
                             transaction.replace(R.id.settings_frame_container, cartFragment);
                         }*/
+
+                        CartFragment.printCardProducts();
+
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.addToBackStack(null);
                         transaction.commit();

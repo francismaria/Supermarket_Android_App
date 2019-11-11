@@ -29,10 +29,11 @@ public class HomeFragment extends Fragment {
         readQRcodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transaction.replace(R.id.home_frame_container, cartFragment);
+                /*transaction.replace(R.id.home_frame_container, cartFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
-                transaction.commit();
+                transaction.commit();*/
+                CartFragment.addProduct("exemplo");
             }
         });
 
