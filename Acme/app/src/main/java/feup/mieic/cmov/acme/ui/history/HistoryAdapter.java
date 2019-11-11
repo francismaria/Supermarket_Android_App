@@ -96,7 +96,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             orderFragment.setArguments(args);
 
             FragmentTransaction transaction = Objects.requireNonNull(fragmentParent.getActivity()).getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_container, orderFragment);
+            transaction.replace(R.id.history_frame_container, orderFragment);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.addToBackStack(null);
             transaction.commit();

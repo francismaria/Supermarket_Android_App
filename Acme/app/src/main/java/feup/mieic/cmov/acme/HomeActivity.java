@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -22,6 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+
+import java.util.Objects;
+
+import feup.mieic.cmov.acme.ui.cart.CartFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -62,7 +69,14 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.iconShopBar:
-                Log.e("tag", "lalalalla");
+
+                FragmentTransaction transaction = Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction();
+                CartFragment cartFragment = new CartFragment();
+                transaction.replace(R.id.contact_frame_container, cartFragment);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
