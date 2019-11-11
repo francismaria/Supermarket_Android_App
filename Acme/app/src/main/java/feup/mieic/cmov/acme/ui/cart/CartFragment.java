@@ -1,4 +1,4 @@
-package feup.mieic.cmov.acme.ui;
+package feup.mieic.cmov.acme.ui.cart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
