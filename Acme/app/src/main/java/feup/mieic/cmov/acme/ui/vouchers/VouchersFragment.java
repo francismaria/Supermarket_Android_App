@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -16,11 +17,22 @@ import feup.mieic.cmov.acme.R;
 
 public class VouchersFragment extends Fragment {
 
+    private Toast errorToast;
     private VouchersViewModel vouchersViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        vouchersViewModel = ViewModelProviders.of(this).get(VouchersViewModel.class);
+    private void initToast(){
+        errorToast = Toast.makeText(getActivity(), null, Toast.LENGTH_SHORT);
+    }
 
+    private void showErrorToast(String msg){
+        errorToast.setText(msg);
+        errorToast.show();
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initToast();
+
+        vouchersViewModel = ViewModelProviders.of(this).get(VouchersViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
 
@@ -35,7 +47,7 @@ public class VouchersFragment extends Fragment {
                         String numStr = Integer.toString(vouchersViewModel.getVouchersNum());
                         vouchersMsg.setText("You have vouchers " + numStr + " to discount on your next purchase!");
                     } else {
-                        noVouchersMsg.setText("Currently, you have ... € accumulated.\nYou are just ...€ short!");
+                        showErrorToast("Unavailable. Please try reloading this page.");
                     }
                 } else {
                     // show error toast
