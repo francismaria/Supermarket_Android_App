@@ -12,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.security.KeyFactory;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.crypto.Cipher;
@@ -52,6 +55,28 @@ public class HomeFragment extends Fragment {
             PrivateKey privateKey = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
             PublicKey publicKey = ks.getCertificate("example").getPublicKey();
 
+        /*
+            byte[] publicBytes = Base64.decode(publicKey.toString(), Base64.DEFAULT);
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PublicKey pubKey = keyFactory.generatePublic(keySpec);
+            Cipher cipher = Cipher.getInstance(); //or try with "RSA"
+            cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+            encrypted = cipher.doFinal(txt.getBytes());
+            encoded = Base64.encodeToString(encrypted, Base64.DEFAULT);
+
+         */
+            final String ENC_ALGO = "RSA/NONE/PKCS1Padding";
+
+            Cipher cipher = Cipher.getInstance(ENC_ALGO);
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] encTag = cipher.doFinal("ahahah".getBytes());
+
+            Log.e("Encrypted", Arrays.toString(encTag));
+
+            byte[] publicKeyBytes = Base64.encode(publicKey.getEncoded(),0);
+            String pubKey = new String(publicKeyBytes);
+            Log.e("KEYS", pubKey);
 
             /*
 

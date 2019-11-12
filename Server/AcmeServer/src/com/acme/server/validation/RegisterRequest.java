@@ -60,7 +60,7 @@ public class RegisterRequest extends Request {
 	// Card Exp Date
 	private void setCardExpDate() throws Exception {
 		if(!obj.has("cardExpDate")) {
-			throw new Exception("username was not specified.");
+			throw new Exception("card Exp Date was not specified.");
 		}
 		this.cardExpDate = obj.getString("cardExpDate");
 	}
@@ -68,7 +68,7 @@ public class RegisterRequest extends Request {
 	// Card CCV
 	private void setCardCCV() throws Exception {
 		if(!obj.has("cardCCV")) {
-			throw new Exception("username was not specified.");
+			throw new Exception("card CCV was not specified.");
 		}
 		this.cardCCV = obj.getString("cardCCV");
 	}
@@ -76,7 +76,7 @@ public class RegisterRequest extends Request {
 	// Public Key
 	private void setPublicKey() throws Exception {
 		if(!obj.has("publicKey")) {
-			throw new Exception("username was not specified.");
+			throw new Exception("public key was not specified.");
 		}
 		this.publicKey = obj.getString("publicKey");
 	}
