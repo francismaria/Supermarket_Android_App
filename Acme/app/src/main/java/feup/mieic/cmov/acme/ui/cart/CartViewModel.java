@@ -1,13 +1,10 @@
 package feup.mieic.cmov.acme.ui.cart;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 

@@ -68,7 +68,7 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
             AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(this.weakActivity.get())
                     .setKeySize(KEY_SIZE)
-                    .setAlias(keyname)
+                    .setAlias("example")                    // this can not be hardcoded
                     .setSubject(new X500Principal("CN=" + keyname))
                     .setSerialNumber(BigInteger.valueOf(CERT_SERIAL))
                     .setStartDate(start.getTime())
