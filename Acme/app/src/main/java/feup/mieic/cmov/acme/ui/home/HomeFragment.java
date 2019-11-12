@@ -14,6 +14,8 @@ import java.util.Objects;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
+import feup.mieic.cmov.acme.ui.cart.CartViewModel;
+import feup.mieic.cmov.acme.ui.order.ProductModel;
 
 public class HomeFragment extends Fragment {
 
@@ -29,11 +31,7 @@ public class HomeFragment extends Fragment {
         readQRcodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*transaction.replace(R.id.home_frame_container, cartFragment);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.addToBackStack(null);
-                transaction.commit();*/
-                CartFragment.addProduct("exemplo");
+                CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
             }
         });
 

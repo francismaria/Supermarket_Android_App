@@ -7,18 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.ui.order.ProductModel;
 
 public class CartFragment extends Fragment {
 
-    // This will serve as a database to store the products
-    private static List<String> cart = new ArrayList<>();
+    private CartViewModel cartViewModel;
 
     private void initActionBar(){
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Shopping Cart");
@@ -29,16 +33,24 @@ public class CartFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        cartViewModel = ViewModelProviders.of(this).get(CartViewModel.class);
+
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_cart);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(CartFragment.this.getActivity());
+        final CartAdapter adapter = new CartAdapter(CartFragment.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        CartViewModel.getCart().observe(this, new Observer<List<ProductModel>>() {
+            @Override
+            public void onChanged(@Nullable List<ProductModel> prods) {
+                adapter.updateCartProducts(prods);
+            }
+        });
+
         return root;
     }
 
-    public static void addProduct(String s){
-        cart.add(s);
-    }
 
-    public static void printCardProducts(){
-        for(String s : cart){
-            Log.i("prod", s);
-        }
-    }
+
 }

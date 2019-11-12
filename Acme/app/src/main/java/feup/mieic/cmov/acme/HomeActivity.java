@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
+import feup.mieic.cmov.acme.ui.cart.CartViewModel;
 import feup.mieic.cmov.acme.ui.contact.ContactFragment;
 import feup.mieic.cmov.acme.ui.history.HistoryFragment;
 import feup.mieic.cmov.acme.ui.home.HomeFragment;
@@ -107,9 +108,6 @@ public class HomeActivity extends AppCompatActivity {
                         /* else if(fragment instanceof Settingsragment){
                             transaction.replace(R.id.settings_frame_container, cartFragment);
                         }*/
-
-                        CartFragment.printCardProducts();
-
                         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.addToBackStack(null);
                         transaction.commit();

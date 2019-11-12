@@ -44,11 +44,7 @@ public class LoginAction {
 		}
 		
 		JSONObject objData = new JSONObject(data);
-		/*
-		if(!schemaMatches(objData)) {
-			return Response.status(HTTPCodes.BAD_REQUEST).entity(null).build();
-		}
-		*/
+
 		final String stmt = "SELECT PASSWORD FROM USERS WHERE USERNAME = ?";
 		
 		try {
@@ -61,7 +57,6 @@ public class LoginAction {
 				return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 			}
 			
-			// is this correct?? ---> TEST THIS
 			if(!rs.getString("password").equals(objData.getString("password"))) {
 				return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 			}
