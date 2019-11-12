@@ -28,7 +28,7 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/removeProdBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/remove_icon"

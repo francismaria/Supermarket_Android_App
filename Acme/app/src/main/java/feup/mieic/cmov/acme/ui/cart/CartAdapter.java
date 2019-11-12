@@ -54,7 +54,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     private class CartItemsViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView idView;
+        private final TextView idView;
         private TextView nameView;
         private TextView qtyView;
         private TextView priceView;
@@ -72,6 +72,14 @@ public class CartAdapter extends RecyclerView.Adapter {
             nameView.setText(name);
             qtyView.setText(qty);
             priceView.setText(price);
+
+            itemView.findViewById(R.id.removeProdBtn).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    CartViewModel.removeProduct(idView.getText().toString());
+                }
+            });
+
         }
     }
 }

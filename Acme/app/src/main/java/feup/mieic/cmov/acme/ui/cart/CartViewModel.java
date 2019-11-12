@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 
@@ -25,14 +26,21 @@ public class CartViewModel extends ViewModel {
             cart.setValue(new ArrayList<ProductModel>());
         }
         if(cart.getValue().size() == MAX_SIZE){
-            // reached maximum size
             return;
         }
 
         cart.getValue().add(prod);
+    }
 
-        for(ProductModel p : cart.getValue()){
-            Log.e("prod", p.toString());
+    public static void removeProduct(String id){
+        List<ProductModel> prods = cart.getValue();
+        List<ProductModel> newProds = new ArrayList<>();
+
+        for(ProductModel p : prods){
+            if(!p.getID().equals(id))
+                newProds.add(p);
+
         }
+        cart.setValue(newProds);
     }
 }
