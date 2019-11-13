@@ -1,5 +1,7 @@
 package com.acme.server;
 
+import java.io.FileNotFoundException;
+import java.security.cert.CertificateException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.acme.server.database.DBConnection;
+import com.acme.server.security.KeyInstance;
 import com.acme.server.validation.RegisterRequest;
 
 /* ------------------------------------- *
@@ -31,6 +34,7 @@ import com.acme.server.validation.RegisterRequest;
 @Path("/register")
 public class RegisterAction {
 
+	private JSONObject res;
 	private Connection connection = null;
 
 	public RegisterAction() {
@@ -63,7 +67,6 @@ public class RegisterAction {
 		if(!rs.next()) 
 			return true;
 		return false;
-	
 	}
 
 	/**
@@ -116,6 +119,7 @@ public class RegisterAction {
 	// and transmit it back to the app, that should store it. Together with the previous id, the server sends also the supermarket 
 	// public key, used to read the product labels.
 	
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
@@ -124,21 +128,21 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
 		RegisterRequest req;
-		JSONObject response = new JSONObject();
+		res = new JSONObject();
 		
 		req = new RegisterRequest(data);
 		
 		try {
 			if(!req.isValid()) {
 				closeConnection();
-				response.put("msg", req.getErrorMsg());
-				return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
+				res.put("msg", req.getErrorMsg());
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(res.toString()).build();
 			}
 		
 			if(!uniqueUsername(req.getUsername())) {
 				closeConnection();
-				response.put("msg", "username must be unique");
-				return Response.status(HTTPCodes.BAD_REQUEST).entity(response.toString()).build();
+				res.put("msg", "username must be unique");
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(res.toString()).build();
 			}
 			
 			int newUUID = getNewUserUUID();
@@ -147,11 +151,17 @@ public class RegisterAction {
 				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 			}
 			
-			registerNewUser(newUUID, req);
+			// registerNewUser(newUUID, req);
 			
-			return Response.status(HTTPCodes.SUCCESS_CODE).entity(Integer.toString(newUUID)).build();
 			
-		} catch (SQLException e) {
+			res.put("UUID", newUUID);
+			res.put("acmePublicKey", KeyInstance.getPublicKey());
+			
+			
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
+			
+		} catch (SQLException | JSONException | FileNotFoundException | CertificateException e) {
+			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 	}

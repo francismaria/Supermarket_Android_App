@@ -17,11 +17,18 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
 
 import feup.mieic.cmov.acme.connection.RegisterAction;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
+
+import java.security.Key;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.util.regex.Pattern;
 
 // TODO: REMOVE ALL THE LOGS
@@ -359,6 +366,12 @@ public class RegisterActivity extends AppCompatActivity {
      *     REGISTER BUTTON LISTENER
      *  ------------------------------- */
 
+    private String getPublicKeyUser(String username) throws Exception {
+        KeyInstance.generateKeyPair(this, username);
+        String pub = KeyInstance.getPubKey();
+        return pub;
+    }
+
     public void submitRegisterInformation(View view){
         if(!areFieldsFilled()){
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
@@ -374,6 +387,8 @@ public class RegisterActivity extends AppCompatActivity {
                     cardExpDate = ((EditText)findViewById(R.id.registerExpDate)).getText().toString(),
                     cardCCV = ((EditText)findViewById(R.id.registerCCV)).getText().toString();
 
+            //TODO: check if username is unique (async task)
+
             try {
                 reqBody.put("name", name);
                 reqBody.put("username", username);
@@ -382,11 +397,22 @@ public class RegisterActivity extends AppCompatActivity {
                 reqBody.put("cardNr", cardNr);
                 reqBody.put("cardExpDate", cardExpDate);
                 reqBody.put("cardCCV", cardCCV);
-                reqBody.put("publicKey", "EXAMPLE??????");
+                reqBody.put("publicKey", getPublicKeyUser(username));
+
+
+                Log.e("pub key", reqBody.getString("publicKey"));
+
+
             } catch (JSONException e) {
+                // TODO : show toast error
+                e.printStackTrace();
+                return;
+            } catch(Exception e){
+                // TODO : show toast error
                 e.printStackTrace();
                 return;
             }
+
 
             new RegisterAction(RegisterActivity.this).execute(reqBody);
         }

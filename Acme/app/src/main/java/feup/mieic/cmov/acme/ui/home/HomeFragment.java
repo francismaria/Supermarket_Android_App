@@ -23,6 +23,7 @@ import java.util.Objects;
 
 import javax.crypto.Cipher;
 
+import feup.mieic.cmov.acme.KeyInstance;
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
 import feup.mieic.cmov.acme.ui.cart.CartViewModel;
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         try{
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
-            KeyStore.Entry entry = ks.getEntry("example", null);
+            KeyStore.Entry entry = ks.getEntry(KeyInstance.KEYNAME, null);
 
 
             PrivateKey privateKey = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();

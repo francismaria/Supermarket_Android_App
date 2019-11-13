@@ -33,6 +33,7 @@ import java.util.GregorianCalendar;
 import javax.security.auth.x500.X500Principal;
 
 import feup.mieic.cmov.acme.HomeActivity;
+import feup.mieic.cmov.acme.KeyInstance;
 
 public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
@@ -89,14 +90,6 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
     @Override
     protected Boolean doInBackground(JSONObject... params) {
         HttpURLConnection urlConnection = null;
-        //String username = params[0], password = params[1];
-
-        String username = "example";
-
-        // TODO: remove this from here??
-        /*if(!generateKeyPair(username))
-            return false;*/
-
 
         try {
             URL url = new URL(HTTPInfo.REGISTER_PATH);
@@ -112,23 +105,23 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
             os.write(params[0].toString().getBytes("UTF-8"));
             os.close();
 
-            Log.i("REGISTER ACTION", "request POST sent");
-
             int code = urlConnection.getResponseCode();
 
             if (code == HTTPInfo.SUCCESS_CODE) {
                 Log.i("REGISTER ACTION", "OK");
             } else {
                 Log.i("REGISTER ACTION", "ERROR " + Integer.toString(code));
-
-                BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                String line;
-
-                while ((line = rd.readLine()) != null) {
-                    JSONObject jsonObject = new JSONObject(line);
-                    Log.i("LOGIN", jsonObject.toString());
-                }
             }
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line;
+
+            while ((line = rd.readLine()) != null) {
+                JSONObject jsonObject = new JSONObject(line);
+                Log.i("LOGIN", jsonObject.toString());
+                // TODO: get supermarket key
+            }
+
         } catch(Exception e){
             return false;
         } finally {
@@ -142,17 +135,9 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
-            try{
-                KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
-                ks.load(null);
-                KeyStore.Entry entry = ks.getEntry("example", null);
-            } catch(Exception e){
-
-            }
-            Log.e("KEYS", "ok");
             weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
         } else {
-            Log.e("KEYS", "oERROR");
+            // todo: show toast error
         }
     }
 }
