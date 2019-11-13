@@ -1,6 +1,7 @@
 package feup.mieic.cmov.acme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -67,6 +68,21 @@ public class HomeActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        drawer.findViewById(R.id.logoutBtn).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                // LOGOUT
+                SharedPreferences settings = HomeActivity.this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.remove("current_user");
+                editor.commit();
+
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+            }
+        });
     }
 
 
