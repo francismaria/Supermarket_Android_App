@@ -78,6 +78,8 @@ public class HomeActivity extends AppCompatActivity {
                 SharedPreferences settings = HomeActivity.this.getSharedPreferences("settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.remove("current_user");
+                editor.remove("uuid");
+                editor.remove("acmePK");
                 editor.commit();
 
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));

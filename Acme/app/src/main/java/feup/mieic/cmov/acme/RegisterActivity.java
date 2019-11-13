@@ -366,15 +366,15 @@ public class RegisterActivity extends AppCompatActivity {
         return pub;
     }
 
-    private void initSharedPreferences(){
+    private void initSharedPreferences(int uuid, String pk){
         SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = settings.edit();
+
         editor.putString("current_user", KeyInstance.KEYNAME);
+        editor.putString("current_uuid", Integer.toString(uuid));
+        editor.putString("acmePK", "--");
 
-
-        // putString("current_uuid", )
-        // putString("acmePK", )
         editor.commit();
     }
 
@@ -408,7 +408,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 reqBody.put("publicKey", getPublicKeyUser(username));
 
-                initSharedPreferences();
+                // TODO : RECEIVE UUID FROM SERVER
+                initSharedPreferences(1, "pk");
 
                 Log.e("pub key", reqBody.getString("publicKey"));
 

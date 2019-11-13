@@ -28,6 +28,8 @@ import com.acme.server.validation.RegisterRequest;
 /*
  * CURL EXAMPLE - testing
  * 
+ * curl -d '{"username":"username"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/register/validate-username
+ * 
  * curl -d '{"username":"username", "password":"francis", "name":"francisco", "email":"example", "cardNr":"1234", "cardExpDate":"12/12", "cardCCV":"123", "publicKey":"asdaksdlakdlak1231ewdda"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/register
  */
 
@@ -67,6 +69,39 @@ public class RegisterAction {
 		if(!rs.next()) 
 			return true;
 		return false;
+	}
+	
+	@Path("/validate-username")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces("application/json")
+	public Response isUsernameUnique(String data) {
+		if(connection == null) 
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		
+		try {
+			JSONObject req = new JSONObject(data);
+			JSONObject res = new JSONObject();
+			
+			String username = req.getString("username");
+			
+			if(!req.has("username")) {
+				closeConnection();
+				return Response.status(HTTPCodes.BAD_REQUEST).entity(null).build();
+			}
+			
+			if(!uniqueUsername(username)) {
+				closeConnection();
+				res.put("unique", false);
+				return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
+			}
+			
+			res.put("unique", true);
+			
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
+		} catch(Exception e) {
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
 	}
 
 	/**
