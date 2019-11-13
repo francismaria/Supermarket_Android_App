@@ -11,7 +11,14 @@
         android:roundIcon="@mipmap/brand_logo_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".qrcodes.QRTag"></activity>
+        <activity android:name=".qrcodes.QRTag"
+            android:parentActivityName=".HomeActivity">
+
+            <!-- This meta-data tag is required to support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
