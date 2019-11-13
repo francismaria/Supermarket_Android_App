@@ -3,9 +3,11 @@ package feup.mieic.cmov.acme;
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
@@ -16,9 +18,12 @@ import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.security.auth.x500.X500Principal;
 
 public class KeyInstance {
@@ -30,9 +35,13 @@ public class KeyInstance {
 
     public static String KEYNAME = "acme_";
 
+    public static void setKeyname(String username) {
+        KEYNAME = KEYNAME + username;
+    }
+
     public static boolean generateKeyPair(Context context, String username) {
 
-        KEYNAME = KEYNAME + username;
+        setKeyname(username);
 
         try {
             Calendar start = new GregorianCalendar();
@@ -64,16 +73,37 @@ public class KeyInstance {
     public static String getPubKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         PublicKey pub = null;
-
         ks.load(null);
 
         KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
 
         if (entry != null) {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            byte[] publicKeyBytes = Base64.encode(pub.getEncoded(),0);
+            return new String(publicKeyBytes);
         }
+        return null;
+    }
 
-        byte[] publicKeyBytes = Base64.encode(pub.getEncoded(),0);
-        return new String(publicKeyBytes);
+    public static String encryptInfo(String info) throws Exception {
+
+        KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
+        PublicKey pub = null;
+        ks.load(null);
+
+        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+
+        if (entry != null) {
+            final String ENC_ALGO = "RSA/NONE/PKCS1Padding";
+
+            pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+
+            Cipher cipher = Cipher.getInstance(ENC_ALGO);
+            cipher.init(Cipher.ENCRYPT_MODE, pub);
+            byte[] encTag = cipher.doFinal(info.getBytes());
+
+            return Arrays.toString(encTag);
+        }
+        throw new Exception("Not possible to encrypt.");
     }
 }
