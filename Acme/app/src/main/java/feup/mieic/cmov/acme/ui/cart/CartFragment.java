@@ -1,5 +1,6 @@
 package feup.mieic.cmov.acme.ui.cart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.qrcodes.QRTag;
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 
 public class CartFragment extends Fragment {
@@ -47,6 +49,16 @@ public class CartFragment extends Fragment {
 
                 Log.e("update", "o");
                 adapter.updateCartProducts(prods);
+            }
+        });
+
+        root.findViewById(R.id.checkoutBtn).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                byte[] c = new byte[10];
+
+                startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", c));
             }
         });
 

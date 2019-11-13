@@ -424,7 +424,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-
             new RegisterAction(RegisterActivity.this).execute(reqBody);
         }
     }

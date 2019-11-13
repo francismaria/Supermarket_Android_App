@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/brand_logo_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".qrcodes.QRTag"></activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
