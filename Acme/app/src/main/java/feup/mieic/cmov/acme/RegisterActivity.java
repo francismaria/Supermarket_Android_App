@@ -4,9 +4,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -17,18 +18,11 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URL;
-
 import feup.mieic.cmov.acme.connection.RegisterAction;
+import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 
-import java.security.Key;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
 import java.util.regex.Pattern;
 
 // TODO: REMOVE ALL THE LOGS
@@ -372,6 +366,18 @@ public class RegisterActivity extends AppCompatActivity {
         return pub;
     }
 
+    private void initSharedPreferences(){
+        SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("current_user", KeyInstance.KEYNAME);
+
+
+        // putString("current_uuid", )
+        // putString("acmePK", )
+        editor.commit();
+    }
+
     public void submitRegisterInformation(View view){
         if(!areFieldsFilled()){
             filledFieldsToast.setText("Please fill all of the registration fields correctly.");
@@ -397,8 +403,12 @@ public class RegisterActivity extends AppCompatActivity {
                 reqBody.put("cardNr", cardNr);
                 reqBody.put("cardExpDate", cardExpDate);
                 reqBody.put("cardCCV", cardCCV);
+
+                //    initSharedPreferences();
+
                 reqBody.put("publicKey", getPublicKeyUser(username));
 
+                initSharedPreferences();
 
                 Log.e("pub key", reqBody.getString("publicKey"));
 

@@ -1,13 +1,11 @@
-package feup.mieic.cmov.acme;
+package feup.mieic.cmov.acme.security;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Base64;
-import android.util.Log;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;

@@ -1,5 +1,7 @@
 package feup.mieic.cmov.acme;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
