@@ -97,7 +97,7 @@ public class RegisterAction {
 	}
 	
 	private void registerNewUser(int UUID, RegisterRequest req) {
-		// CARD ID?? - a card needs first to be innserted in the database in order to associate it to a card ID which will be associated with the user
+		// CARD ID?? - a card needs first to be inserted in the database in order to associate it to a card ID which will be associated with the user
        String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
        
         try {
@@ -152,11 +152,9 @@ public class RegisterAction {
 			}
 			
 			// registerNewUser(newUUID, req);
-			
-			
+					
 			res.put("UUID", newUUID);
 			res.put("acmePublicKey", KeyInstance.getPublicKey());
-			
 			
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
 			
