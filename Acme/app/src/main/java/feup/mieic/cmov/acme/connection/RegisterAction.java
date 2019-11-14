@@ -28,6 +28,8 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 
 import feup.mieic.cmov.acme.HomeActivity;
+import feup.mieic.cmov.acme.security.Cryptography;
+import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
@@ -99,12 +101,18 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
         if(success){
             try{
 
-// this converted to decimal is the same key as the server
+                Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha".getBytes(StandardCharsets.ISO_8859_1), SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
+
+/*
+
+                // TODO : SAVE PUBLIC KEY
+                // this converted to decimal is the same key as the server
                 byte[] pub = Base64.decode(res.getString("acmePK"), Base64.DEFAULT);
                 X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(pub);
                 KeyFactory kf = KeyFactory.getInstance("RSA");
 
                 PublicKey pk = kf.generatePublic(X509publicKey);
+
 
                 Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
                 cipher.init(Cipher.ENCRYPT_MODE, pk);
@@ -117,7 +125,7 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
                 Log.e("testencrypt", Arrays.toString(bs));
 
-
+*/
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
 
 
