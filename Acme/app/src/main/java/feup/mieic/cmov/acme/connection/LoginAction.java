@@ -74,14 +74,12 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
                     // TODO: UPDATE SHARED PREFS WITH UUID AND ACME PK
                 }
             } else if(code == HTTPInfo.UNAUTHORIZED_CODE){
-                Log.e("LOGIN ACTION", "The credentials are wrong.");
                 ERROR_MSG = "Please check your credentials.\nThese are incorrect.";
                 return true;
             } else {
                 throw new IOException("Invalid response from server: " + code);
             }
         } catch(ConnectException exc){
-            Log.e("LOGIN ACTION", "There is no connectivity to the server. Is it down?");
             ERROR_MSG = "No connectivity.";
             return true;
 

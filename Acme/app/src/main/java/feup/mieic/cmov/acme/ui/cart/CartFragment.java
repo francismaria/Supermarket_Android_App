@@ -47,8 +47,6 @@ public class CartFragment extends Fragment {
         CartViewModel.getCart().observe(this, new Observer<List<ProductModel>>() {
             @Override
             public void onChanged(@Nullable List<ProductModel> prods) {
-
-                Log.e("update", "o");
                 adapter.updateCartProducts(prods);
             }
         });

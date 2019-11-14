@@ -45,9 +45,6 @@ public class HomeFragment extends Fragment {
 
             //KeyInstance.setKeyname(settings.getString("current_user", null));
 
-            Log.e("encryption", KeyInstance.KEYNAME);
-            Log.e("encryption", KeyInstance.encryptInfo("AHAHAH"));
-
         } catch(Exception e){
             e.printStackTrace();
         }

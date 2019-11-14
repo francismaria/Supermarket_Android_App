@@ -1,6 +1,7 @@
 package com.acme.server;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.security.cert.CertificateException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -190,7 +191,12 @@ public class RegisterAction {
 					
 			res.put("username", "example");
 			res.put("UUID", newUUID);
-			res.put("acmePK", KeyInstance.getPublicKey());
+			try {
+				res.put("acmePK", KeyInstance.getPublicKey());
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
 			
