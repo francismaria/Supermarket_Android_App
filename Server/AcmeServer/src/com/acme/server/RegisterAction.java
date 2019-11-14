@@ -70,7 +70,7 @@ public class RegisterAction {
 			return true;
 		return false;
 	}
-	
+	/*
 	@Path("/validate-username")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ public class RegisterAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
 	}
-
+*/
 	/**
 	 * Gets the new UUID of the new user.
 	 * 
@@ -188,8 +188,9 @@ public class RegisterAction {
 			
 			// registerNewUser(newUUID, req);
 					
+			res.put("username", "example");
 			res.put("UUID", newUUID);
-			res.put("acmePublicKey", KeyInstance.getPublicKey());
+			res.put("acmePK", KeyInstance.getPublicKey());
 			
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
 			

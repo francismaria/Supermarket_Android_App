@@ -32,7 +32,6 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
     protected void onPreExecute(){
         super.onPreExecute();
         builder = new AlertDialog.Builder(weakActivity.get());
-
     }
 
     @Override
@@ -69,8 +68,10 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
                 while ((line = rd.readLine()) != null) {
                     JSONObject jsonObject = new JSONObject(line);
+
+
+
                     // TODO: UPDATE SHARED PREFS WITH UUID AND ACME PK
-                    Log.i("LOGIN", jsonObject.toString());
                 }
             } else if(code == HTTPInfo.UNAUTHORIZED_CODE){
                 Log.e("LOGIN ACTION", "The credentials are wrong.");

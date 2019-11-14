@@ -20,9 +20,12 @@ import org.json.JSONObject;
 
 import feup.mieic.cmov.acme.connection.RegisterAction;
 import feup.mieic.cmov.acme.security.KeyInstance;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.regex.Pattern;
 
 // TODO: REMOVE ALL THE LOGS
@@ -30,6 +33,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private Toast filledFieldsToast;
+    private Toast unavailableToast;
 
     private boolean NAME_FILLED = false;
     private boolean EMAIL_FLLED = false;
@@ -46,8 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setSupportActionBarIcon();
         setInputValidators();
-
-        filledFieldsToast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
+        initToasts();
     }
 
     /** -------------------------------
@@ -62,6 +65,24 @@ public class RegisterActivity extends AppCompatActivity {
             bar.setDisplayShowHomeEnabled(true);
             bar.setTitle("Register");
         }
+    }
+
+    /** -------------------------------
+     *              TOASTS
+     *  ------------------------------- */
+
+    private void initToasts(){
+        filledFieldsToast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
+        unavailableToast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
+    }
+
+    private void showFilledFieldsToasts(){
+        filledFieldsToast.setText("Please fill all of the registration fields correctly.");
+        filledFieldsToast.show();
+    }
+
+    private void showUnavailableToast(){
+
     }
 
     /** -------------------------------
@@ -365,23 +386,10 @@ public class RegisterActivity extends AppCompatActivity {
         String pub = KeyInstance.getPubKey();
         return pub;
     }
-
-    private void initSharedPreferences(int uuid, String pk){
-        SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putString("current_user", KeyInstance.KEYNAME);
-        editor.putString("current_uuid", Integer.toString(uuid));
-        editor.putString("acmePK", "--");
-
-        editor.commit();
-    }
-
+    
     public void submitRegisterInformation(View view){
         if(!areFieldsFilled()){
-            filledFieldsToast.setText("Please fill all of the registration fields correctly.");
-            filledFieldsToast.show();
+            showFilledFieldsToasts();
         } else {
             JSONObject reqBody = new JSONObject();
 
@@ -403,23 +411,14 @@ public class RegisterActivity extends AppCompatActivity {
                 reqBody.put("cardNr", cardNr);
                 reqBody.put("cardExpDate", cardExpDate);
                 reqBody.put("cardCCV", cardCCV);
-
-                //    initSharedPreferences();
-
                 reqBody.put("publicKey", getPublicKeyUser(username));
 
                 // TODO : RECEIVE UUID FROM SERVER
-                initSharedPreferences(1, "pk");
 
-                Log.e("pub key", reqBody.getString("publicKey"));
+                SharedPrefsHolder.updateCurrentUser(username, 1, "ok", RegisterActivity.this);
 
-
-            } catch (JSONException e) {
-                // TODO : show toast error
-                e.printStackTrace();
-                return;
             } catch(Exception e){
-                // TODO : show toast error
+                showUnavailableToast();
                 e.printStackTrace();
                 return;
             }

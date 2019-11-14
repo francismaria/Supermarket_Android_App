@@ -26,6 +26,7 @@ import javax.security.auth.x500.X500Principal;
 
 public class KeyInstance {
 
+    private static boolean isKeySet = false;
     private static final int KEY_SIZE = 512;
     private static final String KEY_ALGO = "RSA";
     private static final int CERT_SERIAL = 12121212;
@@ -61,6 +62,9 @@ public class KeyInstance {
             kgen.initialize(spec);
 
             KeyPair kp = kgen.generateKeyPair();
+
+            isKeySet = true;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -69,6 +73,11 @@ public class KeyInstance {
     }
 
     public static String getPubKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
+        /*
+        * if(!isKeySet)
+        * generateKeyPair(sharedPreferences.getUsername())
+        * */
+
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         PublicKey pub = null;
         ks.load(null);

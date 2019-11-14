@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
 import feup.mieic.cmov.acme.ui.cart.CartViewModel;
 import feup.mieic.cmov.acme.ui.contact.ContactFragment;
@@ -74,17 +75,12 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // LOGOUT
-                SharedPreferences settings = HomeActivity.this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.remove("current_user");
-                editor.remove("uuid");
-                editor.remove("acmePK");
-                editor.commit();
-
+                SharedPrefsHolder.removeCurrentUser(HomeActivity.this);
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
             }
         });
+
+        Log.i("public key", SharedPrefsHolder.getAcmePublicKey(this));
     }
 
 

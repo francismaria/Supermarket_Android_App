@@ -2,7 +2,9 @@ package feup.mieic.cmov.acme.connection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -13,13 +15,20 @@ import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 
 import feup.mieic.cmov.acme.HomeActivity;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
+    private JSONObject res;
     private WeakReference<Context> weakActivity;
 
     // Security Keys
@@ -67,9 +76,8 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
             String line;
 
             while ((line = rd.readLine()) != null) {
-                JSONObject jsonObject = new JSONObject(line);
-                Log.i("LOGIN", jsonObject.toString());
-                // TODO: get supermarket key
+                res = new JSONObject(line);
+                Log.i("REGISTER", res.toString());
             }
 
         } catch(Exception e){
@@ -85,7 +93,24 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
-            weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
+            try{
+/*
+// this converted to decimal is the same key as the server
+                byte[] pub = Base64.decode(res.getString("acmePK"), 0);
+                X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(pub);
+                KeyFactory kf = KeyFactory.getInstance("RSA");
+
+                PublicKey pk = kf.generatePublic(X509publicKey);
+
+ */
+
+                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
+
+
+                weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         } else {
             // todo: show toast error
         }
