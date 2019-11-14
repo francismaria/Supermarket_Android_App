@@ -34,6 +34,16 @@ public class SharedPrefsHolder {
         editor.commit();
     }
 
+    public static String getUsername(Context c){
+        SharedPreferences settings = c.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        return settings.getString("username", null);
+    }
+
+    public static String getUUID(Context c){
+        SharedPreferences settings = c.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        return settings.getString("uuid", null);
+    }
+
     public static String getAcmePublicKey(Context c){
         SharedPreferences settings = c.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         return settings.getString("acmePK", null);

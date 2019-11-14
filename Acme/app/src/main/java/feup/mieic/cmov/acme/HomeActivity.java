@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         Log.i("public key", SharedPrefsHolder.getAcmePublicKey(this));
+        Log.i("current UUID", SharedPrefsHolder.getUUID(this));
     }
 
 

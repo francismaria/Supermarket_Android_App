@@ -20,6 +20,7 @@ import java.util.List;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.qrcodes.QRTag;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 
 public class CartFragment extends Fragment {
@@ -59,6 +60,8 @@ public class CartFragment extends Fragment {
                 byte[] c = new byte[10];
 
                 startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", c));
+
+
             }
         });
 

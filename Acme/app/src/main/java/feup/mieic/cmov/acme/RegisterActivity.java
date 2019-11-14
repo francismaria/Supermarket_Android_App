@@ -386,7 +386,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pub = KeyInstance.getPubKey();
         return pub;
     }
-    
+
     public void submitRegisterInformation(View view){
         if(!areFieldsFilled()){
             showFilledFieldsToasts();
@@ -412,11 +412,6 @@ public class RegisterActivity extends AppCompatActivity {
                 reqBody.put("cardExpDate", cardExpDate);
                 reqBody.put("cardCCV", cardCCV);
                 reqBody.put("publicKey", getPublicKeyUser(username));
-
-                // TODO : RECEIVE UUID FROM SERVER
-
-                SharedPrefsHolder.updateCurrentUser(username, 1, "ok", RegisterActivity.this);
-
             } catch(Exception e){
                 showUnavailableToast();
                 e.printStackTrace();
