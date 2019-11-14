@@ -21,7 +21,13 @@ public class Cryptography {
 
     private static final String ENC_ALG = "RSA/ECB/PKCS1Padding";
 
-    public static byte[] encrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+    private static byte[] getByteArray(String msg){
+        return msg.getBytes(StandardCharsets.ISO_8859_1);
+    }
+
+    public static byte[] encrypt(String msg, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+        byte[] arr = getByteArray(msg);
+
         if(key instanceof PrivateKey) {
             key = (PrivateKey)key;
         } else {
@@ -36,7 +42,9 @@ public class Cryptography {
         return arr;
     }
 
-    public static String decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+    public static String decrypt(String msg, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+        byte[] arr = getByteArray(msg);
+
         if(key instanceof PrivateKey) {
             key = (PrivateKey)key;
         } else {
