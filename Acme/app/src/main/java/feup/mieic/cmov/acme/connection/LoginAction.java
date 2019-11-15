@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import feup.mieic.cmov.acme.HomeActivity;
+import feup.mieic.cmov.acme.security.Cryptography;
+import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class LoginAction extends AsyncTask<String, Void, Boolean> {
@@ -104,6 +106,17 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
             try{
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
 
+                KeyInstance.generateKeyPair(weakActivity.get(), SharedPrefsHolder.getUsername(weakActivity.get()));
+
+                Log.e("pk", KeyInstance.getRawPublicKey());
+
+                Log.e("loginaction", "encrypt");
+
+                String dec = Cryptography.decrypt(Cryptography.encrypt("ahahah", KeyInstance.getPrivateKey()), KeyInstance.getPublicKey());
+
+                Log.e("loginaction", dec);
+
+                //Log.e("loginaction", KeyInstance.getPublicKey());
                 //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
 
                 Log.e("username", SharedPrefsHolder.getUsername(weakActivity.get()));

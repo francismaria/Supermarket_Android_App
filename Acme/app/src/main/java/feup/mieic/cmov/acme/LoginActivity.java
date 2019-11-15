@@ -50,16 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         String username = ((EditText)findViewById(R.id.loginUsername)).getText().toString();
         String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
 
-        Log.i("bool", Boolean.toString(isTextFieldEmpty(username)));
-
         if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
            toast.setText("Please fill both of the authentication fields.");
            toast.show();
         } else {
             new LoginAction(LoginActivity.this).execute(username, password);
         }
-
-        startActivity(new Intent(this, HomeActivity.class));
     }
 
     private boolean isTextFieldEmpty(String str){

@@ -383,7 +383,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String getPublicKeyUser(String username) throws Exception {
         KeyInstance.generateKeyPair(this, username);
-        String pub = KeyInstance.getPubKey();
+        String pub = KeyInstance.getRawPublicKey();
         return pub;
     }
 

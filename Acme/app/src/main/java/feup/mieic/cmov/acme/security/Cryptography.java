@@ -42,9 +42,7 @@ public class Cryptography {
         return arr;
     }
 
-    public static String decrypt(String msg, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
-        byte[] arr = getByteArray(msg);
-
+    public static String decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
         if(key instanceof PrivateKey) {
             key = (PrivateKey)key;
         } else {

@@ -3,6 +3,7 @@ package feup.mieic.cmov.acme.security;
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -38,10 +39,21 @@ public class KeyInstance {
         KEYNAME = KEYNAME + username;
     }
 
-    public static boolean generateKeyPair(Context context, String username) {
+    public static void generateKeyPair(Context context, String username) throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException {
 
         setKeyname(username);
 
+        KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
+        ks.load(null);
+
+        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+
+
+        Log.e("generateKeyPair", "entrou");
+        if (entry != null) { return; }
+
+
+        Log.e("generateKeyPair", "não exxiste");
         try {
             Calendar start = new GregorianCalendar();
             Calendar end = new GregorianCalendar();
@@ -67,17 +79,10 @@ public class KeyInstance {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public static String getPubKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
-        /*
-        * if(!isKeySet)
-        * generateKeyPair(sharedPreferences.getUsername())
-        * */
-
+    public static PublicKey getPublicKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         PublicKey pub = null;
         ks.load(null);
@@ -86,8 +91,39 @@ public class KeyInstance {
 
         if (entry != null) {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            return pub;
+        }
+        //generateKeyPair(sharedPreferences.getUsername())
+        return null;
+    }
+
+    public static String getRawPublicKey() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, UnrecoverableEntryException {
+        KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
+        PublicKey pub = null;
+        ks.load(null);
+
+        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+
+        if (entry != null) {
+            pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+
             byte[] publicKeyBytes = Base64.encode(pub.getEncoded(),0);
             return new String(publicKeyBytes);
+        }
+        //generateKeyPair(sharedPreferences.getUsername())
+        return null;
+    }
+
+
+    public static PrivateKey getPrivateKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
+        KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
+        PublicKey pub = null;
+        ks.load(null);
+
+        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+
+        if (entry != null) {
+            return ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
         }
         return null;
     }
