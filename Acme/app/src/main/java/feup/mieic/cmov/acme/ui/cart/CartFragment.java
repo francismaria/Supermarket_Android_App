@@ -65,9 +65,11 @@ public class CartFragment extends Fragment {
 
         root.findViewById(R.id.checkoutBtn).setOnClickListener(new View.OnClickListener(){
 
-            private JSONArray arr;
+            private static final int TAG_BYTES = 4;
+            private static final int PRODS_LENGTH_BYTE = 1;
 
-            private void getProducts() throws JSONException {
+            private JSONArray getProducts() throws JSONException {
+                JSONArray arr = new JSONArray();
                 List<ProductModel> prods = adapter.getCartProducts();
 
                 for(ProductModel p : prods){
@@ -80,6 +82,7 @@ public class CartFragment extends Fragment {
 
                     arr.put(item);
                 }
+                return arr;
             }
 
             @Override
@@ -91,31 +94,35 @@ public class CartFragment extends Fragment {
                 try {
 
                     JSONObject obj = new JSONObject();
-
-                    arr = new JSONArray();
-                    getProducts();
-
-                    obj.put("prods", arr);
+                    obj.put("prods", getProducts());
 
                     String prodsArrStr = obj.toString();
 
+                    final int PRODS_LENGTH = prodsArrStr.length();
+
                     ByteBuffer tag;
 
+
                     int tagId = 0x41636D65; // hxadecimal
-                    int len = 4 + 1 + prodsArrStr.length() + (512/8);
+                    final int MSG_LENGTH = TAG_BYTES + PRODS_LENGTH_BYTE + PRODS_LENGTH;
+                    int len = MSG_LENGTH + (512/8);
+
 
                     tag = ByteBuffer.allocate(len);
-                    tag.putInt(tagId);      // 4 bytes
-                    tag.put((byte)prodsArrStr.length());  // 1 byte
+
+                    tag.putInt(tagId);      // 4 bytes = int
+
+                    tag.put((byte)PRODS_LENGTH);  // 1 byte
+
                     tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
 
                     byte[] msg = tag.array();
 
                     Signature sg = Signature.getInstance("SHA256WithRSA");
                     sg.initSign(KeyInstance.getPrivateKey());
-                    sg.update(msg, 0, 5);           // 2 is nr + 1 (num prods +1)
+                    sg.update(msg, 0, MSG_LENGTH);
 
-                    int sz = sg.sign(msg, 5+prodsArrStr.length(), 512/8);
+                    int sz = sg.sign(msg, MSG_LENGTH, 512/8);
 
 
 
