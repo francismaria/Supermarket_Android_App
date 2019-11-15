@@ -127,26 +127,4 @@ public class KeyInstance {
         }
         return null;
     }
-
-    public static String encryptInfo(String info) throws Exception {
-
-        KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
-        PublicKey pub = null;
-        ks.load(null);
-
-        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
-
-        if (entry != null) {
-            final String ENC_ALGO = "RSA/ECB/PKCS1Padding";
-
-            pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
-
-            Cipher cipher = Cipher.getInstance(ENC_ALGO);
-            cipher.init(Cipher.ENCRYPT_MODE, pub);
-            byte[] encTag = cipher.doFinal(info.getBytes());
-
-            return Arrays.toString(encTag);
-        }
-        throw new Exception("Not possible to encrypt.");
-    }
 }
