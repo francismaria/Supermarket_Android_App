@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: open QR CODE READER
-                 CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
+                CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
                 try {
                     Intent intent = new Intent(ACTION_SCAN);
                     intent.putExtra("SCAN_MODE",  "QR_CODE_MODE");
@@ -115,22 +115,26 @@ public class HomeFragment extends Fragment {
         startActivity(qrAct);*/
     }
 
-    // TODO : DECODE QRCODE
     private void decodeQRCode(byte[] encTag){
         try{
             PublicKey acmePK = SharedPrefsHolder.getAcmePublicKey(Objects.requireNonNull(this.getActivity()));
             byte[] clearTag = Cryptography.decrypt(encTag, acmePK);
 
             ByteBuffer tag = ByteBuffer.wrap(clearTag);
+            // Tag ID
             int tId = tag.getInt();
+            // UUID
             UUID id = new UUID(tag.getLong(), tag.getLong());
+            // Price
             int euros = tag.getInt();
             int cents = tag.getInt();
+            // Product Name
             byte[] bName = new byte[tag.get()];
             tag.get(bName);
             String name = new String(bName, StandardCharsets.ISO_8859_1);
+            String priceStr = euros + "." + cents;
 
-            Log.e("OKOK", name + " " + Integer.toString(euros));
+            CartViewModel.addProduct(new ProductModel(id.toString(), name, "1", priceStr));
 
         } catch(Exception e){
             // TODO: show toast with text : "A problem occured during the QR code reading"
