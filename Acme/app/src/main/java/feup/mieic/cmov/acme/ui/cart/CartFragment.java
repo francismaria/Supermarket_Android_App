@@ -99,32 +99,25 @@ public class CartFragment extends Fragment {
                     String prodsArrStr = obj.toString();
 
                     final int PRODS_LENGTH = prodsArrStr.length();
-
-                    ByteBuffer tag;
-
-
                     int tagId = 0x41636D65; // hxadecimal
                     final int MSG_LENGTH = TAG_BYTES + PRODS_LENGTH_BYTE + PRODS_LENGTH;
                     int len = MSG_LENGTH + (512/8);
 
 
-                    tag = ByteBuffer.allocate(len);
+                    ByteBuffer tag = ByteBuffer.allocate(len);
 
                     tag.putInt(tagId);      // 4 bytes = int
-
                     tag.put((byte)PRODS_LENGTH);  // 1 byte
-
                     tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
 
                     byte[] msg = tag.array();
 
+                    // Create Digital Signature
+
                     Signature sg = Signature.getInstance("SHA256WithRSA");
                     sg.initSign(KeyInstance.getPrivateKey());
                     sg.update(msg, 0, MSG_LENGTH);
-
-                    int sz = sg.sign(msg, MSG_LENGTH, 512/8);
-
-
+                    sg.sign(msg, MSG_LENGTH, 512/8);
 
                     startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", msg));
                 } catch(Exception e){
@@ -133,10 +126,6 @@ public class CartFragment extends Fragment {
                 }
             }
         });
-
         return root;
     }
-
-
-
 }
