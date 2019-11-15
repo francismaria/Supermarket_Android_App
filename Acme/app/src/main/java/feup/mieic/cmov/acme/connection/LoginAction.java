@@ -108,15 +108,11 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
 
                 KeyInstance.generateKeyPair(weakActivity.get(), SharedPrefsHolder.getUsername(weakActivity.get()));
 
-                Log.e("pk", KeyInstance.getRawPublicKey());
-
+                /*
                 Log.e("loginaction", "encrypt");
-
                 String dec = Cryptography.decrypt(Cryptography.encrypt("ahahah", KeyInstance.getPrivateKey()), KeyInstance.getPublicKey());
+*/
 
-                Log.e("loginaction", dec);
-
-                //Log.e("loginaction", KeyInstance.getPublicKey());
                 //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
 
                 Log.e("username", SharedPrefsHolder.getUsername(weakActivity.get()));

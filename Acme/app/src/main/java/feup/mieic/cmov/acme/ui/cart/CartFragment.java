@@ -16,10 +16,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.qrcodes.QRTag;
+import feup.mieic.cmov.acme.security.Cryptography;
+import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 
@@ -55,11 +59,16 @@ public class CartFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                byte[] c = new byte[10];
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("test", "example");
+                    byte[] info = Cryptography.encrypt(obj.toString(), KeyInstance.getPrivateKey());
 
-                startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", c));
-
-
+                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", info));
+                } catch(Exception e){
+                    // show toast
+                    e.printStackTrace();
+                }
             }
         });
 
