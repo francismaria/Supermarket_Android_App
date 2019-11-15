@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: open QR CODE READER
-                // CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
+                 CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
                 try {
                     Intent intent = new Intent(ACTION_SCAN);
                     intent.putExtra("SCAN_MODE",  "QR_CODE_MODE");
@@ -73,12 +73,6 @@ public class HomeFragment extends Fragment {
                 //genTag();
             }
         });
-
-        try{
-            SharedPreferences settings = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
 
         return root;
     }

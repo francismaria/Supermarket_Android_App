@@ -30,6 +30,10 @@ public class CartAdapter extends RecyclerView.Adapter {
         this.notifyDataSetChanged();
     }
 
+    public List<ProductModel> getCartProducts(){
+        return prods;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

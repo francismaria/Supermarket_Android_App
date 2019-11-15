@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,8 +17,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import feup.mieic.cmov.acme.R;
@@ -57,16 +61,44 @@ public class CartFragment extends Fragment {
 
         root.findViewById(R.id.checkoutBtn).setOnClickListener(new View.OnClickListener(){
 
+            private JSONArray arr;
+
+            private void getProducts() throws JSONException {
+                List<ProductModel> prods = adapter.getCartProducts();
+
+                for(ProductModel p : prods){
+                    JSONObject item = new JSONObject();
+
+                    item.put("productID", p.getID());
+                    item.put("productName", p.getName());
+                    item.put("productPrice", p.getPrice());
+                    item.put("productQty", p.getQty());
+
+                    arr.put(item);
+                }
+            }
+
             @Override
             public void onClick(View v) {
+
+
+                if(adapter.getItemCount() == 0)
+                    return; // TODO show toast saying cart is null
+
                 try {
                     JSONObject obj = new JSONObject();
-                    obj.put("test", "example");
-                    byte[] info = Cryptography.encrypt(obj.toString(), KeyInstance.getPrivateKey());
+                    arr = new JSONArray();
 
-                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", info));
+                    getProducts();
+
+                    obj.put("prods", arr);
+                    //byte[] info = Cryptography.encrypt(obj.toString(), KeyInstance.getPrivateKey());
+
+                    Log.e("arr", obj.toString());
+
+                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", obj.toString().getBytes(StandardCharsets.ISO_8859_1)));
                 } catch(Exception e){
-                    // show toast
+                    // show toast error
                     e.printStackTrace();
                 }
             }
