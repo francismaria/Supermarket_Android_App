@@ -15,7 +15,7 @@ public class Cryptography {
 	
 	private static final String ENC_ALG = "RSA/ECB/PKCS1Padding";
 
-	public static String encrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+	public static byte[] encrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
 		if(key instanceof PrivateKey) {
 			key = (PrivateKey)key;
 		} else {
@@ -27,7 +27,7 @@ public class Cryptography {
 	    
 	    arr = cipher.doFinal(arr);
 	    
-	    return new String(arr);
+	    return arr;
 	}
 
 	public static String decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {

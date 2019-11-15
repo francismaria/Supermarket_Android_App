@@ -18,8 +18,9 @@ import com.sun.jersey.core.util.Base64;
 
 public class KeyInstance {
 
-	private static final String KEYSTORE_PATH = "///Users/francisco/acme-keystore.p12";
-    private static final String CERTIFICATE_PATH = "///Users/francisco/Documents/FEUP/Projetos/CMOV/Server/server_certificate.cer";
+	private static final String ALIAS = "acme";
+	private static final String KEYSTORE_PATH = "///Users/francisco/acme-server-keystore.p12";
+    private static final String CERTIFICATE_PATH = "///Users/francisco/acme_certificate.cer";
     
     public static String getPublicKey() throws FileNotFoundException, CertificateException, UnsupportedEncodingException {
     	FileInputStream fin = new FileInputStream(CERTIFICATE_PATH);
@@ -38,8 +39,7 @@ public class KeyInstance {
         KeyStore keystore = KeyStore.getInstance("PKCS12");
         keystore.load(is, "password".toCharArray());
 
-        String alias = "senderKeyPair";
-
-        return (PrivateKey) keystore.getKey(alias, "password".toCharArray());
+       
+        return (PrivateKey) keystore.getKey(ALIAS, "password".toCharArray());
     }
 } 
