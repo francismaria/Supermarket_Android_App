@@ -2,10 +2,7 @@ package feup.mieic.cmov.acme.ui.cart;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -108,7 +105,7 @@ public class CartFragment extends Fragment {
 
                     tag.putInt(tagId);      // 4 bytes = int
                     tag.put((byte)PRODS_LENGTH);  // 1 byte
-                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
+                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));     // TODO: instead of this do i have to pass the products as BYTEVALUE??
 
                     byte[] msg = tag.array();
 

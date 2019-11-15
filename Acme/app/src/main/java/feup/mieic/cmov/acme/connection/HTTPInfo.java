@@ -5,21 +5,21 @@ package feup.mieic.cmov.acme.connection;
  */
 public interface HTTPInfo {
 
-    String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/api/login";
+    // Emulator ( http://10.0.2.2:8080/ )
 
-    String REGISTER_PATH = "http://10.0.2.2:8080/AcmeServer/api/register";
+    String LOGIN_PATH = "http://192.168.1.74:8080/AcmeServer/api/login";
 
-    String PROFILE_PATH = "http://10.0.2.2:8080/AcmeServer/api/profile";
+    String REGISTER_PATH = "http://192.168.1.74:8080/AcmeServer/api/register";
 
-    String CONTACT_PATH = "http://10.0.2.2:8080/AcmeServer/api/contact";
+    String PROFILE_PATH = "http://192.168.1.74:8080/AcmeServer/api/profile";
 
-    String HISTORY_PATH = "http://10.0.2.2:8080/AcmeServer/api/history";
+    String CONTACT_PATH = "http://192.168.1.74:8080/AcmeServer/api/contact";
 
-    String GET_ORDER_INFO_PATH = "http://10.0.2.2:8080/AcmeServer/api/order";
+    String HISTORY_PATH = "http://192.168.1.74:8080/AcmeServer/api/history";
 
-    String VOUCHERS_PATH = "http://10.0.2.2:8080/AcmeServer/api/vouchers";
+    String GET_ORDER_INFO_PATH = "http://192.168.1.74:8080/AcmeServer/api/order";
 
-    String VALIDATE_USERNAME_PATH = "http://localhost:8080/AcmeServer/api/register/validate-username";
+    String VOUCHERS_PATH = "http://192.168.1.74:8080/AcmeServer/api/vouchers";
 
     // HTTP response codes
 

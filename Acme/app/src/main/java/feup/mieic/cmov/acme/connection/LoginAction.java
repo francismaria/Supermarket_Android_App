@@ -98,10 +98,11 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         if(!success) {
-            builder.setTitle("Error Message");
+            /*builder.setTitle("Error Message");
             builder.setMessage(ERROR_MSG);
             AlertDialog dialog = builder.create();
-            dialog.show();
+            dialog.show();*/
+            Log.e("okok", "error");
         } else {
             try{
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
