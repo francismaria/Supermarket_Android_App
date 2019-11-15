@@ -42,6 +42,21 @@ public class Cryptography {
         return arr;
     }
 
+    public static byte[] encrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if(key instanceof PrivateKey) {
+            key = (PrivateKey)key;
+        } else {
+            key = (PublicKey)key;
+        }
+
+        Cipher cipher = Cipher.getInstance(ENC_ALG);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        arr = cipher.doFinal(arr);
+
+        return arr;
+    }
+
     public static String decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
         if(key instanceof PrivateKey) {
             key = (PrivateKey)key;

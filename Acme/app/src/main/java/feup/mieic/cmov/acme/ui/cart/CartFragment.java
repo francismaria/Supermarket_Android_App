@@ -2,6 +2,7 @@ package feup.mieic.cmov.acme.ui.cart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.PointerIcon;
@@ -21,8 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.security.Signature;
 import java.util.List;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.qrcodes.QRTag;
@@ -81,22 +85,41 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
                 if(adapter.getItemCount() == 0)
                     return; // TODO show toast saying cart is null
 
                 try {
-                    JSONObject obj = new JSONObject();
-                    arr = new JSONArray();
 
+                    JSONObject obj = new JSONObject();
+
+                    arr = new JSONArray();
                     getProducts();
 
                     obj.put("prods", arr);
-                    //byte[] info = Cryptography.encrypt(obj.toString(), KeyInstance.getPrivateKey());
 
-                    Log.e("arr", obj.toString());
+                    String prodsArrStr = obj.toString();
 
-                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", obj.toString().getBytes(StandardCharsets.ISO_8859_1)));
+                    ByteBuffer tag;
+
+                    int tagId = 0x41636D65; // hxadecimal
+                    int len = 4 + 1 + prodsArrStr.length() + (512/8);
+
+                    tag = ByteBuffer.allocate(len);
+                    tag.putInt(tagId);      // 4 bytes
+                    tag.put((byte)prodsArrStr.length());  // 1 byte
+                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
+
+                    byte[] msg = tag.array();
+
+                    Signature sg = Signature.getInstance("SHA256WithRSA");
+                    sg.initSign(KeyInstance.getPrivateKey());
+                    sg.update(msg, 0, 5);           // 2 is nr + 1 (num prods +1)
+
+                    int sz = sg.sign(msg, 5+prodsArrStr.length(), 512/8);
+
+
+
+                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", msg));
                 } catch(Exception e){
                     // show toast error
                     e.printStackTrace();
