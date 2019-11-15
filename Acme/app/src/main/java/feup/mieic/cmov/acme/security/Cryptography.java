@@ -1,13 +1,16 @@
 package feup.mieic.cmov.acme.security;
 
+import android.util.Base64;
 import android.util.Log;
 
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
@@ -57,7 +60,7 @@ public class Cryptography {
         return arr;
     }
 
-    public static String decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
+    public static byte[] decrypt(byte[] arr, Key key) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
         if(key instanceof PrivateKey) {
             key = (PrivateKey)key;
         } else {
@@ -69,6 +72,6 @@ public class Cryptography {
 
         arr = cipher.doFinal(arr);
 
-        return new String(arr);
+        return arr;
     }
 }

@@ -118,7 +118,10 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 
                 Log.e("testencrypt", Arrays.toString(bs));
 */
+
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
+
+
 
                 //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
 

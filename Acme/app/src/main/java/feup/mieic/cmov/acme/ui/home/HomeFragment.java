@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -36,6 +37,7 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 
 import feup.mieic.cmov.acme.qrcodes.QRTag;
+import feup.mieic.cmov.acme.security.Cryptography;
 import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
@@ -115,7 +117,25 @@ public class HomeFragment extends Fragment {
 
     // TODO : DECODE QRCODE
     private void decodeQRCode(byte[] encTag){
+        try{
+            PublicKey acmePK = SharedPrefsHolder.getAcmePublicKey(Objects.requireNonNull(this.getActivity()));
+            byte[] clearTag = Cryptography.decrypt(encTag, acmePK);
 
+            ByteBuffer tag = ByteBuffer.wrap(clearTag);
+            int tId = tag.getInt();
+            UUID id = new UUID(tag.getLong(), tag.getLong());
+            int euros = tag.getInt();
+            int cents = tag.getInt();
+            byte[] bName = new byte[tag.get()];
+            tag.get(bName);
+            String name = new String(bName, StandardCharsets.ISO_8859_1);
+
+            Log.e("OKOK", name + " " + Integer.toString(euros));
+
+        } catch(Exception e){
+            // TODO: show toast with text : "A problem occured during the QR code reading"
+            return;
+        }
     }
 
     @Override
