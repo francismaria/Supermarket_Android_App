@@ -101,7 +101,7 @@ public class KeyInstance {
         KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
 
         if (entry != null) {
-            final String ENC_ALGO = "RSA/NONE/PKCS1Padding";
+            final String ENC_ALGO = "RSA/ECB/PKCS1Padding";
 
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
 

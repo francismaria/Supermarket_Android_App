@@ -37,14 +37,6 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
     private JSONObject res;
     private WeakReference<Context> weakActivity;
 
-    // Security Keys
-    private PrivateKey pri;
-    private PublicKey pub;
-    private static final int KEY_SIZE = 512;
-    private static final String KEY_ALGO = "RSA";
-    private static final int CERT_SERIAL = 12121212;
-    private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
-
     public RegisterAction(Context context){
         weakActivity = new WeakReference<>(context);
     }
@@ -128,7 +120,7 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
 */
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
 
-                Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
+                //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
 
 
 

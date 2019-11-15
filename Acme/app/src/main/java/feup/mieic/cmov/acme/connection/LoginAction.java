@@ -2,6 +2,7 @@ package feup.mieic.cmov.acme.connection;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,7 +18,12 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import feup.mieic.cmov.acme.HomeActivity;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
+
 public class LoginAction extends AsyncTask<String, Void, Boolean> {
+
+    private JSONObject res;
 
     private WeakReference<Context> weakActivity;
 
@@ -56,52 +62,56 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
             os.write(obj.toString().getBytes("UTF-8"));
             os.close();
 
-            Log.i("LOGIN ACTION", "request POST sent");
-
             int code = urlConnection.getResponseCode();
 
             if (code == HTTPInfo.SUCCESS_CODE) {
-                Log.i("LOGIN ACTION", "OK");
-
                 BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 String line;
 
                 while ((line = rd.readLine()) != null) {
-                    JSONObject jsonObject = new JSONObject(line);
-
-
-
-                    // TODO: UPDATE SHARED PREFS WITH UUID AND ACME PK
+                    res = new JSONObject(line);
                 }
+                return true;
             } else if(code == HTTPInfo.UNAUTHORIZED_CODE){
                 ERROR_MSG = "Please check your credentials.\nThese are incorrect.";
-                return true;
+                return false;
             } else {
                 throw new IOException("Invalid response from server: " + code);
             }
         } catch(ConnectException exc){
             ERROR_MSG = "No connectivity.";
-            return true;
+            return false;
 
 
         } catch (Exception e) {
             Log.e("LOGIN ACTION", e.getMessage());
-            return true;
+            return false;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
-        return false;
     }
 
     @Override
-    protected void onPostExecute(Boolean error) {
-        if(error) {
+    protected void onPostExecute(Boolean success) {
+        if(!success) {
             builder.setTitle("Error Message");
             builder.setMessage(ERROR_MSG);
             AlertDialog dialog = builder.create();
             dialog.show();
+        } else {
+            try{
+                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
+
+                //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
+
+                Log.e("username", SharedPrefsHolder.getUsername(weakActivity.get()));
+
+                weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }
