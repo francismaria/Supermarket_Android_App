@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e("handle_reading", "READ");
 
         String encodedTag = Base64.encodeToString(tag, Base64.DEFAULT);
-        //return encodedTag;
 
         new CheckoutAction().execute(encodedTag);
 /*

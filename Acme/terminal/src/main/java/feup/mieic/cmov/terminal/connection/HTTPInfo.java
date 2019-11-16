@@ -2,6 +2,11 @@ package feup.mieic.cmov.terminal.connection;
 
 /**
  * This interface contains constants related to the connection to the server.
+ *
+ * To test the app in Android cellphone, it must be connected to the same network
+ * as the server.
+ *
+ *
  */
 public interface HTTPInfo {
 

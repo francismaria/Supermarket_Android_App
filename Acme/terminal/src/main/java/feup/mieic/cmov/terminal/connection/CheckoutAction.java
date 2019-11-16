@@ -7,6 +7,8 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -38,13 +40,20 @@ public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
             os.write(msg.getBytes("UTF-8"));
             os.close();
 
-            Log.i("CHECKOUT ACTION", "request POST sent" + msg);
+            Log.i("CHECKOUT ACTION", "request POST sent");
 
             int code = urlConnection.getResponseCode();
 
             if (code == HTTPInfo.SUCCESS_CODE) {
 
+                Log.i("HISTORY ACTION", "OK");
+                BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                String line;
 
+                while ((line = rd.readLine()) != null) {
+                    //res = new JSONObject(line);
+                    Log.i("PROFILE", line.toString());
+                }
             } else {
                 Log.e("Contact Action", "Server error");
                 return false;

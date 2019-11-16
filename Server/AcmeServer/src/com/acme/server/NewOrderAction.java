@@ -3,18 +3,25 @@ package com.acme.server;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.KeyFactory;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.Signature;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.UUID;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -53,6 +60,17 @@ public class NewOrderAction {
 		connection.close();
 	}
 	
+	private PublicKey getUserPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
+		/*String stringPK = null;		// get pk from the database
+		byte[] publicKeyBytes = Base64.decode(stringPK);
+		
+		X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(publicKeyBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+
+        PublicKey pk = kf.generatePublic(X509publicKey);
+        return pk;*/ return null;
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +83,24 @@ public class NewOrderAction {
 			// get user's public key to decrypt the digital signature
 			// verify signature
 			
-			byte[] tag = Base64.decode(data);
+			byte[] msg = Base64.decode(data);
+			
+			ByteBuffer tag = ByteBuffer.wrap(msg);
+            // Tag ID
+            int tId = tag.getInt();
+            // UUID
+            UUID id = new UUID(tag.getLong(), tag.getLong());
+            // Price
+            int euros = tag.getInt();
+            int cents = tag.getInt();
+            // Product Name
+            byte[] bName = new byte[tag.get()];
+            tag.get(bName);
+            String name = new String(bName, StandardCharsets.ISO_8859_1);
+            String priceStr = euros + "." + cents;
+			
+			
+			PublicKey pk = getUserPublicKey();
 			/*
 			 * 
 			 *            
@@ -105,7 +140,7 @@ public class NewOrderAction {
 		         System.out.println("Signature failed");
 		      }*/
 			
-			return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(name.toString()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
