@@ -103,6 +103,7 @@ public class CartFragment extends Fragment {
 
                     ByteBuffer tag = ByteBuffer.allocate(len);
 
+                    // TODO : ADD HERE THE USER ID
                     tag.putInt(tagId);      // 4 bytes = int
                     tag.put((byte)PRODS_LENGTH);  // 1 byte
                     tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));     // TODO: instead of this do i have to pass the products as BYTEVALUE??

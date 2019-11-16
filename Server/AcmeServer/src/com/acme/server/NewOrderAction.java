@@ -67,6 +67,26 @@ public class NewOrderAction {
 			
 			byte[] tag = Base64.decode(data);
 			/*
+			 * 
+			 *            
+			 *             
+			
+			ByteBuffer tag = ByteBuffer.wrap(clearTag);
+            // Tag ID
+            int tId = tag.getInt();
+            // UUID
+            UUID id = new UUID(tag.getLong(), tag.getLong());
+            // Price
+            int euros = tag.getInt();
+            int cents = tag.getInt();
+            // Product Name
+            byte[] bName = new byte[tag.get()];
+            tag.get(bName);
+            String name = new String(bName, StandardCharsets.ISO_8859_1);
+            String priceStr = euros + "." + cents;
+
+
+
 			Signature sg = Signature.getInstance("SHA256WithRSA");
 			// get client public key
 			sg.initVerify();

@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //return encodedTag;
 
         new CheckoutAction().execute(encodedTag);
-
-        /* TODO: send message to server
+/*
         *  TODO: show progress bar while waiting for server's response
         *  TODO: show a dialog to let the user know if the transaction was or not successful
         * */
