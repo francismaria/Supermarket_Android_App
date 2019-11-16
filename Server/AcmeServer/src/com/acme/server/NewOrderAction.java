@@ -1,9 +1,13 @@
 package com.acme.server;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.Signature;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.sql.Connection;
@@ -12,7 +16,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +32,7 @@ import org.json.JSONObject;
 import com.acme.server.database.DBConnection;
 import com.acme.server.security.Cryptography;
 import com.acme.server.security.KeyInstance;
+import com.sun.jersey.core.util.Base64;
 
 /* ------------------------------------- *
  *			 NEW ORDER ACTION
@@ -44,7 +52,48 @@ public class NewOrderAction {
 	private void closeConnection() throws SQLException {
 		connection.close();
 	}
-
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response newOrderAction(String data) {
+		if(connection == null) 
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		
+		try {
+			
+			// get user's public key to decrypt the digital signature
+			// verify signature
+			
+			byte[] tag = Base64.decode(data);
+			/*
+			Signature sg = Signature.getInstance("SHA256WithRSA");
+			// get client public key
+			sg.initVerify();
+			sg.verify(tag);*/
+			/*
+		      //Initializing the signature
+		      sign.initVerify(pair.getPublic());
+		      sign.update(bytes);
+		      
+		      //Verifying the signature
+		      boolean bool = sign.verify(signature);
+		      
+		      if(bool) {
+		         System.out.println("Signature verified");   
+		      } else {
+		         System.out.println("Signature failed");
+		      }*/
+			
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(null).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
+		}
+		
+				
+	}
+/*
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -66,12 +115,12 @@ public class NewOrderAction {
 
 			
 			String res = Arrays.toString(Cryptography.encrypt(arr, KeyInstance.getPrivateKey()));
-					*/
+					
 			closeConnection();
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		}
-	}
+	}*/
 }

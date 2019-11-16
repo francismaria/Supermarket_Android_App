@@ -33,6 +33,16 @@ public class KeyInstance {
         return new String(publicKeyBytes, "UTF-8");
     }
     
+    public static PublicKey getPublicKeyObject() throws FileNotFoundException, CertificateException, UnsupportedEncodingException {
+    	FileInputStream fin = new FileInputStream(CERTIFICATE_PATH);
+    	
+    	CertificateFactory f = CertificateFactory.getInstance("X.509");
+        X509Certificate certificate = (X509Certificate)f.generateCertificate(fin);
+        PublicKey pk = certificate.getPublicKey();
+        
+        return pk;
+    }
+    
     public static PrivateKey getPrivateKey() throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException {
     	FileInputStream is = new FileInputStream(KEYSTORE_PATH);
 

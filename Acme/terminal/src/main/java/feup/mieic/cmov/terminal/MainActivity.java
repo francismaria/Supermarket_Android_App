@@ -9,11 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import java.nio.charset.StandardCharsets;
+
+import feup.mieic.cmov.terminal.connection.CheckoutAction;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +48,15 @@ public class MainActivity extends AppCompatActivity {
     public void handleReading(byte[] tag){
         Log.e("handle_reading", "READ");
 
+        String encodedTag = Base64.encodeToString(tag, Base64.DEFAULT);
+        //return encodedTag;
 
-        // TODO: send message to server
+        new CheckoutAction().execute(encodedTag);
+
+        /* TODO: send message to server
+        *  TODO: show progress bar while waiting for server's response
+        *  TODO: show a dialog to let the user know if the transaction was or not successful
+        * */
     }
 
     @Override
