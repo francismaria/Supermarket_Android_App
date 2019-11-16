@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: upon successful reading, show text showing that checkout is being processed
     public void handleReading(byte[] tag){
-        Log.e("handle_reading", "READ");
+        Log.e("handle_reading", new String(tag));
 
-        String encodedTag = Base64.encodeToString(tag, Base64.DEFAULT);
+        String encodedTag = Base64.encodeToString(tag, Base64.NO_WRAP);
+
+        Log.e("handle_reading", new String(Base64.decode(encodedTag, Base64.NO_WRAP)));
 
         new CheckoutAction().execute(encodedTag);
 /*

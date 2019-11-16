@@ -82,24 +82,27 @@ public class NewOrderAction {
 			
 			// get user's public key to decrypt the digital signature
 			// verify signature
+
+			
+			/*JSONObject req = new JSONObject(data);
+			byte[] msg = Base64.decode(req.getString("msg"));
+			*/
 			
 			byte[] msg = Base64.decode(data);
 			
 			ByteBuffer tag = ByteBuffer.wrap(msg);
-            // Tag ID
-            int tId = tag.getInt();
-            // UUID
-            UUID id = new UUID(tag.getLong(), tag.getLong());
-            // Price
-            int euros = tag.getInt();
-            int cents = tag.getInt();
-            // Product Name
-            byte[] bName = new byte[tag.get()];
-            tag.get(bName);
-            String name = new String(bName, StandardCharsets.ISO_8859_1);
-            String priceStr = euros + "." + cents;
-			
-			
+			int sign_size = 512/8;
+		    int mess_size = msg.length - sign_size;
+            
+		    byte[] mess = new byte[mess_size];
+		    byte[] sign = new byte[sign_size];
+		    tag.get(mess, 0, mess_size);
+		    tag.get(sign, 0, sign_size);
+		    //boolean verified = validate(mess, sign);
+		      
+		    JSONObject res = new JSONObject();
+		    res.put("msg", new String(msg));
+		      
 			PublicKey pk = getUserPublicKey();
 			/*
 			 * 
@@ -140,7 +143,7 @@ public class NewOrderAction {
 		         System.out.println("Signature failed");
 		      }*/
 			
-			return Response.status(HTTPCodes.SUCCESS_CODE).entity(name.toString()).build();
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(msg).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
