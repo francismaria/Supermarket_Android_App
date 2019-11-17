@@ -49,7 +49,6 @@ public class ProfileAction {
 			res = null;
 			return;
 		}
-		
 		res.put("cardNr", rs.getString("NUMBER"));
 		res.put("cardExpDate", rs.getString("EXP_DATE"));
 		res.put("cardCCV", rs.getString("CCV"));
@@ -59,7 +58,7 @@ public class ProfileAction {
 		final String stmt = "SELECT NAME, USERNAME, EMAIL, CARD_ID FROM USERS WHERE UUID = ?";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		
 		ResultSet rs = pStmt.executeQuery();
 		

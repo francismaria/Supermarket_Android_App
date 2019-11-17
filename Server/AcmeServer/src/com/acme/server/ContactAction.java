@@ -36,7 +36,7 @@ public class ContactAction {
 		final String stmt = "SELECT EMAIL FROM USERS WHERE UUID = ?";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		
 		ResultSet rs = pStmt.executeQuery();
 		

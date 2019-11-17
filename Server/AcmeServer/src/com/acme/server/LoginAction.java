@@ -1,5 +1,8 @@
 package com.acme.server;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.internal.util.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +56,7 @@ public class LoginAction {
 		}
 		
 		res.put("username", rs.getString("USERNAME"));
-		res.put("UUID", rs.getInt("UUID"));
+		res.put("UUID", rs.getString("UUID"));
 	}
 	
 	@POST

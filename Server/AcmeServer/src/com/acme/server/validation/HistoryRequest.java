@@ -1,10 +1,12 @@
 package com.acme.server.validation;
 
+import java.util.UUID;
+
 import org.json.JSONObject;
 
 public class HistoryRequest extends Request {
 	
-	private int UUID;
+	private UUID UUID;
 	private String publicKey;
 	
 	private JSONObject obj;
@@ -13,7 +15,7 @@ public class HistoryRequest extends Request {
 		if(!obj.has("UUID")) {
 			throw new Exception("UUID was not specified");
 		}
-		this.UUID = obj.getInt("UUID");
+		this.UUID = java.util.UUID.fromString(obj.getString("UUID"));
 	}
 	
 	private void setKeys() {
@@ -32,8 +34,8 @@ public class HistoryRequest extends Request {
 		setKeys();
 	}
 	
-	public int getUUID() {
-		return UUID;
+	public UUID getUUID() {
+		return this.UUID;
 	}
 	
 	public String getPublicKey() {

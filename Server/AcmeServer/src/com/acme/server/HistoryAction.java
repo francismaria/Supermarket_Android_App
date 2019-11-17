@@ -49,7 +49,7 @@ public class HistoryAction {
 		final String stmt = "SELECT ID, DATE, TOTAL_COST FROM TRANSACTIONS WHERE USER_ID = ?";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		
 		ResultSet rs = pStmt.executeQuery();
 		JSONArray itemsArr = new JSONArray();
@@ -90,9 +90,5 @@ public class HistoryAction {
 		} catch (SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(e.getMessage()).build();
 		}
-		/*
-		if(!publicKeyMatches()) {
-			
-		}*/
 	}
 }

@@ -2,8 +2,10 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
+import java.util.UUID;
+
 public class VouchersRequest extends Request {
-	private int UUID;
+	private UUID UUID;
 	private String publicKey;
 	
 	private JSONObject obj;
@@ -12,13 +14,12 @@ public class VouchersRequest extends Request {
 		if(!obj.has("UUID")) {
 			throw new Exception("UUID was not specified");
 		}
-		this.UUID = obj.getInt("UUID");
+		this.UUID = java.util.UUID.fromString(obj.getString("UUID"));
 	}
 	
 	private void setKeys() {
 		try {
 			setUUID();
-			//setPublicKey();
 		} catch(Exception e) {
 			setAsInvalid(e.getMessage());
 		}
@@ -31,7 +32,7 @@ public class VouchersRequest extends Request {
 		setKeys();
 	}
 	
-	public int getUUID() {
+	public UUID getUUID() {
 		return UUID;
 	}
 

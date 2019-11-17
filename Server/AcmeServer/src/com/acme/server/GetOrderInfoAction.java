@@ -49,7 +49,7 @@ public class GetOrderInfoAction {
 		final String stmt = "SELECT DATE, VOUCHERS, TOTAL_COST FROM TRANSACTIONS WHERE TRANSACTIONS.USER_ID = ? AND TRANSACTIONS.ID = ?;";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		pStmt.setInt(2, req.getOrderID());
 		
 		ResultSet rs = pStmt.executeQuery();
@@ -58,7 +58,6 @@ public class GetOrderInfoAction {
 			res = null;
 			return;
 		}
-		
 		res.put("orderID", req.getOrderID());
 		res.put("vouchers", rs.getInt("VOUCHERS"));
 		res.put("date", rs.getString("DATE"));
@@ -71,10 +70,9 @@ public class GetOrderInfoAction {
 		getGeneralInformation();
 		
 		final String stmt = "SELECT PRODUCT_ID, NAME, PRICE, QUANTITY FROM TRANSACTIONS INNER JOIN HISTORY ON TRANSACTIONS.ID = HISTORY.TRANSACTION_ID INNER JOIN PRODUCTS ON HISTORY.PRODUCT_ID = PRODUCTS.UUID WHERE TRANSACTIONS.USER_ID = ? AND TRANSACTIONS.ID = ?;";
-		
 				
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		pStmt.setInt(2, req.getOrderID());
 		
 		ResultSet rs = pStmt.executeQuery();

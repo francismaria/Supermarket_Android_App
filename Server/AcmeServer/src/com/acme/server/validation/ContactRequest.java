@@ -2,8 +2,10 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
+import java.util.UUID;
+
 public class ContactRequest extends Request {
-	private int UUID;
+	private UUID UUID;
 	private String msg;
 	private JSONObject obj;
 	
@@ -11,7 +13,7 @@ public class ContactRequest extends Request {
 		if(!obj.has("UUID")) {
 			throw new Exception("UUID was not specified");
 		}
-		UUID = obj.getInt("UUID");
+		UUID = java.util.UUID.fromString(obj.getString("UUID"));
 	}
 	
 	private void setMsg() throws Exception {
@@ -38,7 +40,7 @@ public class ContactRequest extends Request {
 		setKeys();
 	}
 
-	public int getUUID() {
+	public UUID getUUID() {
 		return UUID;
 	}
 	

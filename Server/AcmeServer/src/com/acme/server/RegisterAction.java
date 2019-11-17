@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -110,9 +111,10 @@ public class RegisterAction {
 	 * 
 	 * It gets from the database the the maximum UUID and increments it by one.
 	 * 
-	 * @return
+	 * @return UUID
 	 */
-	private int getNewUserUUID() {
+	private UUID getNewUserUUID() {
+		/*
 		if(connection == null)
 			return -1;			// throw NonExisitingConnection
 		
@@ -130,15 +132,19 @@ public class RegisterAction {
 		}
 		
 		return nextUUID;
+		*/
+		
+		return UUID.randomUUID();
 	}
 	
-	private void registerNewUser(int UUID, RegisterRequest req) {
+	private UUID registerNewUser(RegisterRequest req) {
 		// CARD ID?? - a card needs first to be inserted in the database in order to associate it to a card ID which will be associated with the user
        String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
+       UUID newUUID =  getNewUserUUID();
        
         try {
             PreparedStatement pstmt = connection.prepareStatement(INSERT_NEW_USER_QUERY);
-            pstmt.setInt(1, UUID);
+            pstmt.setString(1, newUUID.toString());
             pstmt.setString(2, req.getName());
             pstmt.setString(3, req.getEmail());
             pstmt.setString(4, req.getUsername());
@@ -148,7 +154,9 @@ public class RegisterAction {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
+        return newUUID;
 	}
 	
 	//TODO: In response, the server should generate a unique user identifier in the format of a UUID (16- byte value) 
@@ -181,21 +189,16 @@ public class RegisterAction {
 				return Response.status(HTTPCodes.BAD_REQUEST).entity(res.toString()).build();
 			}
 			
-			int newUUID = getNewUserUUID();
-			if(newUUID == -1) {
-				closeConnection();
-				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-			}
-			
-			registerNewUser(newUUID, req);
+			UUID newUUID = registerNewUser(req);
 					
-			res.put("username", "example");
-			res.put("UUID", newUUID);
+			res.put("username", req.getUsername());
+			res.put("UUID", newUUID.toString());
+			
 			try {
 				res.put("acmePK", KeyInstance.getPublicKey());
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 			}
 			
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();

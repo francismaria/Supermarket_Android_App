@@ -21,7 +21,7 @@ import com.acme.server.validation.VouchersRequest;
  *			 HISTORY ACTION
  * ------------------------------------- */
 
-// curl -d '{"UUID":"1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/vouchers
+// curl -d '{"UUID": UUID}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/vouchers
 
 
 @Path("/vouchers")
@@ -45,7 +45,7 @@ public class VouchersAction {
 		final String stmt = "SELECT VOUCHERS_AVLB FROM USERS WHERE UUID = ?";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, req.getUUID());
+		pStmt.setString(1, req.getUUID().toString());
 		
 		ResultSet rs = pStmt.executeQuery();
 		
@@ -83,9 +83,5 @@ public class VouchersAction {
 		} catch (SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(e.getMessage()).build();
 		}
-		/*
-		if(!publicKeyMatches()) {
-			
-		}*/
 	}
 }

@@ -2,9 +2,11 @@ package com.acme.server.validation;
 
 import org.json.JSONObject;
 
+import java.util.UUID;
+
 public class GetOrderInfoRequest extends Request {
 	
-	private int UUID;
+	private UUID UUID;
 	private int orderID;
 	private String publicKey;
 	
@@ -14,7 +16,7 @@ public class GetOrderInfoRequest extends Request {
 		if(!obj.has("UUID")) {
 			throw new Exception("UUID was not specified");
 		}
-		this.UUID = obj.getInt("UUID");
+		this.UUID = java.util.UUID.fromString(obj.getString("UUID"));
 	}
 	
 	private void setOrderID() throws Exception{
@@ -41,7 +43,7 @@ public class GetOrderInfoRequest extends Request {
 		setKeys();
 	}
 	
-	public int getUUID() {
+	public UUID getUUID() {
 		return UUID;
 	}
 	

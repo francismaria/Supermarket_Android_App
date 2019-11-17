@@ -62,11 +62,11 @@ public class NewOrderAction {
 		connection.close();
 	}
 	
-	private String getUserRawPublicKey(int userID) throws SQLException {
+	private String getUserRawPublicKey(UUID uuid) throws SQLException {
 		final String stmt = "SELECT PUBLIC_KEY FROM USERS WHERE UUID = ?";
 		
 		PreparedStatement pStmt = connection.prepareStatement(stmt);
-		pStmt.setInt(1, userID);
+		pStmt.setString(1, uuid.toString());
 		
 		ResultSet rs = pStmt.executeQuery();
 		
@@ -79,7 +79,7 @@ public class NewOrderAction {
 	
 	private PublicKey getUserPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
 		// can't be hardcoded
-		String stringPK = getUserRawPublicKey(3);		// get pk from the database
+		String stringPK = getUserRawPublicKey();		// get pk from the database
 		
 		byte[] publicKeyBytes = Base64.decode(stringPK);
 		
@@ -111,8 +111,7 @@ public class NewOrderAction {
 		sg.update(mess);
 		
 		boolean verified = sg.verify(sign);
-		
-	      
+		   
 	    if(verified) {
 	       System.out.println("Signature verified");   
 	    } else {
@@ -146,15 +145,13 @@ public class NewOrderAction {
 		    	return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 		    }
 		     
-		    JSONObject res = new JSONObject();
+		    
 		    
 		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, 5, mess_size), StandardCharsets.ISO_8859_1));
-		   
-		    
 		    JSONArray arr = (JSONArray) s.get("prods");
 		    
 		    
-		    
+		    JSONObject res = new JSONObject();
 		    res.put("msg", arr.toString());	
 
 			
