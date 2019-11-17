@@ -35,6 +35,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.acme.server.database.DBConnection;
@@ -129,11 +130,6 @@ public class NewOrderAction {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 		
 		try {
-			
-			// get user's public key to decrypt the digital signature
-			// verify signature
-
-			
 			byte[] msg = Base64.decode(data);
 			
 			ByteBuffer tag = ByteBuffer.wrap(msg);
@@ -142,13 +138,24 @@ public class NewOrderAction {
             
 		    byte[] mess = new byte[mess_size];
 		    byte[] sign = new byte[sign_size];
+		    
 		    tag.get(mess, 0, mess_size);
 		    tag.get(sign, 0, sign_size);
 		    
-		    boolean verified = verifySignature(mess, sign);
+		    if(!verifySignature(mess, sign)) {
+		    	return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
+		    }
 		     
 		    JSONObject res = new JSONObject();
-		    res.put("msg", verified);	
+		    
+		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, 5, mess_size), StandardCharsets.ISO_8859_1));
+		   
+		    
+		    JSONArray arr = (JSONArray) s.get("prods");
+		    
+		    
+		    
+		    res.put("msg", arr.toString());	
 
 			
 			/*
