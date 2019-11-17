@@ -60,15 +60,32 @@ public class NewOrderAction {
 		connection.close();
 	}
 	
-	private PublicKey getUserPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-		/*String stringPK = null;		// get pk from the database
+	private String getUserRawPublicKey(int userID) throws SQLException {
+		final String stmt = "SELECT PUBLIC_KEY FROM USERS WHERE UUID = ?";
+		
+		PreparedStatement pStmt = connection.prepareStatement(stmt);
+		pStmt.setInt(1, userID);
+		
+		ResultSet rs = pStmt.executeQuery();
+		
+		if(!rs.next()) {
+			return null;
+		}
+		
+		return rs.getString("PUBLIC_KEY");
+	}
+	
+	private PublicKey getUserPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
+		// can't be hardcoded
+		String stringPK = getUserRawPublicKey(3);		// get pk from the database
+		
 		byte[] publicKeyBytes = Base64.decode(stringPK);
 		
 		X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory kf = KeyFactory.getInstance("RSA");
 
         PublicKey pk = kf.generatePublic(X509publicKey);
-        return pk;*/ return null;
+        return pk;
 	}
 	
 	@POST
@@ -83,10 +100,6 @@ public class NewOrderAction {
 			// get user's public key to decrypt the digital signature
 			// verify signature
 
-			
-			/*JSONObject req = new JSONObject(data);
-			byte[] msg = Base64.decode(req.getString("msg"));
-			*/
 			
 			byte[] msg = Base64.decode(data);
 			

@@ -187,7 +187,7 @@ public class RegisterAction {
 				return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
 			}
 			
-			// registerNewUser(newUUID, req);
+			registerNewUser(newUUID, req);
 					
 			res.put("username", "example");
 			res.put("UUID", newUUID);
