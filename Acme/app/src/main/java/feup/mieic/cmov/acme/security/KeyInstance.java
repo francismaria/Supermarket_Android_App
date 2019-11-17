@@ -39,6 +39,7 @@ public class KeyInstance {
         KEYNAME = KEYNAME + username;
     }
 
+    // TODO: return public key
     public static void generateKeyPair(Context context, String username) throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException {
 
         setKeyname(username);
@@ -50,8 +51,10 @@ public class KeyInstance {
 
 
         Log.e("generateKeyPair", "entrou");
-        if (entry != null) { return; }
-
+        if (entry != null) {
+            // TODO: if it already exists then call (get raw user public key)
+            return;
+        }
 
         Log.e("generateKeyPair", "não exxiste");
         try {
@@ -80,6 +83,12 @@ public class KeyInstance {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        /**
+         * finally {
+         *  getRawPublicKey()
+         * }
+         */
     }
 
     public static PublicKey getPublicKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {

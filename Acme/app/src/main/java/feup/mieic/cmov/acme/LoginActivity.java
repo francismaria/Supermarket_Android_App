@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         String username = ((EditText)findViewById(R.id.loginUsername)).getText().toString();
         String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
 
+        // TODO: submit also the new key (if a new pair was generated and update it in the server
+
         if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
            toast.setText("Please fill both of the authentication fields.");
            toast.show();
