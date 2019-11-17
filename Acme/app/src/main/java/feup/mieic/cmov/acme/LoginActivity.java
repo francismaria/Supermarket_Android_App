@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Starts a new LoginAction responsible for sending the login information
      * to the server.

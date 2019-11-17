@@ -69,8 +69,8 @@ public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
                 String line;
 
                 while ((line = rd.readLine()) != null) {
-//                    JSONObject res = new JSONObject(line);
-                    Log.i("CHECKOUT", line.toString());
+                    JSONObject res = new JSONObject(line);
+                    Log.i("CHECKOUT RESULT", res.toString());
                 }
             } else {
                 Log.e("CHECKOUT Action", "Server error");

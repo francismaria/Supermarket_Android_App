@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
@@ -88,6 +89,38 @@ public class NewOrderAction {
         return pk;
 	}
 	
+	/**
+	 * Verifies the signature of the message.
+	 * 
+	 * @param mess
+	 * @param sign
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidKeySpecException
+	 * @throws SQLException
+	 * @throws InvalidKeyException
+	 * @throws SignatureException
+	 */
+	private boolean verifySignature(byte[] mess, byte[] sign) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, InvalidKeyException, SignatureException {
+		PublicKey pk = getUserPublicKey();
+		
+		Signature sg = Signature.getInstance("SHA256WithRSA");
+		
+		sg.initVerify(pk);
+		sg.update(mess);
+		
+		boolean verified = sg.verify(sign);
+		
+	      
+	    if(verified) {
+	       System.out.println("Signature verified");   
+	    } else {
+           System.out.println("Signature failed");
+        }
+		
+	    return verified;
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -111,26 +144,12 @@ public class NewOrderAction {
 		    byte[] sign = new byte[sign_size];
 		    tag.get(mess, 0, mess_size);
 		    tag.get(sign, 0, sign_size);
-		    //boolean verified = validate(mess, sign);
-		     
 		    
-			PublicKey pk = getUserPublicKey();
-			
-			Signature sg = Signature.getInstance("SHA256WithRSA");
-			// get client public key
-			sg.initVerify(pk);
-			sg.update(mess);
-			boolean verified = sg.verify(sign);
-			
-		      
-		    if(verified) {
-		       System.out.println("Signature verified");   
-		    } else {
-               System.out.println("Signature failed");
-            }
-			
+		    boolean verified = verifySignature(mess, sign);
+		     
 		    JSONObject res = new JSONObject();
-		    res.put("msg", verified);
+		    res.put("msg", verified);	
+
 			
 			/*
 			 * 

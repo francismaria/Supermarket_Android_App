@@ -107,7 +107,7 @@ public class KeyInstance {
         if (entry != null) {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
 
-            byte[] publicKeyBytes = Base64.encode(pub.getEncoded(),0);
+            byte[] publicKeyBytes = Base64.encode(pub.getEncoded(), Base64.NO_WRAP);
             return new String(publicKeyBytes);
         }
         //generateKeyPair(sharedPreferences.getUsername())

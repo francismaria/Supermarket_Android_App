@@ -417,7 +417,6 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
                 return;
             }
-
             new RegisterAction(RegisterActivity.this).execute(reqBody);
         }
     }
