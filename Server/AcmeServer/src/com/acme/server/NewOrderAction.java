@@ -112,16 +112,33 @@ public class NewOrderAction {
 		    tag.get(mess, 0, mess_size);
 		    tag.get(sign, 0, sign_size);
 		    //boolean verified = validate(mess, sign);
-		      
-		    JSONObject res = new JSONObject();
-		    res.put("msg", new String(msg));
-		      
+		     
+		    
 			PublicKey pk = getUserPublicKey();
+			
+			Signature sg = Signature.getInstance("SHA256WithRSA");
+			// get client public key
+			sg.initVerify(pk);
+			sg.update(mess);
+			boolean verified = sg.verify(sign);
+			
+		      
+		    if(verified) {
+		       System.out.println("Signature verified");   
+		    } else {
+               System.out.println("Signature failed");
+            }
+			
+		    JSONObject res = new JSONObject();
+		    res.put("msg", verified);
+			
 			/*
 			 * 
 			 *            
 			 *             
-			
+		
+      
+      
 			ByteBuffer tag = ByteBuffer.wrap(clearTag);
             // Tag ID
             int tId = tag.getInt();
@@ -156,7 +173,7 @@ public class NewOrderAction {
 		         System.out.println("Signature failed");
 		      }*/
 			
-			return Response.status(HTTPCodes.SUCCESS_CODE).entity(msg).build();
+			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
