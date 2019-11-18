@@ -52,6 +52,8 @@ import com.sun.jersey.core.util.Base64;
 @Path("/new-order")
 public class NewOrderAction {
 
+	private final int SIGN_SIZE = 512/8;
+	private final int UUID_SIZE = 36;
 	private Connection connection = null;
 
 	public NewOrderAction() {
@@ -77,9 +79,8 @@ public class NewOrderAction {
 		return rs.getString("PUBLIC_KEY");
 	}
 	
-	private PublicKey getUserPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
-		// can't be hardcoded
-		String stringPK = getUserRawPublicKey();		// get pk from the database
+	private PublicKey getUserPublicKey(UUID uuid) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
+		String stringPK = getUserRawPublicKey(uuid);		// get pk from the database
 		
 		byte[] publicKeyBytes = Base64.decode(stringPK);
 		
@@ -102,9 +103,7 @@ public class NewOrderAction {
 	 * @throws InvalidKeyException
 	 * @throws SignatureException
 	 */
-	private boolean verifySignature(byte[] mess, byte[] sign) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, InvalidKeyException, SignatureException {
-		PublicKey pk = getUserPublicKey();
-		
+	private boolean verifySignature(byte[] mess, byte[] sign, PublicKey pk) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, InvalidKeyException, SignatureException {
 		Signature sg = Signature.getInstance("SHA256WithRSA");
 		
 		sg.initVerify(pk);
@@ -133,22 +132,23 @@ public class NewOrderAction {
 			
 			ByteBuffer tag = ByteBuffer.wrap(msg);
 			
-			final int UUID_SIZE = 36;
-			final int sign_size = 512/8;
-		    int mess_size = msg.length - sign_size;
+			
+		    int mess_size = msg.length - SIGN_SIZE;
             
 		    byte[] mess = new byte[mess_size];
-		    byte[] sign = new byte[sign_size];
+		    byte[] sign = new byte[SIGN_SIZE];
 		    
 		    tag.get(mess, 0, mess_size);
-		    tag.get(sign, 0, sign_size);
+		    tag.get(sign, 0, SIGN_SIZE);
 		    
-		    /*if(!verifySignature(mess, sign)) {
+		    UUID userUUID = UUID.fromString(new String(Arrays.copyOfRange(mess, 0, UUID_SIZE), StandardCharsets.ISO_8859_1));
+		    
+		    PublicKey pk = getUserPublicKey(userUUID);
+		    
+		    if(!verifySignature(mess, sign, pk)) {
 		    	return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 		    }
-		     */
-		    
-		    
+		      
 		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, UUID_SIZE, mess_size), StandardCharsets.ISO_8859_1));
 		    JSONArray arr = (JSONArray) s.get("prods");
 		    
