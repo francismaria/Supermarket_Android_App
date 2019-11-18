@@ -38,7 +38,7 @@ public class OrderAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        String ID = prods.get(position).getID();
+        String ID = prods.get(position).getID().toString();
         String name = prods.get(position).getName();
         String qty = prods.get(position).getQty();
         String price = prods.get(position).getPrice();

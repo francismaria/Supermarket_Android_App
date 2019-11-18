@@ -21,7 +21,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.crypto.BadPaddingException;
@@ -36,6 +38,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.acme.server.database.DBConnection;
@@ -120,6 +123,78 @@ public class NewOrderAction {
 	    return verified;
 	}
 	
+	private int getNextTransactionID() throws Exception {
+		final String NEXT_TRANSACTION_ID_QUERY = "SELECT MAX(ID) FROM TRANSACTIONS;";
+		   
+		PreparedStatement pStmt = connection.prepareStatement(NEXT_TRANSACTION_ID_QUERY);
+
+		ResultSet rs = pStmt.executeQuery();
+		
+		if(!rs.next()) {
+			throw new Exception("Unable to get next transaction ID");
+		}
+		
+		return rs.getInt(1)+1;
+	}
+	
+	/**
+	 * Gets current date in the dd-mm-yyyy format.
+	 * 
+	 * @return String
+	 */
+	private String getCurrentDate() {
+		return new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+	}
+	
+	private void addNewHistoryEntry(int transactionID, UUID productID, int productQty) throws SQLException {
+		final String INSERT_NEW_HISTORY_QUERY = "INSERT INTO HISTORY (TRANSACTION_ID, PRODUCT_ID, QUANTITY) VALUES(?,?,?);";
+		   
+		PreparedStatement pstmt = connection.prepareStatement(INSERT_NEW_HISTORY_QUERY);
+		pstmt.setInt(1, transactionID);			
+		pstmt.setString(2, productID.toString());
+		pstmt.setInt(3, productQty);
+		pstmt.executeUpdate();  
+	}
+	
+	/**
+	 * Adds products to the history.
+	 * 
+	 * @param transactionID
+	 * @param prods
+	 * @throws JSONException
+	 * @throws SQLException
+	 */
+	private void addProductsToHistory(final int transactionID, JSONArray prods) throws JSONException, SQLException {
+		
+		for(int i = 0; i < prods.length(); i++) {
+			JSONObject prod = prods.getJSONObject(i);
+			UUID productUUID = UUID.fromString(prod.getString("productID"));
+			
+			addNewHistoryEntry(transactionID, productUUID, prod.getInt("productQty"));
+		}
+	}
+	
+	/**
+	 * Adds a new transaction to the database.
+	 * 
+	 * @param uuid
+	 * @param prods
+	 */
+	private void addNewTransaction(UUID uuid, JSONArray prods) throws Exception {
+       final String INSERT_NEW_TRANSACTION_QUERY = "INSERT INTO TRANSACTIONS (ID, USER_ID, DATE, VOUCHERS) VALUES(?,?,?,?);";
+       
+       final int transactionID = getNextTransactionID();
+       
+       PreparedStatement pstmt = connection.prepareStatement(INSERT_NEW_TRANSACTION_QUERY);
+       pstmt.setInt(1, transactionID);				
+       pstmt.setString(2, uuid.toString());
+       pstmt.setString(3, getCurrentDate());
+       pstmt.setInt(4, 0);
+       pstmt.executeUpdate();
+       
+       addProductsToHistory(transactionID, prods);
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -133,7 +208,7 @@ public class NewOrderAction {
 			ByteBuffer tag = ByteBuffer.wrap(msg);
 			
 			
-		    int mess_size = msg.length - SIGN_SIZE;
+		    final int mess_size = msg.length - SIGN_SIZE;
             
 		    byte[] mess = new byte[mess_size];
 		    byte[] sign = new byte[SIGN_SIZE];
@@ -146,65 +221,25 @@ public class NewOrderAction {
 		    PublicKey pk = getUserPublicKey(userUUID);
 		    
 		    if(!verifySignature(mess, sign, pk)) {
+		    	closeConnection();
 		    	return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 		    }
 		      
 		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, UUID_SIZE, mess_size), StandardCharsets.ISO_8859_1));
 		    JSONArray arr = (JSONArray) s.get("prods");
 		    
+		    addNewTransaction(userUUID, arr);
 		    
+		  
 		    JSONObject res = new JSONObject();
 		    res.put("msg", arr.toString());	
 
-			
-			/*
-			 * 
-			 *            
-			 *             
-		
-      
-      
-			ByteBuffer tag = ByteBuffer.wrap(clearTag);
-            // Tag ID
-            int tId = tag.getInt();
-            // UUID
-            UUID id = new UUID(tag.getLong(), tag.getLong());
-            // Price
-            int euros = tag.getInt();
-            int cents = tag.getInt();
-            // Product Name
-            byte[] bName = new byte[tag.get()];
-            tag.get(bName);
-            String name = new String(bName, StandardCharsets.ISO_8859_1);
-            String priceStr = euros + "." + cents;
-
-
-
-			Signature sg = Signature.getInstance("SHA256WithRSA");
-			// get client public key
-			sg.initVerify();
-			sg.verify(tag);*/
-			/*
-		      //Initializing the signature
-		      sign.initVerify(pair.getPublic());
-		      sign.update(bytes);
-		      
-		      //Verifying the signature
-		      boolean bool = sign.verify(signature);
-		      
-		      if(bool) {
-		         System.out.println("Signature verified");   
-		      } else {
-		         System.out.println("Signature failed");
-		      }*/
-			
+		    closeConnection();
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(null).build();
-		}
-		
-				
+		}		
 	}
 /*
 	@POST

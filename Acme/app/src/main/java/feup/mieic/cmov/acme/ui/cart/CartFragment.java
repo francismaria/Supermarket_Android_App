@@ -25,7 +25,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.Signature;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.qrcodes.QRTag;
@@ -73,9 +72,7 @@ public class CartFragment extends Fragment {
                 for(ProductModel p : prods){
                     JSONObject item = new JSONObject();
 
-                    item.put("productID", p.getID());
-                    item.put("productName", p.getName());
-                    item.put("productPrice", p.getPrice());
+                    item.put("productID", p.getID().toString());
                     item.put("productQty", p.getQty());
 
                     arr.put(item);
@@ -97,24 +94,15 @@ public class CartFragment extends Fragment {
                     String prodsArrStr = obj.toString();
 
                     final int PRODS_LENGTH = prodsArrStr.length();
-                    //int tagId = 0x41636D65; // hxadecimal
-                    String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));
-
                     final int MSG_LENGTH = UUID_BYTES + PRODS_LENGTH;
-                    int len = MSG_LENGTH + (512/8);
-
+                    final int len = MSG_LENGTH + (512/8);
 
                     ByteBuffer tag = ByteBuffer.allocate(len);
 
-                    // TODO : ADD HERE THE USER ID
-                    //tag.putInt(tagId);      // 4 bytes = int
-                    //tag.put((byte)PRODS_LENGTH);  // 1 byte
+                    String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));
 
                     tag.put(uuid.getBytes(StandardCharsets.ISO_8859_1));
-
-                    Log.e("size", Integer.toString(uuid.getBytes(StandardCharsets.ISO_8859_1).length));
-
-                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));     // TODO: instead of this do i have to pass the products as BYTEVALUE??
+                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
 
                     byte[] msg = tag.array();
 

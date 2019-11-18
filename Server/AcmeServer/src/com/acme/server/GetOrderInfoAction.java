@@ -39,10 +39,6 @@ public class GetOrderInfoAction {
 		connection.close();
 	}
 	
-	//private boolean publicKeyMatches() {}
-	
-	// String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date()); -> gets current date in the specific format
-	
 	// "SELECT DATE, VOUCHERS, TOTAL_COST, PRODUCT_ID, PRICE, NAME, QUANTITY FROM TRANSACTIONS INNER JOIN HISTORY ON TRANSACTIONS.ID = HISTORY.TRANSACTION_ID INNER JOIN PRODUCTS ON HISTORY.PRODUCT_ID = PRODUCTS.UUID WHERE TRANSACTIONS.USER_ID = ? AND TRANSACTIONS.ID = ?;";
 	
 	private void getGeneralInformation() throws SQLException {

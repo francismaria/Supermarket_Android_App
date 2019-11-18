@@ -47,12 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: upon successful reading, show text showing that checkout is being processed
     public void handleReading(byte[] tag){
-        Log.e("handle_reading", new String(tag));
-
         String encodedTag = Base64.encodeToString(tag, Base64.NO_WRAP);
-
-        Log.e("handle_reading", new String(Base64.decode(encodedTag, Base64.NO_WRAP)));
-
         new CheckoutAction().execute(encodedTag);
 /*
         *  TODO: show progress bar while waiting for server's response

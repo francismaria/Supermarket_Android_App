@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.connection.OrderAction;
 
@@ -69,8 +70,9 @@ public class OrderViewModel extends ViewModel {
 
         for(int i = 0; i < rawProds.length(); i++){
             JSONObject prodItem = rawProds.getJSONObject(i);
+            UUID productID = UUID.fromString(prodItem.getString("productID"));
 
-            ProductModel item = new ProductModel(prodItem.getString("productID"), prodItem.getString("productName"), prodItem.getString("productQty"), prodItem.getString("productPrice"));
+            ProductModel item = new ProductModel(productID, prodItem.getString("productName"), prodItem.getString("productQty"), prodItem.getString("productPrice"));
             products.add(item);
         }
     }

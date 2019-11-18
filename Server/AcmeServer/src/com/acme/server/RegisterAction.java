@@ -114,26 +114,6 @@ public class RegisterAction {
 	 * @return UUID
 	 */
 	private UUID getNewUserUUID() {
-		/*
-		if(connection == null)
-			return -1;			// throw NonExisitingConnection
-		
-		int nextUUID = -1;
-		final String MAX_ID_QUERY = "SELECT MAX(UUID) FROM USERS";
-		
-		try {
-			PreparedStatement pStmt = connection.prepareStatement(MAX_ID_QUERY);
-			ResultSet rs = pStmt.executeQuery();
-
-			nextUUID = rs.getInt("MAX(UUID)")+1;
-		} catch (SQLException e) {
-			System.out.println("Error: " + e .toString());
-			return -1;
-		}
-		
-		return nextUUID;
-		*/
-		
 		return UUID.randomUUID();
 	}
 	
@@ -158,11 +138,6 @@ public class RegisterAction {
         }
         return newUUID;
 	}
-	
-	//TODO: In response, the server should generate a unique user identifier in the format of a UUID (16- byte value) 
-	// and transmit it back to the app, that should store it. Together with the previous id, the server sends also the supermarket 
-	// public key, used to read the product labels.
-	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

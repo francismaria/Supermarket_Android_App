@@ -126,7 +126,6 @@ public class KeyInstance {
 
     public static PrivateKey getPrivateKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
-        PublicKey pub = null;
         ks.load(null);
 
         KeyStore.Entry entry = ks.getEntry(KEYNAME, null);

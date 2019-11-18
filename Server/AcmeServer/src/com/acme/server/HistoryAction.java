@@ -59,7 +59,7 @@ public class HistoryAction {
 			
 			item.put("id", rs.getInt("ID"));
 			item.put("date", rs.getString("DATE"));
-			item.put("total_cost", rs.getString("TOTAL_COST"));
+			item.put("total_cost", rs.getDouble("TOTAL_COST"));
 			
 			itemsArr.put(item);
 		}

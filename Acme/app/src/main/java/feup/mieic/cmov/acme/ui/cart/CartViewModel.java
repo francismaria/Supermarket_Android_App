@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.ui.order.ProductModel;
 
@@ -32,12 +33,13 @@ public class CartViewModel extends ViewModel {
     public static void removeProduct(String id){
         List<ProductModel> prods = cart.getValue();
         List<ProductModel> newProds = new ArrayList<>();
+        UUID uuid = UUID.fromString(id);
 
         for(ProductModel p : prods){
-            if(!p.getID().equals(id))
+            if(!p.getID().equals(uuid))
                 newProds.add(p);
-
         }
+
         cart.setValue(newProds);
     }
 }

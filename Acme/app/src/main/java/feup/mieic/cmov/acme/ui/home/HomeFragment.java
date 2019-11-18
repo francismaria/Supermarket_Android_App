@@ -63,7 +63,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: open QR CODE READER
-                CartViewModel.addProduct(new ProductModel("1", "exa", "1", "10"));
                 try {
                     Intent intent = new Intent(ACTION_SCAN);
                     intent.putExtra("SCAN_MODE",  "QR_CODE_MODE");
@@ -134,7 +133,7 @@ public class HomeFragment extends Fragment {
             String name = new String(bName, StandardCharsets.ISO_8859_1);
             String priceStr = euros + "." + cents;
 
-            CartViewModel.addProduct(new ProductModel(id.toString(), name, "1", priceStr));
+            CartViewModel.addProduct(new ProductModel(id, name, "1", priceStr));
 
         } catch(Exception e){
             // TODO: show toast with text : "A problem occured during the QR code reading"
