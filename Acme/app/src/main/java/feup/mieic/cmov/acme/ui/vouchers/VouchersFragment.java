@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class VouchersFragment extends Fragment {
 
@@ -33,6 +34,8 @@ public class VouchersFragment extends Fragment {
         initToast();
 
         vouchersViewModel = ViewModelProviders.of(this).get(VouchersViewModel.class);
+        vouchersViewModel.setUUID(SharedPrefsHolder.getUUID(this.getActivity()));
+        vouchersViewModel.sendRequest();
 
         View root = inflater.inflate(R.layout.fragment_vouchers, container, false);
 

@@ -92,41 +92,7 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
     protected void onPostExecute(Boolean success) {
         if(success){
             try{
-
-
-/*
-                // TODO : REMOVE THESE COMMENTS - DEBUG PURPOSES ONLY
-                // running example
-                Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
-
-                // this converted to decimal is the same key as the server
-                byte[] pub = Base64.decode(res.getString("acmePK"), Base64.DEFAULT);
-                X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(pub);
-                KeyFactory kf = KeyFactory.getInstance("RSA");
-
-                PublicKey pk = kf.generatePublic(X509publicKey);
-
-
-                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-                cipher.init(Cipher.ENCRYPT_MODE, pk);
-
-                byte[] bs = "ahahahahaha".getBytes(StandardCharsets.ISO_8859_1);
-
-
-                bs = cipher.doFinal(bs);
-
-
-                Log.e("testencrypt", Arrays.toString(bs));
-*/
-
-                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
-
-
-
-                //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
-
-
-
+                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getString("UUID"), res.getString("acmePK"), weakActivity.get());
                 weakActivity.get().startActivity(new Intent(weakActivity.get(), HomeActivity.class));
             } catch(Exception e){
                 e.printStackTrace();

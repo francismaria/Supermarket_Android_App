@@ -12,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Objects;
+
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class ProfileFragment extends Fragment {
 
@@ -20,6 +23,9 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        profileViewModel.setUUID(SharedPrefsHolder.getUUID(Objects.requireNonNull(this.getActivity())));
+        profileViewModel.sendRequest();
+
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         final TextView profileName = root.findViewById(R.id.profileNameText);

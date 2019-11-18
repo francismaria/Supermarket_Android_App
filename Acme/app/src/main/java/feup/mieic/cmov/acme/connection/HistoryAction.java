@@ -14,9 +14,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.ui.history.HistoryViewModel;
 
-public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
+public class HistoryAction extends AsyncTask<String, Void, Boolean> {
 
     private JSONObject res;
     private JSONObject req;
@@ -29,11 +30,11 @@ public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPreExecute(){ }
 
-    private void setRequestBody(){
+    private void setRequestBody(String uuid){
         req = new JSONObject();
 
         try {
-            req.put("UUID", "1");
+            req.put("UUID", uuid);
         } catch (JSONException e) {
             e.printStackTrace();
             req = null;
@@ -41,10 +42,11 @@ public class HistoryAction extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected Boolean doInBackground(String... params) {
 
         HttpURLConnection urlConnection = null;
-        setRequestBody();
+
+        setRequestBody(params[0]);
 
         if(req == null) return false;
 

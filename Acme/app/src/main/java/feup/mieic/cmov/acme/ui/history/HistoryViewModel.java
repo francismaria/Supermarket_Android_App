@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import feup.mieic.cmov.acme.connection.HistoryAction;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class HistoryViewModel extends ViewModel {
 
@@ -21,12 +22,19 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<String> mErrorMsg;
     private MutableLiveData<Boolean> load;
     private List<ItemModel> itemsParsed;
+    private String uuid;
 
     public HistoryViewModel() {
         mErrorMsg = new MutableLiveData<>();
         load = new MutableLiveData<>();
+    }
 
-        new HistoryAction(this).execute();
+    public void setUUID(String uuid){
+        this.uuid = uuid;
+    }
+
+    public void sendRequest(){
+        new HistoryAction(this).execute(uuid);
     }
 
     public LiveData<String> getError() {

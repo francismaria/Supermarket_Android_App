@@ -14,7 +14,7 @@ import java.net.URL;
 
 import feup.mieic.cmov.acme.ui.profile.ProfileViewModel;
 
-public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
+public class ProfileAction extends AsyncTask<String, Void, Boolean> {
 
     private JSONObject req;
     private JSONObject res;
@@ -28,12 +28,11 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPreExecute(){ }
 
-    private void setRequestBody(){
+    private void setRequestBody(String uuid){
         req = new JSONObject();
 
         try {
-            req.put("UUID", "1");
-            req.put("publicKey", "example???");
+            req.put("UUID", uuid);
         } catch (JSONException e) {
             e.printStackTrace();
             req = null;
@@ -41,10 +40,11 @@ public class ProfileAction extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected Boolean doInBackground(String... params) {
 
         HttpURLConnection urlConnection = null;
-        setRequestBody();
+
+        setRequestBody(params[0]);
 
         if(req == null) return false;     // error
 

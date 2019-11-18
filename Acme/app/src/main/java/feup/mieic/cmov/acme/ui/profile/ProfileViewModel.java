@@ -27,6 +27,8 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> mExpDate;
     private MutableLiveData<String> mNumber;
 
+    private String uuid;
+
     private void initData(){
         mName = new MutableLiveData<>();
         mUsername = new MutableLiveData<>();
@@ -38,7 +40,14 @@ public class ProfileViewModel extends ViewModel {
 
     public ProfileViewModel() {
         initData();
-        new ProfileAction(this).execute();
+    }
+
+    public void setUUID(String uuid){
+        this.uuid = uuid;
+    }
+
+    public void sendRequest(){
+        new ProfileAction(this).execute(this.uuid);
     }
 
     // Name

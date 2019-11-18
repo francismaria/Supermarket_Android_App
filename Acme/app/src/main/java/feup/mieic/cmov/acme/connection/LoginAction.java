@@ -83,8 +83,6 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
         } catch(ConnectException exc){
             ERROR_MSG = "No connectivity.";
             return false;
-
-
         } catch (Exception e) {
             Log.e("LOGIN ACTION", e.getMessage());
             return false;
@@ -98,23 +96,16 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         if(!success) {
-            /*builder.setTitle("Error Message");
+            builder.setTitle("Error Message");
             builder.setMessage(ERROR_MSG);
             AlertDialog dialog = builder.create();
-            dialog.show();*/
+            dialog.show();
             Log.e("okok", "error");
         } else {
             try{
-                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getInt("UUID"), res.getString("acmePK"), weakActivity.get());
+                SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getString("UUID"), res.getString("acmePK"), weakActivity.get());
 
-                KeyInstance.generateKeyPair(weakActivity.get(), SharedPrefsHolder.getUsername(weakActivity.get()));
-
-                /*
-                Log.e("loginaction", "encrypt");
-                String dec = Cryptography.decrypt(Cryptography.encrypt("ahahah", KeyInstance.getPrivateKey()), KeyInstance.getPublicKey());
-*/
-
-                //Log.e("testencrypt", Arrays.toString(Cryptography.encrypt("ahahahahaha", SharedPrefsHolder.getAcmePublicKey(weakActivity.get()))));
+                // KeyInstance.generateKeyPair(weakActivity.get(), SharedPrefsHolder.getUsername(weakActivity.get()));
 
                 Log.e("username", SharedPrefsHolder.getUsername(weakActivity.get()));
 

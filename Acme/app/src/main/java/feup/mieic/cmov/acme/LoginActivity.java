@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import feup.mieic.cmov.acme.connection.LoginAction;
+import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private String getHashedPassword(String password) throws Exception {
+        Sha256Hashing encryptInstance = new Sha256Hashing(password);
+        return encryptInstance.getResult();
+    }
+
     /**
      * Starts a new LoginAction responsible for sending the login information
      * to the server.
@@ -49,13 +55,19 @@ public class LoginActivity extends AppCompatActivity {
         String username = ((EditText)findViewById(R.id.loginUsername)).getText().toString();
         String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
 
-        // TODO: submit also the new key (if a new pair was generated and update it in the server
+        // TODO: submit also the new key (if a new pair was generated and update it in the server)
 
         if(isTextFieldEmpty(username) || isTextFieldEmpty(password)){
            toast.setText("Please fill both of the authentication fields.");
            toast.show();
         } else {
-            new LoginAction(LoginActivity.this).execute(username, password);
+            try {
+                new LoginAction(LoginActivity.this).execute(username, getHashedPassword(password));
+            } catch (Exception e) {
+                e.printStackTrace();
+                toast.setText("Please repeat login.");
+                toast.show();
+            }
         }
     }
 

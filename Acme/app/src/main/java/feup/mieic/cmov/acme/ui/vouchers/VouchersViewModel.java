@@ -11,12 +11,19 @@ public class VouchersViewModel extends ViewModel {
     private MutableLiveData<Boolean> load;
     private Integer vouchersNum;
     private boolean success;
+    private String uuid;
 
     public VouchersViewModel() {
         load = new MutableLiveData<>();
         success = true;
+    }
 
-        new VouchersAction(this).execute();
+    public void setUUID(String uuid){
+        this.uuid = uuid;
+    }
+
+    public void sendRequest(){
+        new VouchersAction(this).execute(uuid);
     }
 
     public LiveData<Boolean> getLoad() {

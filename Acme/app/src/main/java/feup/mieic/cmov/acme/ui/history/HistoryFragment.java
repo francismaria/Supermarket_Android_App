@@ -14,7 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class HistoryFragment extends Fragment {
 
@@ -33,6 +36,8 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initToast();
         historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        historyViewModel.setUUID(SharedPrefsHolder.getUUID(Objects.requireNonNull(this.getActivity())));
+        historyViewModel.sendRequest();
 
         final View root = inflater.inflate(R.layout.fragment_history, container, false);
 

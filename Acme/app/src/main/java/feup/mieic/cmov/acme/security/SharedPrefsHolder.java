@@ -19,12 +19,12 @@ public class SharedPrefsHolder {
 
     public SharedPrefsHolder(){ }
 
-    public static void updateCurrentUser(String username, Integer uuid, String acmePK, Context c){
+    public static void updateCurrentUser(String username, String uuid, String acmePK, Context c){
         SharedPreferences settings = c.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
         editor.putString("username",username);
-        editor.putString("uuid", Integer.toString(uuid));
+        editor.putString("uuid", uuid);
         editor.putString("acmePK", acmePK);
 
         editor.commit();
