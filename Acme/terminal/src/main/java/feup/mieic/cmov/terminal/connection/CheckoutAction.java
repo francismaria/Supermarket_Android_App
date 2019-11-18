@@ -23,26 +23,11 @@ public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPreExecute(){ }
 
-    private void setRequestBody(String msg){
-        req = new JSONObject();
-
-        try {
-            req.put("UUID", "1");
-            req.put("msg", msg);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            req = null;
-        }
-    }
-
     @Override
     protected Boolean doInBackground(String... params) {
 
         String msg = params[0];
-        setRequestBody(params[0]);
         HttpURLConnection urlConnection = null;
-
-        if(req == null) return false;
 
         try {
             URL url = new URL(HTTPInfo.CHECKOUT_PATH);
@@ -55,7 +40,7 @@ public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
             urlConnection.setDoInput(true);
 
             OutputStream os = urlConnection.getOutputStream();
-            os.write(msg.toString().getBytes(StandardCharsets.UTF_8));
+            os.write(msg.getBytes(StandardCharsets.UTF_8));
             os.close();
 
             Log.i("CHECKOUT ACTION", "request POST sent");

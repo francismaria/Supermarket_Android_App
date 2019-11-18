@@ -132,7 +132,9 @@ public class NewOrderAction {
 			byte[] msg = Base64.decode(data);
 			
 			ByteBuffer tag = ByteBuffer.wrap(msg);
-			int sign_size = 512/8;
+			
+			final int UUID_SIZE = 36;
+			final int sign_size = 512/8;
 		    int mess_size = msg.length - sign_size;
             
 		    byte[] mess = new byte[mess_size];
@@ -141,13 +143,13 @@ public class NewOrderAction {
 		    tag.get(mess, 0, mess_size);
 		    tag.get(sign, 0, sign_size);
 		    
-		    if(!verifySignature(mess, sign)) {
+		    /*if(!verifySignature(mess, sign)) {
 		    	return Response.status(HTTPCodes.UNAUTHORIZED_CODE).entity(null).build();
 		    }
-		     
+		     */
 		    
 		    
-		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, 5, mess_size), StandardCharsets.ISO_8859_1));
+		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, UUID_SIZE, mess_size), StandardCharsets.ISO_8859_1));
 		    JSONArray arr = (JSONArray) s.get("prods");
 		    
 		    

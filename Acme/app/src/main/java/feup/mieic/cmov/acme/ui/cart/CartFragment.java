@@ -2,6 +2,7 @@ package feup.mieic.cmov.acme.ui.cart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.Signature;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import feup.mieic.cmov.acme.R;
@@ -62,8 +64,7 @@ public class CartFragment extends Fragment {
 
         root.findViewById(R.id.checkoutBtn).setOnClickListener(new View.OnClickListener(){
 
-            private static final int TAG_BYTES = 4;
-            private static final int PRODS_LENGTH_BYTE = 1;
+            private static final int UUID_BYTES = 36;
 
             private JSONArray getProducts() throws JSONException {
                 JSONArray arr = new JSONArray();
@@ -96,16 +97,23 @@ public class CartFragment extends Fragment {
                     String prodsArrStr = obj.toString();
 
                     final int PRODS_LENGTH = prodsArrStr.length();
-                    int tagId = 0x41636D65; // hxadecimal
-                    final int MSG_LENGTH = TAG_BYTES + PRODS_LENGTH_BYTE + PRODS_LENGTH;
+                    //int tagId = 0x41636D65; // hxadecimal
+                    String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));
+
+                    final int MSG_LENGTH = UUID_BYTES + PRODS_LENGTH;
                     int len = MSG_LENGTH + (512/8);
 
 
                     ByteBuffer tag = ByteBuffer.allocate(len);
 
                     // TODO : ADD HERE THE USER ID
-                    tag.putInt(tagId);      // 4 bytes = int
-                    tag.put((byte)PRODS_LENGTH);  // 1 byte
+                    //tag.putInt(tagId);      // 4 bytes = int
+                    //tag.put((byte)PRODS_LENGTH);  // 1 byte
+
+                    tag.put(uuid.getBytes(StandardCharsets.ISO_8859_1));
+
+                    Log.e("size", Integer.toString(uuid.getBytes(StandardCharsets.ISO_8859_1).length));
+
                     tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));     // TODO: instead of this do i have to pass the products as BYTEVALUE??
 
                     byte[] msg = tag.array();
