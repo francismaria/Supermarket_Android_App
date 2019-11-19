@@ -30,12 +30,6 @@
         tools:layout="@layout/fragment_vouchers" />
 
     <fragment
-        android:id="@+id/nav_settings"
-        android:name="feup.mieic.cmov.acme.ui.settings.SettingsFragment"
-        android:label="@string/settings_caption"
-        tools:layout="@layout/fragment_settings" />
-
-    <fragment
         android:id="@+id/nav_contact"
         android:name="feup.mieic.cmov.acme.ui.contact.ContactFragment"
         android:label="@string/contact_caption"

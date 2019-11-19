@@ -28,11 +28,6 @@
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_menu_camera"
                 android:title="@string/profile_caption" />
-
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/settings_caption" />
         </menu>
     </item>
 
