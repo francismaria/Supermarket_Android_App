@@ -17,12 +17,9 @@ import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.security.spec.AlgorithmParameterSpec;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.security.auth.x500.X500Principal;
 
 public class KeyInstance {
@@ -49,46 +46,36 @@ public class KeyInstance {
 
         KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
 
+        if (entry == null) {
+            Log.e("generateKeyPair", "não exxiste");
+            try {
+                Calendar start = new GregorianCalendar();
+                Calendar end = new GregorianCalendar();
+                // set the end date to 20 years from now
+                end.add(Calendar.YEAR, 20);
 
-        Log.e("generateKeyPair", "entrou");
-        if (entry != null) {
-            // TODO: if it already exists then call (get raw user public key)
-            return;
+                KeyPairGenerator kgen = null;
+                kgen = KeyPairGenerator.getInstance(KEY_ALGO, ANDROID_KEYSTORE);
+
+                AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(context)
+                        .setKeySize(KEY_SIZE)
+                        .setAlias(KEYNAME)
+                        .setSubject(new X500Principal("CN=" + KEYNAME))
+                        .setSerialNumber(BigInteger.valueOf(CERT_SERIAL))
+                        .setStartDate(start.getTime())
+                        .setEndDate(end.getTime())
+                        .build();
+                kgen.initialize(spec);
+
+                KeyPair kp = kgen.generateKeyPair();
+
+                isKeySet = true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-        Log.e("generateKeyPair", "não exxiste");
-        try {
-            Calendar start = new GregorianCalendar();
-            Calendar end = new GregorianCalendar();
-            // set the end date to 20 years from now
-            end.add(Calendar.YEAR, 20);
-
-            KeyPairGenerator kgen = null;
-            kgen = KeyPairGenerator.getInstance(KEY_ALGO, ANDROID_KEYSTORE);
-
-            AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(context)
-                    .setKeySize(KEY_SIZE)
-                    .setAlias(KEYNAME)
-                    .setSubject(new X500Principal("CN=" + KEYNAME))
-                    .setSerialNumber(BigInteger.valueOf(CERT_SERIAL))
-                    .setStartDate(start.getTime())
-                    .setEndDate(end.getTime())
-                    .build();
-            kgen.initialize(spec);
-
-            KeyPair kp = kgen.generateKeyPair();
-
-            isKeySet = true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**
-         * finally {
-         *  getRawPublicKey()
-         * }
-         */
+        getRawPublicKey();
     }
 
     public static PublicKey getPublicKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
@@ -102,7 +89,6 @@ public class KeyInstance {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
             return pub;
         }
-        //generateKeyPair(sharedPreferences.getUsername())
         return null;
     }
 
@@ -119,7 +105,6 @@ public class KeyInstance {
             byte[] publicKeyBytes = Base64.encode(pub.getEncoded(), Base64.NO_WRAP);
             return new String(publicKeyBytes);
         }
-        //generateKeyPair(sharedPreferences.getUsername())
         return null;
     }
 

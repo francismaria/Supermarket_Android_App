@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean userLoggedIn(){
         SharedPreferences settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        if(settings.getString("current_user", null) != null)
+        if(settings.getString("username", null) != null)
             return true;
         return false;
     }
