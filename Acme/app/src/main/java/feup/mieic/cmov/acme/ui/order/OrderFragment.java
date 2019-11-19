@@ -17,7 +17,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class OrderFragment extends Fragment {
 
@@ -38,7 +42,7 @@ public class OrderFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final int orderID;
+        final String orderID;
 
         initToast();
         initActionBar();
@@ -46,14 +50,18 @@ public class OrderFragment extends Fragment {
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
-            orderID = bundle.getInt("orderID", 0);
+            orderID = bundle.getString("orderID");
         } else {
             showErrorToast("Unavailable. Please try again later.");
             return null;
         }
 
+        String userID = SharedPrefsHolder.getUUID(Objects.requireNonNull(this.getActivity()));
+
         orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
-        orderViewModel.sendRequest(orderID);
+        orderViewModel.setUserID(userID);
+        orderViewModel.setOrderID(orderID);
+        orderViewModel.sendRequest();
 
         final View root = inflater.inflate(R.layout.fragment_order, container, false);
 

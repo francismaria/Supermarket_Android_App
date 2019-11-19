@@ -12,17 +12,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.ui.order.OrderViewModel;
 
 public class OrderAction extends AsyncTask<Void, Void, Boolean> {
 
-    private int orderID;
+    private String userID;
+    private String orderID;
+
     private JSONObject res;
     private JSONObject req;
+
     private OrderViewModel model;
 
-    public OrderAction(OrderViewModel model, int orderID){
+    public OrderAction(OrderViewModel model, String userID, String orderID){
+        this.userID = userID;
         this.orderID = orderID;
         this.model = model;
     }
@@ -34,8 +39,8 @@ public class OrderAction extends AsyncTask<Void, Void, Boolean> {
         req = new JSONObject();
 
         try {
-            req.put("UUID", "1");
-            req.put("orderID", Integer.toString(orderID));
+            req.put("UUID", userID);
+            req.put("orderID", orderID);
         } catch (JSONException e) {
             e.printStackTrace();
             req = null;
@@ -64,12 +69,12 @@ public class OrderAction extends AsyncTask<Void, Void, Boolean> {
             os.write(req.toString().getBytes("UTF-8"));
             os.close();
 
-            Log.i("HISTORY ACTION", "request POST sent" + req.toString());
+            Log.i("ORDER ACTION", "request POST sent" + req.toString());
 
             int code = urlConnection.getResponseCode();
 
             if (code == HTTPInfo.SUCCESS_CODE) {
-                Log.i("HISTORY ACTION", "OK");
+                Log.i("ORDER ACTION", "OK");
                 BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 String line;
 
@@ -89,7 +94,6 @@ public class OrderAction extends AsyncTask<Void, Void, Boolean> {
         }
         return true;
     }
-
 
     @Override
     protected void onPostExecute(Boolean success) {

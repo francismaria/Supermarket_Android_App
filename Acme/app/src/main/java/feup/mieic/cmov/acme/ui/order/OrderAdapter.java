@@ -53,21 +53,21 @@ public class OrderAdapter extends RecyclerView.Adapter {
 
     private class OrderViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView idView;
+        //private TextView idView;
         private TextView nameView;
         private TextView qtyView;
         private TextView priceView;
 
         public OrderViewHolder(View itemView){
             super(itemView);
-            idView = itemView.findViewById(R.id.productID);
+            //idView = itemView.findViewById(R.id.productID);
             nameView = itemView.findViewById(R.id.productName);
             qtyView = itemView.findViewById(R.id.productQty);
             priceView = itemView.findViewById(R.id.productPrice);
         }
 
         public void bindView(String ID, String name, String qty, String price){
-            idView.setText(ID);
+            //idView.setText(ID);
             nameView.setText(name);
             qtyView.setText(qty);
             priceView.setText(price);

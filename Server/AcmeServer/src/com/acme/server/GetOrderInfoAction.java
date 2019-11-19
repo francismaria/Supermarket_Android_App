@@ -77,7 +77,7 @@ public class GetOrderInfoAction {
 		while(rs.next()) {
 			JSONObject item = new JSONObject();
 		
-			item.put("productID", rs.getInt("PRODUCT_ID"));
+			item.put("productID", rs.getString("PRODUCT_ID"));
 			item.put("productName", rs.getString("NAME"));
 			item.put("productPrice", rs.getDouble("PRICE"));
 			item.put("productQty", rs.getInt("QUANTITY"));
@@ -110,9 +110,5 @@ public class GetOrderInfoAction {
 		} catch (SQLException e) {
 			return Response.status(HTTPCodes.INTERNAL_SERVER_ERROR_CODE).entity(e.getMessage()).build();
 		}
-		/*
-		if(!publicKeyMatches()) {
-			
-		}*/
 	}
 }

@@ -7,6 +7,22 @@ public interface HTTPInfo {
 
     // Emulator ( http://10.0.2.2:8080/ )
 
+
+    String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/api/login";
+
+    String REGISTER_PATH = "http://10.0.2.2:8080/AcmeServer/api/register";
+
+    String PROFILE_PATH = "http://10.0.2.2:8080/AcmeServer/api/profile";
+
+    String CONTACT_PATH = "http://10.0.2.2:8080/AcmeServer/api/contact";
+
+    String HISTORY_PATH = "http://10.0.2.2:8080/AcmeServer/api/history";
+
+    String GET_ORDER_INFO_PATH = "http://10.0.2.2:8080/AcmeServer/api/order";
+
+    String VOUCHERS_PATH = "http://10.0.2.2:8080/AcmeServer/api/vouchers";
+
+    /*
     String LOGIN_PATH = "http://192.168.1.74:8080/AcmeServer/api/login";
 
     String REGISTER_PATH = "http://192.168.1.74:8080/AcmeServer/api/register";
@@ -20,7 +36,7 @@ public interface HTTPInfo {
     String GET_ORDER_INFO_PATH = "http://192.168.1.74:8080/AcmeServer/api/order";
 
     String VOUCHERS_PATH = "http://192.168.1.74:8080/AcmeServer/api/vouchers";
-
+*/
     // HTTP response codes
 
     int SUCCESS_CODE = 200;

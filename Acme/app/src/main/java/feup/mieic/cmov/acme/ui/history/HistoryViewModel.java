@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.connection.HistoryAction;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
@@ -48,7 +49,6 @@ public class HistoryViewModel extends ViewModel {
             JSONObject jsonItem = items.getJSONObject(i);
 
             ItemModel item = new ItemModel(jsonItem.getString("id"), jsonItem.getString("total_cost"), jsonItem.getString("date"));
-
             itemsParsed.add(item);
         }
     }

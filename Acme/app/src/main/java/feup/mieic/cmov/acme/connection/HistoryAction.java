@@ -75,7 +75,7 @@ public class HistoryAction extends AsyncTask<String, Void, Boolean> {
 
                 while ((line = rd.readLine()) != null) {
                     res = new JSONObject(line);
-                    Log.i("PROFILE", res.toString());
+                    Log.i("HISTORY", res.toString());
                 }
             } else {
                 return false;

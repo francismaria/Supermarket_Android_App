@@ -39,10 +39,11 @@ public class HistoryAction {
 		connection.close();
 	}
 	
-	//private boolean publicKeyMatches() {}
-	
-	// String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date()); -> gets current date in the specific format
-	
+	/**
+	 * Returns the history entry.
+	 * 
+	 * @throws SQLException
+	 */
 	private void getHistoryItemsInformation() throws SQLException {
 		res = new JSONObject();
 		

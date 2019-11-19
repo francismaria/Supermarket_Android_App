@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import feup.mieic.cmov.acme.R;
 import feup.mieic.cmov.acme.ui.order.OrderFragment;
@@ -27,7 +28,7 @@ public class HistoryAdapter extends RecyclerView.Adapter {
 
     public HistoryAdapter(List<ItemModel> items, HistoryFragment fragment){
         if(items == null){
-            this.items = new ArrayList<ItemModel>();
+            this.items = new ArrayList<>();
         } else {
             this.items = items;
         }
@@ -67,11 +68,11 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         private TextView totalView;
         private TextView orderIDView;
 
-        private int orderID;
+        private String orderID;
 
         public HistoryViewHolder(View itemView){
             super(itemView);
-            orderID = -1;
+            orderID = null;
             totalView = itemView.findViewById(R.id.total_history);
             dateView = itemView.findViewById(R.id.date_history);
             orderIDView = itemView.findViewById(R.id.order_id_history);
@@ -84,14 +85,14 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             dateView.setText(date);
             orderIDView.setText("#" + id);
 
-            orderID = Integer.parseInt(id);
+            orderID = id;
         }
 
         public void onClick(View view){
             OrderFragment orderFragment = new OrderFragment();
 
             Bundle args = new Bundle();
-            args.putInt("orderID", orderID);
+            args.putString("orderID", orderID);
 
             orderFragment.setArguments(args);
 

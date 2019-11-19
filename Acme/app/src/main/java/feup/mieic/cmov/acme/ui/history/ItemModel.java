@@ -2,12 +2,12 @@ package feup.mieic.cmov.acme.ui.history;
 
 public class ItemModel {
 
-    private String ID;
+    private String transactionID;
     private String total;
     private String date;
 
     public ItemModel(String ID, String total, String date){
-        this.ID = ID;
+        this.transactionID = ID;
         this.total = total;
         this.date = date;
     }
@@ -21,6 +21,6 @@ public class ItemModel {
     }
 
     public String getID(){
-        return ID;
+        return transactionID;
     }
 }

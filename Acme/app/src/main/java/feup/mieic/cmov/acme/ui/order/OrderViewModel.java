@@ -12,14 +12,15 @@ import java.util.List;
 import java.util.UUID;
 
 import feup.mieic.cmov.acme.connection.OrderAction;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 public class OrderViewModel extends ViewModel {
 
-    private String id;
+    private String orderID;
+    private String userID;
     private String date;
     private String totalCost;
     private String vouchers;
-
 
     private static final String ERROR_MSG = "Unavailable. Please try reloading this page";
     private MutableLiveData<String> mError;
@@ -32,8 +33,15 @@ public class OrderViewModel extends ViewModel {
         products = new ArrayList<>();
     }
 
-    public void sendRequest(int orderID){
-        new OrderAction(this, orderID).execute();
+    public void setUserID(String uuid){
+        userID = uuid;
+    }
+
+    public void setOrderID(String id){
+        orderID = id;
+    }
+    public void sendRequest(){
+        new OrderAction(this, userID, orderID).execute();
     }
 
 
@@ -50,7 +58,7 @@ public class OrderViewModel extends ViewModel {
     }
 
     public String getOrderID(){
-        return id;
+        return orderID;
     }
 
     public String getOrderDate(){
@@ -78,7 +86,7 @@ public class OrderViewModel extends ViewModel {
     }
 
     public void setRequestResult(String id, String date, String totalCost, String vouchers, JSONArray rawProds){
-        this.id = id;
+        this.orderID = id;
         this.date = date;
         this.totalCost = totalCost;
         this.vouchers = vouchers;
@@ -86,6 +94,7 @@ public class OrderViewModel extends ViewModel {
         try{
             parseRawProducts(rawProds);
         } catch(Exception e){
+            e.printStackTrace();
             flagError();
             return;
         }
