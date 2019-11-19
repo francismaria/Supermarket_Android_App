@@ -22,6 +22,8 @@ public interface HTTPInfo {
 
     String VOUCHERS_PATH = "http://10.0.2.2:8080/AcmeServer/api/vouchers";
 
+    String VERIFY_USERNAME_PATH = "http://10.0.2.2:8080/AcmeServer/api/verify-username";
+
     /*
     String LOGIN_PATH = "http://192.168.1.74:8080/AcmeServer/api/login";
 

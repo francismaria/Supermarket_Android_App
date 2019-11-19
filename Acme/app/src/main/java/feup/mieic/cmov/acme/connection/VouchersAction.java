@@ -98,7 +98,6 @@ public class VouchersAction extends AsyncTask<String, Void, Boolean>{
         }
         else
             model.setVouchersNum(-1);
-
     }
 }
 

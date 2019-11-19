@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import feup.mieic.cmov.acme.connection.RegisterAction;
+import feup.mieic.cmov.acme.connection.VerifyUsernameAction;
 import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
@@ -26,6 +27,7 @@ import feup.mieic.cmov.acme.validation.TextValidator;
 
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 // TODO: REMOVE ALL THE LOGS
@@ -387,6 +389,10 @@ public class RegisterActivity extends AppCompatActivity {
         return pub;
     }
 
+    public boolean isUsernameUnique(String username) throws JSONException, ExecutionException, InterruptedException {
+        return new VerifyUsernameAction().execute(username).get();
+    }
+
     public void submitRegisterInformation(View view){
         if(!areFieldsFilled()){
             showFilledFieldsToasts();
@@ -401,9 +407,15 @@ public class RegisterActivity extends AppCompatActivity {
                     cardExpDate = ((EditText)findViewById(R.id.registerExpDate)).getText().toString(),
                     cardCCV = ((EditText)findViewById(R.id.registerCCV)).getText().toString();
 
-            //TODO: check if username is unique (async task)
 
             try {
+                if(!isUsernameUnique(username)){
+                    //showUnavailableToast();
+                    Log.e("Error", "Username must be unique");
+                    return;
+                }
+
+
                 reqBody.put("name", name);
                 reqBody.put("username", username);
                 reqBody.put("password", password);
