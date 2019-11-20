@@ -1,9 +1,11 @@
 package feup.mieic.cmov.terminal.connection;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -19,6 +22,12 @@ import java.nio.charset.StandardCharsets;
 public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
 
     private JSONObject req;
+    private Toast successfulPaymentToast;
+    private WeakReference<Context> weakActivity;
+
+    public CheckoutAction(Context c){
+        weakActivity = new WeakReference<>(c);
+    }
 
     @Override
     protected void onPreExecute(){ }
@@ -73,10 +82,17 @@ public class CheckoutAction extends AsyncTask<String, Void, Boolean> {
         return true;
     }
 
+    private void showSuccessfulPaymentToast(){
+        successfulPaymentToast = Toast.makeText(weakActivity.get(), null, Toast.LENGTH_SHORT);
+        successfulPaymentToast.setText("PAYMENT WAS SUCCESSFUL");
+        successfulPaymentToast.show();
+    }
+
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
             Log.i("onpostexecute", "success");
+            showSuccessfulPaymentToast();
         } else {
             Log.i("onpostexecute", "error");
         }

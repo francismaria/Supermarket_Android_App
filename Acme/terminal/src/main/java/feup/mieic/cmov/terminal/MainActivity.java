@@ -11,9 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.nio.charset.StandardCharsets;
 
@@ -45,14 +45,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: upon successful reading, show text showing that checkout is being processed
     public void handleReading(byte[] tag){
         String encodedTag = Base64.encodeToString(tag, Base64.NO_WRAP);
-        new CheckoutAction().execute(encodedTag);
-/*
-        *  TODO: show progress bar while waiting for server's response
-        *  TODO: show a dialog to let the user know if the transaction was or not successful
-        * */
+        new CheckoutAction(this).execute(encodedTag);
     }
 
     @Override
