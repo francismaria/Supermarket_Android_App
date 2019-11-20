@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import feup.mieic.cmov.acme.connection.LoginAction;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.validation.Sha256Hashing;
 import feup.mieic.cmov.acme.validation.TextValidator;
 
@@ -26,6 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBarIcon();
 
         toast =  Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
+    }
+
+    public void onBackPressed() {
+        /*
+        if(SharedPrefsHolder.getUsername(this) != null)
+            finish();
+         */
     }
 
     /**

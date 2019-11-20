@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import com.acme.server.database.DBConnection;
 import com.acme.server.validation.VerifyUsernameRequest;
-import com.acme.server.database.DBConnection;
 
 // curl -d '{"username": "smendes"}' -H "Content-Type: application/json" -X POST http://localhost:8080/AcmeServer/api/verify-username
 
@@ -74,8 +73,6 @@ public class VerifyUsernameAction {
 				res.put("res", false);
 			}
 				
-				
-			// send email to user
 			
 			closeConnection();
 			return Response.status(HTTPCodes.SUCCESS_CODE).entity(res.toString()).build();

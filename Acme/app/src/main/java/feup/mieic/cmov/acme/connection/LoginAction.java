@@ -100,7 +100,6 @@ public class LoginAction extends AsyncTask<String, Void, Boolean> {
             builder.setMessage(ERROR_MSG);
             AlertDialog dialog = builder.create();
             dialog.show();
-            Log.e("okok", "error");
         } else {
             try{
                 SharedPrefsHolder.updateCurrentUser(res.getString("username"), res.getString("UUID"), res.getString("acmePK"), weakActivity.get());

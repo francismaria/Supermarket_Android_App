@@ -1,11 +1,15 @@
 package feup.mieic.cmov.acme.ui.cart;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +30,10 @@ import java.security.Signature;
 import java.util.List;
 import java.util.Objects;
 
+import feup.mieic.cmov.acme.CheckoutActivity;
+import feup.mieic.cmov.acme.HomeActivity;
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.connection.VouchersCheckoutAction;
 import feup.mieic.cmov.acme.qrcodes.QRTag;
 import feup.mieic.cmov.acme.security.Cryptography;
 import feup.mieic.cmov.acme.security.KeyInstance;
@@ -83,13 +90,45 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(adapter.getItemCount() == 0)
-                    return; // TODO show toast saying cart is null
+                /*if(adapter.getItemCount() == 0)
+                    return; // TODO show toast saying cart is null*/
 
                 try {
+                    String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));
+                    int numVouchers = new VouchersCheckoutAction().execute(uuid).get();
 
                     JSONObject obj = new JSONObject();
+
+                    obj.put("vouchers", numVouchers);
                     obj.put("prods", getProducts());
+
+                    Intent intent = new Intent(CartFragment.this.getActivity(), CheckoutActivity.class);
+                    intent.putExtra("data", obj.toString());
+
+                    startActivity(intent);
+                } catch(Exception e) {
+                    // show toast error
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+/*
+
+
+
+
+
+
+
+                    // Products + Vouchers
+
+                    JSONObject obj = new JSONObject();
+
+                    obj.put("vouchers", getChosenVouchers());
+                    obj.put("prods", getProducts());
+
 
                     String prodsArrStr = obj.toString();
 
@@ -112,14 +151,12 @@ public class CartFragment extends Fragment {
                     sg.initSign(KeyInstance.getPrivateKey());
                     sg.update(msg, 0, MSG_LENGTH);
                     sg.sign(msg, MSG_LENGTH, 512/8);
+*/
 
-                    startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", msg));
-                } catch(Exception e){
-                    // show toast error
-                    e.printStackTrace();
-                }
-            }
-        });
+
+                   // startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", msg));
+
+
         return root;
     }
 }

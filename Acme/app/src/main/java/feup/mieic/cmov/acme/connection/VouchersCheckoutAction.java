@@ -15,15 +15,10 @@ import java.net.URL;
 
 import feup.mieic.cmov.acme.ui.vouchers.VouchersViewModel;
 
-public class VouchersAction extends AsyncTask<String, Void, Boolean>{
+public class VouchersCheckoutAction extends AsyncTask<String, Void, Integer>{
 
     private JSONObject res;
     private JSONObject req;
-    private VouchersViewModel model;
-
-    public VouchersAction(VouchersViewModel model){
-        this.model = model;
-    }
 
     @Override
     protected void onPreExecute(){ }
@@ -40,12 +35,12 @@ public class VouchersAction extends AsyncTask<String, Void, Boolean>{
     }
 
     @Override
-    protected Boolean doInBackground(String... params) {
+    protected Integer doInBackground(String... params) {
 
         HttpURLConnection urlConnection = null;
         setRequestBody(params[0]);
 
-        if(req == null) return false;
+        if(req == null) return -1;
 
         try {
             URL url = new URL(HTTPInfo.VOUCHERS_PATH);
@@ -71,33 +66,22 @@ public class VouchersAction extends AsyncTask<String, Void, Boolean>{
 
                 while ((line = rd.readLine()) != null) {
                     res = new JSONObject(line);
-                    Log.i("PROFILE", res.toString());
                 }
+                return res.getInt("vouchers");
             } else {
-                return false;
+                return -1;
             }
         } catch(Exception e){
-            return false;
+            return -1;
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
-        return true;
     }
 
     @Override
-    protected void onPostExecute(Boolean success) {
-        if(success) {
-            try {
-                model.setVouchersNum(res.getInt("vouchers"));
-            } catch (JSONException e) {
-                model.setVouchersNum(-1);
-            }
-        }
-        else
-            model.setVouchersNum(-1);
+    protected void onPostExecute(Integer numVouchers) {
+        super.onPostExecute(numVouchers);
     }
 }
-
-

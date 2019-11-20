@@ -4,7 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -85,6 +87,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void showUnavailableToast(){
 
+    }
+
+    /** -------------------------------
+     *           ALERT DIALOG
+     *  ------------------------------- */
+
+    private void showInvalidUsernameDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle("Invalid username")
+                .setMessage("The username you entered already exists.")
+                .setPositiveButton(android.R.string.yes, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     /** -------------------------------
@@ -233,8 +248,6 @@ public class RegisterActivity extends AppCompatActivity {
                         Sha256Hashing encryptInstance = new Sha256Hashing(confirmPasswdTextView.getText().toString());
                         String confirmEncryption = encryptInstance.getResult();
 
-                        Log.i("CONFIRM PASSWORD:", encryptedPasswdSHA256);
-
                         if(!confirmEncryption.equals(encryptedPasswdSHA256)){
                             confirmPasswdTextView.setError("The passwords do not match.");
 
@@ -248,6 +261,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                     } catch (Exception e){
+                        e.printStackTrace();
                         Log.e("Cfm Password Encryption", "Algorithm does not exist.");
                     }
                 }
@@ -385,12 +399,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String getPublicKeyUser(String username) throws Exception {
         KeyInstance.generateKeyPair(this, username);
-        String pub = KeyInstance.getRawPublicKey();
+        String pub = KeyInstance.getRawPublicKey(username);
         return pub;
     }
 
     public boolean isUsernameUnique(String username) throws JSONException, ExecutionException, InterruptedException {
-        return new VerifyUsernameAction().execute(username).get();
+        Boolean res = new VerifyUsernameAction().execute(username).get();
+        return res;
     }
 
     public void submitRegisterInformation(View view){
@@ -410,11 +425,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             try {
                 if(!isUsernameUnique(username)){
-                    //showUnavailableToast();
+                    showInvalidUsernameDialog();
                     Log.e("Error", "Username must be unique");
                     return;
                 }
-
 
                 reqBody.put("name", name);
                 reqBody.put("username", username);

@@ -118,8 +118,7 @@ public class RegisterAction {
 	}
 	
 	private UUID registerNewUser(RegisterRequest req) {
-		// CARD ID?? - a card needs first to be inserted in the database in order to associate it to a card ID which will be associated with the user
-       String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
+	   String INSERT_NEW_USER_QUERY = "INSERT INTO USERS(UUID, NAME, EMAIL, USERNAME, PASSWORD, CARD_ID, PUBLIC_KEY) VALUES(?,?,?,?,?,?,?)";
        UUID newUUID =  getNewUserUUID();
        
         try {
@@ -129,11 +128,11 @@ public class RegisterAction {
             pstmt.setString(3, req.getEmail());
             pstmt.setString(4, req.getUsername());
             pstmt.setString(5, req.getPassword());
-            pstmt.setInt(6, 1);			// hardcoded value - the card must be added first in the DB
+            pstmt.setInt(6, 1);			
             pstmt.setString(7, req.getPublicKey());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        	e.printStackTrace();
             return null;
         }
         return newUUID;

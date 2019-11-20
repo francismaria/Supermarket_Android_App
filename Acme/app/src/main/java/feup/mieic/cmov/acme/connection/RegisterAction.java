@@ -62,6 +62,8 @@ public class RegisterAction extends AsyncTask<JSONObject, Void, Boolean>  {
             os.write(params[0].toString().getBytes("UTF-8"));
             os.close();
 
+            Log.i("REGISTER ACTION", params[0].toString());
+
             int code = urlConnection.getResponseCode();
 
             if (code == HTTPInfo.SUCCESS_CODE) {

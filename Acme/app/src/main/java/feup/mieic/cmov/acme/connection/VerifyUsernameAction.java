@@ -1,6 +1,7 @@
 package feup.mieic.cmov.acme.connection;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,10 +30,10 @@ public class VerifyUsernameAction extends AsyncTask<String, Void, Boolean> {
     @Override
     protected Boolean doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
-        boolean unique = false;
+        boolean unique;
 
         try {
-            URL url = new URL(HTTPInfo.LOGIN_PATH);
+            URL url = new URL(HTTPInfo.VERIFY_USERNAME_PATH);
 
             setRequestObject(params[0]);
 
@@ -57,19 +58,19 @@ public class VerifyUsernameAction extends AsyncTask<String, Void, Boolean> {
                     while ((line = rd.readLine()) != null) {
                         res = new JSONObject(line);
                     }
-                    unique = true;
-                    break;
-                case HTTPInfo.UNAUTHORIZED_CODE:
-                    MSG = "The username already exists";
-                    res = null;
-                    unique = false;
+                    if(res.getBoolean("res"))
+                        unique = true;
+                    else
+                        unique = false;
                     break;
                 case HTTPInfo.INTERNAL_ERROR_CODE:
                     MSG = "Internal server error. Please try again";
+                    Log.e("VERIFY USERNAME ACTION", "Internal error.");
                     res = null;
                     unique = false;
                     break;
                 default:
+                    Log.e("VERIFY USERNAME ACTION", "Internal error.");
                     unique = false;
                     break;
             }

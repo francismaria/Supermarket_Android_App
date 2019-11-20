@@ -34,4 +34,6 @@
     <string name="checkout_caption">Checkout</string>
     <string name="contact_text">Please fill out the form below to send us a message
         regarding any problems you may encounter or any other subject.\n\nWe will try to answer you as soon as possible.\n\nThank you.</string>
+    <string name="checkout_text">You have vouchers to discount!</string>
+
 </resources>

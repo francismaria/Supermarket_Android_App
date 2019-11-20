@@ -5,9 +5,9 @@ package feup.mieic.cmov.acme.connection;
  */
 public interface HTTPInfo {
 
-    // Emulator ( http://10.0.2.2:8080/ )
 
 
+/*
     String LOGIN_PATH = "http://10.0.2.2:8080/AcmeServer/api/login";
 
     String REGISTER_PATH = "http://10.0.2.2:8080/AcmeServer/api/register";
@@ -23,6 +23,24 @@ public interface HTTPInfo {
     String VOUCHERS_PATH = "http://10.0.2.2:8080/AcmeServer/api/vouchers";
 
     String VERIFY_USERNAME_PATH = "http://10.0.2.2:8080/AcmeServer/api/verify-username";
+
+    */
+
+    String LOGIN_PATH = "http://192.168.43.45:8080/AcmeServer/api/login";
+
+    String REGISTER_PATH = "http://192.168.43.45:8080/AcmeServer/api/register";
+
+    String PROFILE_PATH = "http://192.168.43.45:8080/AcmeServer/api/profile";
+
+    String CONTACT_PATH = "http://192.168.43.45:8080/AcmeServer/api/contact";
+
+    String HISTORY_PATH = "http://192.168.43.45:8080/AcmeServer/api/history";
+
+    String GET_ORDER_INFO_PATH = "http://192.168.43.45:8080/AcmeServer/api/order";
+
+    String VOUCHERS_PATH = "http://192.168.43.45:8080/AcmeServer/api/vouchers";
+
+    String VERIFY_USERNAME_PATH = "http://192.168.43.45:8080/AcmeServer/api/verify-username";
 
     /*
     String LOGIN_PATH = "http://192.168.1.74:8080/AcmeServer/api/login";

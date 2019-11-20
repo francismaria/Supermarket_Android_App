@@ -30,21 +30,12 @@ public class KeyInstance {
     private static final int CERT_SERIAL = 12121212;
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 
-    public static String KEYNAME = "acme_";
-
-    public static void setKeyname(String username) {
-        KEYNAME = KEYNAME + username;
-    }
-
     // TODO: return public key
     public static void generateKeyPair(Context context, String username) throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException {
-
-        setKeyname(username);
-
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         ks.load(null);
 
-        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+        KeyStore.Entry entry = ks.getEntry(username, null);
 
         if (entry == null) {
             Log.e("generateKeyPair", "não exxiste");
@@ -59,8 +50,8 @@ public class KeyInstance {
 
                 AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(context)
                         .setKeySize(KEY_SIZE)
-                        .setAlias(KEYNAME)
-                        .setSubject(new X500Principal("CN=" + KEYNAME))
+                        .setAlias(username)
+                        .setSubject(new X500Principal("CN=" + username))
                         .setSerialNumber(BigInteger.valueOf(CERT_SERIAL))
                         .setStartDate(start.getTime())
                         .setEndDate(end.getTime())
@@ -75,15 +66,15 @@ public class KeyInstance {
                 e.printStackTrace();
             }
         }
-        getRawPublicKey();
+        getRawPublicKey(username);
     }
 
-    public static PublicKey getPublicKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
+    public static PublicKey getPublicKey(String username) throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         PublicKey pub = null;
         ks.load(null);
 
-        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+        KeyStore.Entry entry = ks.getEntry(username, null);
 
         if (entry != null) {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
@@ -92,12 +83,12 @@ public class KeyInstance {
         return null;
     }
 
-    public static String getRawPublicKey() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, UnrecoverableEntryException {
+    public static String getRawPublicKey(String username) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, UnrecoverableEntryException {
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         PublicKey pub = null;
         ks.load(null);
 
-        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+        KeyStore.Entry entry = ks.getEntry(username, null);
 
         if (entry != null) {
             pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
@@ -109,11 +100,12 @@ public class KeyInstance {
     }
 
 
-    public static PrivateKey getPrivateKey() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
+    public static PrivateKey getPrivateKey(String username) throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
+
         KeyStore ks = KeyStore.getInstance(ANDROID_KEYSTORE);
         ks.load(null);
 
-        KeyStore.Entry entry = ks.getEntry(KEYNAME, null);
+        KeyStore.Entry entry = ks.getEntry(username, null);
 
         if (entry != null) {
             return ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();

@@ -12,7 +12,9 @@ public interface HTTPInfo {
 
     // Emulator ( http://10.0.2.2:8080/ )
 
-    String CHECKOUT_PATH = "http://192.168.1.74:8080/AcmeServer/api/new-order";
+    //String CHECKOUT_PATH = "http://192.168.1.74:8080/AcmeServer/api/new-order";
+
+    String CHECKOUT_PATH = "http://192.168.43.45:8080/AcmeServer/api/new-order";
 
     // HTTP response codes
 
