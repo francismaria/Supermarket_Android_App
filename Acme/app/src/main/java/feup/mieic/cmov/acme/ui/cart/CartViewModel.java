@@ -42,4 +42,9 @@ public class CartViewModel extends ViewModel {
 
         cart.setValue(newProds);
     }
+
+    public static void removeAllProducts(){
+        List<ProductModel> newProds = new ArrayList<>();
+        cart.setValue(newProds);
+    }
 }

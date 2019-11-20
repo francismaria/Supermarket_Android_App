@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,14 +43,25 @@ import feup.mieic.cmov.acme.ui.order.ProductModel;
 
 public class CartFragment extends Fragment {
 
+    private Toast emptyCartToast;
     private CartViewModel cartViewModel;
 
     private void initActionBar(){
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Shopping Cart");
     }
 
+    private void initEmptyCartToast(){
+        emptyCartToast = Toast.makeText(getActivity(), null, Toast.LENGTH_SHORT);
+    }
+
+    private void showEmptyCartToast(){
+        emptyCartToast.setText("Your shopping cart is empty.");
+        emptyCartToast.show();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initActionBar();
+        initEmptyCartToast();
 
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
 
@@ -90,8 +102,10 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                /*if(adapter.getItemCount() == 0)
-                    return; // TODO show toast saying cart is null*/
+                if(adapter.getItemCount() == 0){
+                    showEmptyCartToast();
+                    return;
+                }
 
                 try {
                     String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));

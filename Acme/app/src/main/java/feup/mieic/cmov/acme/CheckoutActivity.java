@@ -22,6 +22,7 @@ import feup.mieic.cmov.acme.qrcodes.QRTag;
 import feup.mieic.cmov.acme.security.KeyInstance;
 import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 import feup.mieic.cmov.acme.ui.cart.CartFragment;
+import feup.mieic.cmov.acme.ui.cart.CartViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -136,6 +137,8 @@ public class CheckoutActivity extends AppCompatActivity {
             sg.initSign(KeyInstance.getPrivateKey(SharedPrefsHolder.getUsername(this)));
             sg.update(msg, 0, MSG_LENGTH);
             sg.sign(msg, MSG_LENGTH, 512 / 8);
+
+            CartViewModel.removeAllProducts();
 
             startActivity(new Intent(this, QRTag.class).putExtra("data", msg));
 

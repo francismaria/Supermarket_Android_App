@@ -13,8 +13,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import feup.mieic.cmov.acme.ui.vouchers.VouchersViewModel;
-
 public class VouchersCheckoutAction extends AsyncTask<String, Void, Integer>{
 
     private JSONObject res;
