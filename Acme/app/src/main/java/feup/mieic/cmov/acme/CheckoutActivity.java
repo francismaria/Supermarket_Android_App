@@ -38,6 +38,12 @@ public class CheckoutActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        double cost = getIntent().getDoubleExtra("total_cost", 0.0);
+        final TextView totalCostView = findViewById(R.id.totalCostValue);
+        String costValue = Double.toString(cost) + "€";
+        totalCostView.setText(costValue);
+
+
         try{
             if(getIntent().hasExtra("data")) {
                 obj = new JSONObject(getIntent().getStringExtra("data"));
@@ -99,7 +105,6 @@ public class CheckoutActivity extends AppCompatActivity {
                         try {
                             obj.put("vouchers", currenVouchersNum);
                         } catch (JSONException e) {
-                            // TODO : SHOW TOAST??
                             e.printStackTrace();
                             return;
                         }

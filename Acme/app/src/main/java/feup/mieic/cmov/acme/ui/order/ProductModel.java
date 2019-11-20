@@ -22,6 +22,11 @@ public class ProductModel {
 
     public String getQty(){ return qty; }
 
+    public void incQty(){
+        int q = Integer.parseInt(qty);
+        q++;
+        qty = Integer.toString(q);
+    }
     public String getPrice(){ return price; }
 
 }

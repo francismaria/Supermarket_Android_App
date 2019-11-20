@@ -30,11 +30,11 @@ public class ContactAction extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPreExecute(){ }
 
-    private void setRequestBody(String msg){
+    private void setRequestBody(String uuid, String msg){
         req = new JSONObject();
 
         try {
-            req.put("UUID", "1");
+            req.put("UUID", uuid);
             req.put("msg", msg);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -46,7 +46,7 @@ public class ContactAction extends AsyncTask<String, Void, Boolean> {
     protected Boolean doInBackground(String... params) {
 
         HttpURLConnection urlConnection = null;
-        setRequestBody(params[0]);
+        setRequestBody(params[0], params[1]);
 
         if(req == null) return false;
 
@@ -71,9 +71,11 @@ public class ContactAction extends AsyncTask<String, Void, Boolean> {
             if (code == HTTPInfo.SUCCESS_CODE) {
                 Log.i("CONTACT ACTION", "OK");
             } else {
+                Log.i("CONTACT ACTION", "SERVER ERROR");
                 return false;
             }
         } catch(Exception e){
+            e.printStackTrace();
             return false;
         } finally {
             if (urlConnection != null) {

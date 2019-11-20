@@ -56,13 +56,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date:"
+                    android:layout_marginEnd="20dp"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/orderDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
                     android:layout_weight="1"
                     android:text=""
                     android:textSize="16sp" />
@@ -80,14 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/productIDLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ID"
-                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/productNameLabel"

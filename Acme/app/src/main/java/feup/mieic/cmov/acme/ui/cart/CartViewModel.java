@@ -27,6 +27,16 @@ public class CartViewModel extends ViewModel {
             return;
         }
 
+        List<ProductModel> prods = cart.getValue();
+
+        for(ProductModel p : prods){
+            if(p.getID().equals(prod.getID())){
+                p.incQty();
+                cart.setValue(prods);
+                return;
+            }
+        }
+
         cart.getValue().add(prod);
     }
 

@@ -118,6 +118,7 @@ public class CartFragment extends Fragment {
 
                     Intent intent = new Intent(CartFragment.this.getActivity(), CheckoutActivity.class);
                     intent.putExtra("data", obj.toString());
+                    intent.putExtra("total_cost", adapter.getTotalPrice());
 
                     startActivity(intent);
                 } catch(Exception e) {

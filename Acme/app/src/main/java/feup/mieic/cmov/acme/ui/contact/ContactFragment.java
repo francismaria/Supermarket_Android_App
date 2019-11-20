@@ -16,7 +16,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Objects;
+
 import feup.mieic.cmov.acme.R;
+import feup.mieic.cmov.acme.security.SharedPrefsHolder;
 
 
 public class ContactFragment extends Fragment {
@@ -69,6 +72,7 @@ public class ContactFragment extends Fragment {
                 } else if (msg.equals("")){         // message is empty
                     showEmptyMsgToast();
                 } else {
+                    contactViewModel.setUUID(SharedPrefsHolder.getUUID(Objects.requireNonNull(getActivity())));
                     contactViewModel.sendMessage(msg);
                 }
             }

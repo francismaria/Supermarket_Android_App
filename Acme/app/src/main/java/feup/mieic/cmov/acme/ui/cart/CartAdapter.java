@@ -34,6 +34,18 @@ public class CartAdapter extends RecyclerView.Adapter {
         return prods;
     }
 
+    public double getTotalPrice(){
+        double total = 0;
+
+        for(ProductModel p: prods){
+            Double price = Double.parseDouble(p.getPrice());
+            int qty = Integer.parseInt(p.getQty());
+            total +=  price*qty;
+        }
+
+        return total;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
