@@ -42,13 +42,19 @@ public class HistoryViewModel extends ViewModel {
         return mErrorMsg;
     }
 
+    private String roundDouble(String res) throws JSONException {
+        Double totalCostValue = Double.parseDouble(res);
+        totalCostValue = Math.round(totalCostValue * 100.0) / 100.0;
+        return Double.toString(totalCostValue);
+    }
+
     private void parseResponse(JSONArray items) throws JSONException {
         itemsParsed = new ArrayList<>();
 
         for(int i = 0; i < items.length(); i++){
             JSONObject jsonItem = items.getJSONObject(i);
 
-            ItemModel item = new ItemModel(jsonItem.getString("id"), jsonItem.getString("total_cost"), jsonItem.getString("date"));
+            ItemModel item = new ItemModel(jsonItem.getString("id"), roundDouble(jsonItem.getString("total_cost")), jsonItem.getString("date"));
             itemsParsed.add(item);
         }
     }

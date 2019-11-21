@@ -92,7 +92,7 @@ public class OrderFragment extends Fragment {
                     orderIDText.setText(orderViewModel.getOrderID());
                     orderDateText.setText(orderViewModel.getOrderDate());
                     orderVouchersText.setText(orderViewModel.getVouchers());
-                    orderTotalCostText.setText(orderViewModel.getOrderTotalCost());
+                    orderTotalCostText.setText(orderViewModel.getOrderTotalCost() + "€");
                 }
             }
         });

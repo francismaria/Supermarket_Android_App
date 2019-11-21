@@ -95,13 +95,19 @@ public class OrderAction extends AsyncTask<Void, Void, Boolean> {
         return true;
     }
 
+    private String roundDouble() throws JSONException {
+        Double totalCostValue = res.getDouble("total_cost");
+        totalCostValue = Math.round(totalCostValue * 100.0) / 100.0;
+        return Double.toString(totalCostValue);
+    }
+
     @Override
     protected void onPostExecute(Boolean success) {
         if(success){
             try {
                 model.setRequestResult(res.getString("orderID"), res.getString("date"),
-                        res.getString("total_cost"), res.getString("vouchers"),
-                        res.getJSONArray("products"));
+                    roundDouble(), res.getString("vouchers"),
+                    res.getJSONArray("products"));
             } catch (JSONException e) {
                 e.printStackTrace();
                 model.flagError();

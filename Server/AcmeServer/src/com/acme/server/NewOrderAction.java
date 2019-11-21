@@ -180,7 +180,7 @@ public class NewOrderAction {
 	 * @param uuid
 	 * @param prods
 	 */
-	private void addNewTransaction(UUID uuid, JSONArray prods) throws Exception {
+	private void addNewTransaction(UUID uuid, JSONArray prods, int numVouchersToDiscount) throws Exception {
        final String INSERT_NEW_TRANSACTION_QUERY = "INSERT INTO TRANSACTIONS (ID, USER_ID, DATE, VOUCHERS) VALUES(?,?,?,?);";
        
        final int transactionID = getNextTransactionID();
@@ -189,7 +189,7 @@ public class NewOrderAction {
        pstmt.setInt(1, transactionID);				
        pstmt.setString(2, uuid.toString());
        pstmt.setString(3, getCurrentDate());
-       pstmt.setInt(4, 0);
+       pstmt.setInt(4, numVouchersToDiscount);
        pstmt.executeUpdate();
        
        addProductsToHistory(transactionID, prods);
@@ -227,8 +227,9 @@ public class NewOrderAction {
 		      
 		    JSONObject s = new JSONObject(new String(Arrays.copyOfRange(mess, UUID_SIZE, mess_size), StandardCharsets.ISO_8859_1));
 		    JSONArray arr = (JSONArray) s.get("prods");
+		    int numVouchersToDiscount = s.getInt("vouchers");
 		    
-		    addNewTransaction(userUUID, arr);
+		    addNewTransaction(userUUID, arr, numVouchersToDiscount);
 		    
 		  
 		    JSONObject res = new JSONObject();
