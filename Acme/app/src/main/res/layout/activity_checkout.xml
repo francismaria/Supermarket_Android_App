@@ -8,6 +8,7 @@
     tools:context=".CheckoutActivity">
 
     <LinearLayout
+        android:id="@+id/vouchersLayoutContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -20,6 +21,13 @@
             android:text="@string/checkout_caption"
             android:layout_marginBottom="20dp"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vouchers to Discount:"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/vouchersNumbersText"

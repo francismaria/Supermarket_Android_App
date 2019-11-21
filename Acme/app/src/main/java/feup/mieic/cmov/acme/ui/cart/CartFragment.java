@@ -129,49 +129,6 @@ public class CartFragment extends Fragment {
             }
         });
 
-/*
-
-
-
-
-
-
-
-                    // Products + Vouchers
-
-                    JSONObject obj = new JSONObject();
-
-                    obj.put("vouchers", getChosenVouchers());
-                    obj.put("prods", getProducts());
-
-
-                    String prodsArrStr = obj.toString();
-
-                    final int PRODS_LENGTH = prodsArrStr.length();
-                    final int MSG_LENGTH = UUID_BYTES + PRODS_LENGTH;
-                    final int len = MSG_LENGTH + (512/8);
-
-                    ByteBuffer tag = ByteBuffer.allocate(len);
-
-                    String uuid = SharedPrefsHolder.getUUID(Objects.requireNonNull(CartFragment.this.getActivity()));
-
-                    tag.put(uuid.getBytes(StandardCharsets.ISO_8859_1));
-                    tag.put(prodsArrStr.getBytes(StandardCharsets.ISO_8859_1));
-
-                    byte[] msg = tag.array();
-
-                    // Create Digital Signature
-
-                    Signature sg = Signature.getInstance("SHA256WithRSA");
-                    sg.initSign(KeyInstance.getPrivateKey());
-                    sg.update(msg, 0, MSG_LENGTH);
-                    sg.sign(msg, MSG_LENGTH, 512/8);
-*/
-
-
-                   // startActivity(new Intent(CartFragment.this.getActivity(), QRTag.class).putExtra("data", msg));
-
-
         return root;
     }
 }

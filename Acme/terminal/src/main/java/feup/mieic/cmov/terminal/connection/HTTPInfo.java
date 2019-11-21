@@ -14,7 +14,7 @@ public interface HTTPInfo {
 
     //String CHECKOUT_PATH = "http://192.168.1.74:8080/AcmeServer/api/new-order";
 
-    String CHECKOUT_PATH = "http://192.168.1.10:8080/AcmeServer/api/new-order";
+    String CHECKOUT_PATH = "http://192.168.43.45:8080/AcmeServer/api/new-order";
 
     // HTTP response codes
 

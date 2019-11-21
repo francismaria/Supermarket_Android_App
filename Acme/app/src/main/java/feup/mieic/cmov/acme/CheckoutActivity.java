@@ -28,6 +28,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private JSONObject obj;
     private int MAX_NUM_VOUCHERS;
+    private int vchosenVouchersNum;
     private static final int UUID_BYTES = 36;
 
 
@@ -50,60 +51,65 @@ public class CheckoutActivity extends AppCompatActivity {
 
                 MAX_NUM_VOUCHERS = obj.getInt("vouchers");
 
-                final TextView vouchersNumField = findViewById(R.id.vouchersNumbersText);
+                if(MAX_NUM_VOUCHERS != 0) {
+                    final TextView vouchersNumField = findViewById(R.id.vouchersNumbersText);
 
-                String newVouchersNum = Integer.toString(MAX_NUM_VOUCHERS);
-                vouchersNumField.setText(newVouchersNum);
+                    String newVouchersNum = Integer.toString(MAX_NUM_VOUCHERS);
+                    vouchersNumField.setText(newVouchersNum);
 
-                Button removeBtn = findViewById(R.id.removeVoucherBtn);
-                removeBtn.setOnClickListener(new View.OnClickListener(){
+                    Button removeBtn = findViewById(R.id.removeVoucherBtn);
+                    removeBtn.setOnClickListener(new View.OnClickListener() {
 
-                    private int getCurrentSelectedVouchersNumber(){
-                        return Integer.parseInt(vouchersNumField.getText().toString());
-                    }
+                        private int getCurrentSelectedVouchersNumber() {
+                            return Integer.parseInt(vouchersNumField.getText().toString());
+                        }
 
-                    @Override
-                    public void onClick(View v) {
-                        int numVouchers = getCurrentSelectedVouchersNumber();
-                        if(numVouchers == 0)
-                            return;
+                        @Override
+                        public void onClick(View v) {
+                            int numVouchers = getCurrentSelectedVouchersNumber();
+                            if (numVouchers == 0)
+                                return;
 
-                        numVouchers--;
+                            numVouchers--;
 
-                        String newVouchersNumber = Integer.toString(numVouchers);
-                        vouchersNumField.setText(newVouchersNumber);
+                            String newVouchersNumber = Integer.toString(numVouchers);
+                            vouchersNumField.setText(newVouchersNumber);
+                            vchosenVouchersNum = numVouchers;
+                        }
+                    });
 
-                    }
-                });
+                    Button addBtn = findViewById(R.id.addVoucherBtn);
+                    addBtn.setOnClickListener(new View.OnClickListener() {
 
-                Button addBtn = findViewById(R.id.addVoucherBtn);
-                addBtn.setOnClickListener(new View.OnClickListener(){
+                        private int getCurrentSelectedVouchersNumber() {
+                            return Integer.parseInt(vouchersNumField.getText().toString());
+                        }
 
-                    private int getCurrentSelectedVouchersNumber(){
-                        return Integer.parseInt(vouchersNumField.getText().toString());
-                    }
+                        @Override
+                        public void onClick(View v) {
+                            int numVouchers = getCurrentSelectedVouchersNumber();
+                            if (numVouchers == MAX_NUM_VOUCHERS)
+                                return;
 
-                    @Override
-                    public void onClick(View v) {
-                        int numVouchers = getCurrentSelectedVouchersNumber();
-                        if(numVouchers == MAX_NUM_VOUCHERS)
-                            return;
+                            numVouchers++;
 
-                        numVouchers++;
-
-                        String newVouchersNumber = Integer.toString(numVouchers);
-                        vouchersNumField.setText(newVouchersNumber);
-                    }
-                });
-
+                            String newVouchersNumber = Integer.toString(numVouchers);
+                            vouchersNumField.setText(newVouchersNumber);
+                            vchosenVouchersNum = numVouchers;
+                        }
+                    });
+                } else {
+                    findViewById(R.id.vouchersLayoutContainer).setVisibility(View.INVISIBLE);
+                    vchosenVouchersNum = 0;
+                }
                 Button checkoutBtn = findViewById(R.id.generateQRcodeBtn);
-                checkoutBtn.setOnClickListener(new View.OnClickListener(){
+                checkoutBtn.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        String currenVouchersNum  = vouchersNumField.getText().toString();
+                        String currentVouchersNum = Integer.toString(vchosenVouchersNum);
                         try {
-                            obj.put("vouchers", currenVouchersNum);
+                            obj.put("vouchers", currentVouchersNum);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             return;
@@ -111,7 +117,6 @@ public class CheckoutActivity extends AppCompatActivity {
                         generateQRcode();
                     }
                 });
-
             }
         } catch(Exception e){
             e.printStackTrace();

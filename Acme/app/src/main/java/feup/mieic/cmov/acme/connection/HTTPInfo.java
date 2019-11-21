@@ -26,21 +26,21 @@ public interface HTTPInfo {
 
     */
 
-    String LOGIN_PATH = "http://192.168.1.10:8080/AcmeServer/api/login";
+    String LOGIN_PATH = "http://192.168.43.45:8080/AcmeServer/api/login";
 
-    String REGISTER_PATH = "http://192.168.1.10:8080/AcmeServer/api/register";
+    String REGISTER_PATH = "http://192.168.43.45:8080/AcmeServer/api/register";
 
-    String PROFILE_PATH = "http://192.168.1.10:8080/AcmeServer/api/profile";
+    String PROFILE_PATH = "http://192.168.43.45:8080/AcmeServer/api/profile";
 
-    String CONTACT_PATH = "http://192.168.1.10:8080/AcmeServer/api/contact";
+    String CONTACT_PATH = "http://192.168.43.45:8080/AcmeServer/api/contact";
 
-    String HISTORY_PATH = "http://192.168.1.10:8080/AcmeServer/api/history";
+    String HISTORY_PATH = "http://192.168.43.45:8080/AcmeServer/api/history";
 
-    String GET_ORDER_INFO_PATH = "http://192.168.1.10:8080/AcmeServer/api/order";
+    String GET_ORDER_INFO_PATH = "http://192.168.43.45:8080/AcmeServer/api/order";
 
-    String VOUCHERS_PATH = "http://192.168.1.10:8080/AcmeServer/api/vouchers";
+    String VOUCHERS_PATH = "http://192.168.43.45:8080/AcmeServer/api/vouchers";
 
-    String VERIFY_USERNAME_PATH = "http://192.168.1.10:8080/AcmeServer/api/verify-username";
+    String VERIFY_USERNAME_PATH = "http://192.168.43.45:8080/AcmeServer/api/verify-username";
 
     /*
     String LOGIN_PATH = "http://192.168.1.74:8080/AcmeServer/api/login";
