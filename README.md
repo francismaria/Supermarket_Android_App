@@ -41,6 +41,8 @@ The registration process goes through a thorough input validation as well as a p
 
 In the input validation, by making use of the Android EditTexts' `inputType` capabilities, we make sure that the user when entering his/hers details, inputs the correct format of information. For example, when the user is asked to insert the credit card credentials, upon click, the keyboard only accepts numbers as input, enforcing a security policy against potential attacks to the application and providing a better user interface. 
 
+Throughout the text fields the user has to fill in order to complete his registration in the app, there are multiple hints to guide the user through this process. Also, it is important to note that exists real-time warning messages about specific requirements of a field
+
 ![Registration screenshot 1](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg)
 
 *Fig.2: Registration's personal information details*
