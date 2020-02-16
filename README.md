@@ -51,4 +51,11 @@ Throughout the text fields the user has to fill in order to complete his registr
 
 *Fig.3: Registration's credit card input type*
 
+2. Log In
+
+The login process also goes through an input validation. The user should insert his username and password to be able to enter the application. This creates an APIRequest to evaluate the information and check if that data is already registered inthe server.
+
+![Login screenshot 2](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg)
+
+
 ## Development
