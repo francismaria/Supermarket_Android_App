@@ -21,6 +21,8 @@ The project consisted in creating an Android application to simulate a supermark
 
 *At any time, the app should be capable of consulting past transactions’ information, and retrieve available emitted loyalty vouchers, that can concede a discount in some future buy. A loyalty voucher is offered whenever the customer accumulated payments surpassed a multiple of some value."*
 
+Inline-style: 
+![Communication diagram](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/communication_diagram.png)
 
 
 ## What technologies were used?
