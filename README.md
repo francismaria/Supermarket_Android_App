@@ -55,7 +55,24 @@ Throughout the text fields the user has to fill in order to complete his registr
 
 The login process also goes through an input validation. The user should insert his username and password to be able to enter the application. This creates an APIRequest to evaluate the information and check if that data is already registered inthe server.
 
-![Login screenshot 2](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg)
+![Login screenshot](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg)
 
+*Fig.4: Log in page*
+
+3. Buying
+
+The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user, as we will demonstrate in some screenshots from the application, enters the application and can immediately add products to his shopping cart with a QR Code reader.
+
+![Nivea QR code](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/nivea.png)
+
+*Fig.5: QR code for a product*
+
+In the end of the shopping or if the user adds a product that he doesn't wants anymore, he can view his full basket and remove the products that he wants. Finally he can perform the checkout which generates also a QR Code that will be read from the Acme Supermarket terminal and with that will end.
+
+The user is able to read these QR Codes in just one click after he enters the application on the activity displayed on. The listener of the button opens a QR Code reader that will be able to interpret the encoded message of each product.
+
+Finally the user is ready to finalize his shopping. On the top right corner on every screen of the application the user has a cart logo available to click that redirects the application for the cart screen that is shown in [Fig. 8]. This section allows the user add or remove the products and select the amount of vouchers that wants to use for a final discount (if available).
 
 ## Development
+
+This project is no longer under development.
