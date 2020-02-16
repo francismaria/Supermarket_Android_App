@@ -22,6 +22,7 @@ The project consisted in creating an Android application to simulate a supermark
 *At any time, the app should be capable of consulting past transactions’ information, and retrieve available emitted loyalty vouchers, that can concede a discount in some future buy. A loyalty voucher is offered whenever the customer accumulated payments surpassed a multiple of some value."*
 
 ![Communication diagram](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/communication_diagram.png)
+
 *Fig.1: Communication diagram*
 
 ## What technologies were used?
@@ -33,5 +34,19 @@ The project consisted in creating an Android application to simulate a supermark
 | Terminal | Java |  
 
 ## Main Functionalities
+
+1. Registration
+
+The registration process goes through a thorough input validation as well as a process of formatting text.
+
+In the input validation, by making use of the Android EditTexts' `inputType` capabilities, we make sure that the user when entering his/hers details, inputs the correct format of information. For example, when the user is asked to insert the credit card credentials, upon click, the keyboard only accepts numbers as input, enforcing a security policy against potential attacks to the application and providing a better user interface. 
+
+![Registration screenshot 1](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg)
+
+*Fig.2: Registration's personal information details*
+
+![Registration screenshot 2](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png)
+
+*Fig.3: Registration's credit card input type*
 
 ## Development
