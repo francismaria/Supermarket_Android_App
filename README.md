@@ -4,12 +4,12 @@ This repo hosts the code for an android application created for the CMOV (Mobile
 
 ## Table of Contents
 
-- What is it?
+- [What is it?](#What-is-it?)
 - What technologies were used?
 - Main functionalities
 - Development
 
-##What is it?
+## What is it?
 
 The project consisted in creating an Android application to simulate a supermarket app where the users could shop with their smartphones only. Below is the transcript of the project's requirements.
 
@@ -24,7 +24,7 @@ The project consisted in creating an Android application to simulate a supermark
 ![Communication diagram](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/communication_diagram.png)
 *Fig.1: Communication diagram*
 
-##What technologies were used?
+## What technologies were used?
 
 | Component | Technology | 
 | ------------- |:-------------:| 
