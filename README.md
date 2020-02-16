@@ -4,10 +4,10 @@ This repo hosts the code for an android application created for the CMOV (Mobile
 
 ## Table of Contents
 
-- [What is it?](#What-is-it?)
-- What technologies were used?
-- Main functionalities
-- Development
+- [What is it?](#what-is-it)
+- [What technologies were used?](#what-technologies-were-used)
+- [Main functionalities](#main-functionalities)
+- [Development](#development)
 
 ## What is it?
 
