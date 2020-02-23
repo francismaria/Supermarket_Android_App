@@ -82,7 +82,16 @@ The user is able to read these QR Codes in just one click after he enters the ap
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/home_screen.jpg" height="500"/>
 </p>
 
+*Fig: 6 - Acme's Home Screen*
+
 Finally the user is ready to finalize his shopping. On the top right corner on every screen of the application the user has a cart logo available to click that redirects the application for the cart screen that is shown in [Fig. 8]. This section allows the user add or remove the products and select the amount of vouchers that wants to use for a final discount (if available).
+
+<p align="middle">
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/cart.jpg" height="500" hspace="20"/>
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/vouchers.png" height="500" hspace="20"/> 
+</p>
+
+*Fig: 7 - Acme's Checkout Pages*
 
 ## Development
 
