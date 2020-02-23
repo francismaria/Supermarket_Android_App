@@ -63,7 +63,7 @@ The login process also goes through an input validation. The user should insert 
 
 The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user, as we will demonstrate in some screenshots from the application, enters the application and can immediately add products to his shopping cart with a QR Code reader.
 
-<div align="middle">
+<div style="text-align:center">
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/nivea.png" height="600"/>
 </div>
 
