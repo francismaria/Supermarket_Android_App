@@ -36,7 +36,7 @@ The project consisted in creating an Android application to simulate a supermark
 
 ## Main Functionalities
 
-1. Registration
+#### 1. Registration
 
 The registration process goes through a thorough input validation as well as a process of formatting text.
 
@@ -54,7 +54,7 @@ Throughout the text fields the user has to fill in order to complete his registr
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png" height="500" hspace="20"/> 
 </p>
 
-2. Log In
+#### 2. Log In
 
 The login process also goes through an input validation. The user should insert his username and password to be able to enter the application. This creates an APIRequest to evaluate the information and check if that data is already registered inthe server.
 
@@ -64,7 +64,7 @@ The login process also goes through an input validation. The user should insert 
 
 *Fig.4: Log in page*
 
-3. Buying
+#### 3. Buying
 
 The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user enters the application and can immediately add products to his shopping cart with a QR Code reader. The products in this demonstration are represented by its corresponding QR codes, as you can see in the image below.
 
@@ -92,6 +92,31 @@ Finally the user is ready to finalize his shopping. On the top right corner on e
 </p>
 
 *Fig: 7 - Acme's Checkout Pages*
+
+#### 4. Consulting Past Transactions
+
+A user can check on his past transactions at any time. In the navigation menu, there exists the "History" option which leads to a Fragment containing a RecyclerView where, upon receiving the server response for the current logged user past transactions, it is updated with all the transactions/orders the user has done. Moreover, the user can click in any of these elements of the RecyclerView, in order to check the details of the transaction (its date, the products bought, if a voucher was used, the total cost of the transaction, etc.). 
+
+<p align="middle">
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/history.jpg" height="500" hspace="20"/>
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/order.jpg" height="500" hspace="20"/> 
+</p>
+
+*Fig. 8 - Past History Screens*
+
+#### 5. Profile
+
+Acme Supermarket' application also provides an independent screen for the user to check his information. In this screen the user can confirm his username, email or even the credit cart that he has introduced when registering.
+
+<p align="middle">
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/profile.jpg" height="500" hspace="20"/>
+</p>
+
+#### 6. Contact
+
+The feedback that each costumer can provide for a company is key for its success. Knowing this fact we have also implemented a Contact functionality that allows the user to directly contact the company. In the application just needs to write the message and click the *Send Button* and it'll be sent to the Acme Supermarket team (server) which can then access it in a file which keeps every message with the following format : \[date - email] : msg.
+
+*Fig. 9 - Contact Activities*
 
 ## Development
 
