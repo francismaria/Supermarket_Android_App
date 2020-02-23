@@ -88,7 +88,7 @@ Finally the user is ready to finalize his shopping. On the top right corner on e
 
 <p align="middle">
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/cart.jpg" height="500" hspace="20"/>
-  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/vouchers.png" height="500" hspace="20"/> 
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/vouchers.jpg" height="500" hspace="20"/> 
 </p>
 
 *Fig: 7 - Acme's Checkout Pages*
