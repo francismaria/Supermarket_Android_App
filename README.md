@@ -66,7 +66,7 @@ The login process also goes through an input validation. The user should insert 
 
 3. Buying
 
-The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user, as we will demonstrate in some screenshots from the application, enters the application and can immediately add products to his shopping cart with a QR Code reader.
+The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user enters the application and can immediately add products to his shopping cart with a QR Code reader. The products in this demonstration are represented by its corresponding QR codes, as you can see in the image below.
 
 <p align="middle">
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/nivea.png" height="500"/>
@@ -74,9 +74,13 @@ The Acme Supermarket tries to offer an efficient and instinctive way to the clie
 
 *Fig.5: QR code for a product*
 
-In the end of the shopping or if the user adds a product that he doesn't wants anymore, he can view his full basket and remove the products that he wants. Finally he can perform the checkout which generates also a QR Code that will be read from the Acme Supermarket terminal and with that will end.
+In the end of the shopping or if the user adds a product that he doesn't wants anymore, he can view his full basket and remove the products that he wants. Finally he can perform the checkout which generates also a QR Code that will be read from the Acme Supermarket terminal and with that, the shopping process will end.
 
 The user is able to read these QR Codes in just one click after he enters the application on the activity displayed on. The listener of the button opens a QR Code reader that will be able to interpret the encoded message of each product.
+
+<p align="middle">
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/home_screen.jpg" height="500"/>
+</p>
 
 Finally the user is ready to finalize his shopping. On the top right corner on every screen of the application the user has a cart logo available to click that redirects the application for the cart screen that is shown in [Fig. 8]. This section allows the user add or remove the products and select the amount of vouchers that wants to use for a final discount (if available).
 
