@@ -43,17 +43,14 @@ In the input validation, by making use of the Android EditTexts' `inputType` cap
 
 Throughout the text fields the user has to fill in order to complete his registration in the app, there are multiple hints to guide the user through this process. Also, it is important to note that exists real-time warning messages about specific requirements of a field
 
-<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg" height="600"/>
-
 *Fig.2: Registration's personal information details*
 
-<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png" height="600"/>
 
 *Fig.3: Registration's credit card input type*
 
 <p align="middle">
-  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg" width="100" />
-  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png" width="100" /> 
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg" height="600" hspace="20"/>
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png" height="600" hspace="20"/> 
 </p>
 
 2. Log In
