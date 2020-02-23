@@ -43,11 +43,11 @@ In the input validation, by making use of the Android EditTexts' `inputType` cap
 
 Throughout the text fields the user has to fill in order to complete his registration in the app, there are multiple hints to guide the user through this process. Also, it is important to note that exists real-time warning messages about specific requirements of a field
 
-![Registration screenshot 1](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.jpg)
+<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/register.png" height="500"/>
 
 *Fig.2: Registration's personal information details*
 
-![Registration screenshot 2](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png)
+<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/creditcardkeyboard.png" height="500"/>
 
 *Fig.3: Registration's credit card input type*
 
@@ -55,9 +55,7 @@ Throughout the text fields the user has to fill in order to complete his registr
 
 The login process also goes through an input validation. The user should insert his username and password to be able to enter the application. This creates an APIRequest to evaluate the information and check if that data is already registered inthe server.
 
-![Login screenshot](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg)
-
-<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg" height="200"/>
+<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.png" height="500"/>
 
 *Fig.4: Log in page*
 
@@ -65,7 +63,7 @@ The login process also goes through an input validation. The user should insert 
 
 The Acme Supermarket tries to offer an efficient and instinctive way to the client realize his shopping. The user, as we will demonstrate in some screenshots from the application, enters the application and can immediately add products to his shopping cart with a QR Code reader.
 
-![Nivea QR code](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/nivea.png)
+<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/nivea.png" height="500"/>
 
 *Fig.5: QR code for a product*
 
