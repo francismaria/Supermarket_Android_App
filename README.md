@@ -112,11 +112,18 @@ Acme Supermarket' application also provides an independent screen for the user t
   <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/profile.jpg" height="500" hspace="20"/>
 </p>
 
+*Fig. 9 - Profile Screen*
+
 #### 6. Contact
 
 The feedback that each costumer can provide for a company is key for its success. Knowing this fact we have also implemented a Contact functionality that allows the user to directly contact the company. In the application just needs to write the message and click the *Send Button* and it'll be sent to the Acme Supermarket team (server) which can then access it in a file which keeps every message with the following format : \[date - email] : msg.
 
-*Fig. 9 - Contact Activities*
+<p align="middle">
+  <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/empty_message.jpg" height="500" hspace="20"/>
+    <img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/message_sent.jpg" height="500" hspace="20"/>
+</p>
+
+*Fig. 10 - Contact Screen*
 
 ## Development
 
