@@ -57,6 +57,8 @@ The login process also goes through an input validation. The user should insert 
 
 ![Login screenshot](https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg)
 
+<img src="https://github.com/francismaria/Supermarket_Android_App/blob/master/docs/login.jpg" height="200"/>
+
 *Fig.4: Log in page*
 
 3. Buying
